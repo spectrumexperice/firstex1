@@ -1,9 +1,10 @@
+
 import { Geist, Geist_Mono } from 'next/font/google';
 import { Tajawal } from 'next/font/google';
-import { NextIntlClientProvider, hasLocale } from 'next-intl';
+import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
-
+import { setRequestLocale } from 'next-intl/server';
 import Providers from '@/app/providers';
 import UserProvider from '@/app/userProvide';
 import Header from '@/app/[locale]/component/Header';
@@ -24,40 +25,48 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
-type RootLayoutProps = {
-  children: React.ReactNode;
-  params: { locale: string };
-};
+export async function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
 
 export default async function LocaleLayout({
+  
   children,
-  params,
+  params
 }: {
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await params;
-
-  if (!hasLocale(routing.locales, locale)) {
+  const {locale}=await params
+  // Validate the locale
+  if (!routing.locales.includes(locale as any)) {
     notFound();
   }
-const messages = (await import(`../../../messages/${locale}.json`)).default;
-console.log("messageeeee",messages)
+
+  // Set the locale for the request
+setRequestLocale(locale);
+
+  // Load messages
+  let messages;
+  try {
+    messages = (await import(`../../../messages/${locale}.json`)).default;
+  } catch (error) {
+    console.error('Failed to load messages', error);
+    notFound();
+  }
 
   return (
-     <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} ${tajawal.variable} antialiased`}
-      >
-   <NextIntlClientProvider locale={locale} messages={messages}>
-      <Providers>
-        <UserProvider>
-          <Header />
-          <main>{children}</main>
-        </UserProvider>
-      </Providers>
-    </NextIntlClientProvider>
-     </body>
+    <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'} suppressHydrationWarning>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${tajawal.variable} antialiased`}>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <Providers>
+            <UserProvider>
+              <Header />
+              <main>{children}</main>
+            </UserProvider>
+          </Providers>
+        </NextIntlClientProvider>
+      </body>
     </html>
   );
 }

@@ -1,5 +1,6 @@
 "use client";
-
+import fetchUserDetails from "@/app/utilities/fetchUserDetails";
+import {setUserDetails} from '../../store/userSlice'
 import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -9,40 +10,61 @@ import AxiosToastError from "@/app/utilities/AxiosToatError";
 import SummaryApi from "../../common/summaryApi";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
+import { useDispatch } from "react-redux";
 export default function Login() {
   const [data, setData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter(); // يجب إضافته في أعلى الصفحة
   const t = useTranslations("login");
   const locale = useLocale()   
+  const dispatch=useDispatch()
+  const [loading, setLoading] = useState(true);
+
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
 
     setData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await Axios({
-        ...SummaryApi.login,
-        data: data,
-      });
-      if (response.data.error) toast.error(response.data.message);
-      if (response.data.success) {
-        toast.success(response.data.message);
-        localStorage.setItem('accessToken',response.data.data.accessToken)
-        localStorage.setItem('refreshToken',response.data.data.refreshToken)
-        setData({
-          email: "",
-          password: "",
-        });
-        router.push(`/${locale}/`);
-      }
-    } catch (error) {
-      AxiosToastError(error);
+ const handleSubmit = async (e) => {
+  
+  e.preventDefault();
+  try {
+    const response = await Axios({
+      ...SummaryApi.login,
+      data: data,
+    });
+
+    if (response.data.error) {
+      toast.error(response.data.message);
+      return;
     }
-  };
+
+    if (response.data.success) {
+      // حفظ التوكنات
+      localStorage.setItem('accessToken', response.data.data.accessToken);
+      localStorage.setItem('refreshToken', response.data.data.refreshToken);
+
+      // جلب بيانات المستخدم بعد تسجيل الدخول
+     
+      const userData = await fetchUserDetails(); 
+      dispatch(setUserDetails(userData));
+
+      // تفريغ الفورم
+      setData({ email: "", password: "" });
+
+      // الانتقال للصفحة الرئيسية
+         window.location.href = `/${locale}/Home`; // استخدم مسارًا محددًا
+
+      toast.success(response.data.message);
+    }
+
+  } catch (error) {
+    AxiosToastError(error);
+  }
+};
+
 
   return (
     <section

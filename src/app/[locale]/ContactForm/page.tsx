@@ -12,13 +12,14 @@ type Attachment = { file: File; id: string };
 
 const initialFormData: FormData = {
   fullName: "",
+  company:"",
   email: "",
   phone: "",
   projectName: "",
   projectStatus: "",
   projectLocation: "",
   projectType: "",
-  qty: "",
+  qty: null,
   specifications: "",
   description: "",
 };
@@ -28,10 +29,7 @@ export default function ContactForm() {
 
   const t = useTranslations("form");
    
-  const [formData, setFormData] = useState({
-  
-
-  });
+  const [formData, setFormData] = useState<FormData>(initialFormData);
   const [attachments, setAttachments] = useState<Attachment[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -53,18 +51,22 @@ export default function ContactForm() {
   };
 
   const removeAttachment = (id: string) => {
-    setAttachments((prev) => prev.filter((att) =>{
-        att.id !== id
-       URL.revokeObjectURL(att.id);
-    }
-      
-   ));
+   setAttachments((prev) => {
+  const removed = prev.find(att => att.id === id);
+  if (removed) URL.revokeObjectURL(removed.id);
+  return prev.filter(att => att.id !== id);
+});
+
     
   };
 
-  const validate = () => {
+  const validate = () => { //داله التحقق
     if (!formData.fullName.trim()) {
       toast.error(t("errors.fullNameRequired"));
+      return false;
+    }
+     if (!formData.company.trim()) {
+      toast.error(t("errors.companyRequired"));
       return false;
     }
     if (!formData.email.trim()) {
@@ -96,9 +98,9 @@ export default function ContactForm() {
 
     setLoading(true);
     try {
-      const dataToSend = new FormData();
+      const dataToSend = new FormData();//مهم للملفات المتعدده
       for (const key in formData) {
-        dataToSend.append(key, (formData as any)[key]);
+        dataToSend.append(key,(formData as any)[key])
       }
       attachments.forEach((att) => {
         dataToSend.append("attachments", att.file);
@@ -132,9 +134,16 @@ export default function ContactForm() {
         {t("title")}
       </h2>
 
-      <form onSubmit={handleSubmit} className="space-y-6 text-right mt-10">
-        <fieldset className="border p-4 rounded-md">
-          <legend className="font-semibold text-lg mb-4">
+      <form onSubmit={handleSubmit} className="space-y-6  mt-10">
+        <fieldset
+          className="border border-gray-300 p-4 rounded-md bg-gray-50"
+          aria-labelledby="personal-data-legend"
+        >
+          <legend
+            id="personal-data-legend"
+            className="px-3 font-semibold text-lg text-gray-800 bg-white rounded-md shadow-sm"
+          >
+            
             {t("personalData")}
           </legend>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -144,7 +153,7 @@ export default function ContactForm() {
               placeholder={t("fullName")}
               value={formData.fullName}
               onChange={handleChange}
-              className="border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-[#6b252f]"
+              className="border border-gray-300 rounded p-3 bg-white focus:outline-none "
               required
             />
             <input
@@ -153,7 +162,16 @@ export default function ContactForm() {
               placeholder={t("email")}
               value={formData.email}
               onChange={handleChange}
-              className="border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-[#6b252f]"
+              className="border border-gray-300 rounded p-3 bg-white focus:outline-none"
+              required
+            />
+             <input
+              name="company"
+              type="text"
+              placeholder={t("company")}
+              value={formData.company}
+              onChange={handleChange}
+              className="border border-gray-300 rounded p-3 bg-white focus:outline-none "
               required
             />
             <input
@@ -163,13 +181,13 @@ export default function ContactForm() {
               placeholder={t("phone")}
               value={formData.phone}
               onChange={handleChange}
-              className="border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-[#6b252f]"
+              className="border border-gray-300 rounded p-3 bg-white focus:outline-none"
             />
           </div>
         </fieldset>
 
-        <fieldset className="border p-4 rounded-md">
-          <legend className="font-semibold text-lg mb-4">
+        <fieldset className="border border-gray-300 p-4 rounded-md bg-gray-50">
+          <legend className="px-3 font-semibold text-lg text-gray-800 bg-white rounded-md shadow-sm ">
             {t("projectData")}
           </legend>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -179,17 +197,17 @@ export default function ContactForm() {
               placeholder={t("projectName")}
               value={formData.projectName}
               onChange={handleChange}
-              className="border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-[#6b252f]"
+              className="border border-gray-300 p-4 rounded-md bg-white"
               required
             />
             <select
               name="projectStatus"
               value={formData.projectStatus}
               onChange={handleChange}
-              className="border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-[#6b252f]"
+              className="border border-gray-300 bg-white rounded p-3 focus:outline-none "
               required
             >
-              <option value="">اختر حالة المشروع</option>
+              <option  value="">اختر حالة المشروع</option>
               <option value="مخطط">مخطط</option>
               <option value="قيد التنفيذ">قيد التنفيذ</option>
               <option value="مكتمل">مكتمل</option>
@@ -202,7 +220,7 @@ export default function ContactForm() {
               placeholder={t("projectLocation")}
               value={formData.projectLocation}
               onChange={handleChange}
-              className="border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-[#6b252f]"
+              className="border border-gray-300 rounded p-3 focus:outline-none bg-white"
               required
             />
             <input
@@ -211,7 +229,7 @@ export default function ContactForm() {
               placeholder={t("projectType")}
               value={formData.projectType}
               onChange={handleChange}
-              className="border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-[#6b252f]"
+              className="border border-gray-300 rounded p-3 focus:outline-none bg-white"
             />
             <input
               name="qty"
@@ -219,7 +237,7 @@ export default function ContactForm() {
               placeholder={t("qty")}
               value={formData.qty}
               onChange={handleChange}
-              className="border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-[#6b252f]"
+              className="border border-gray-300 rounded p-3 focus:outline-none bg-white"
             />
           </div>
           <textarea
@@ -228,7 +246,7 @@ export default function ContactForm() {
             value={formData.specifications}
             onChange={handleChange}
             rows={3}
-            className="w-full mt-4 border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-[#6b252f]"
+            className="w-full mt-4 border border-gray-300 rounded p-3 focus:outline-none bg-white"
           />
           <textarea
             name="description"
@@ -236,12 +254,12 @@ export default function ContactForm() {
             value={formData.description}
             onChange={handleChange}
             rows={3}
-            className="w-full mt-4 border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-[#6b252f]"
+            className="w-full mt-4 border border-gray-300 rounded p-3 focus:outline-none bg-white"
           />
         </fieldset>
 
-        <fieldset className="border p-4 rounded-md">
-          <legend className="font-semibold text-lg mb-4">
+        <fieldset className="border border-gray-300 p-4 rounded-md bg-gray-50">
+          <legend className="px-3 font-semibold text-lg text-gray-800 bg-white rounded-md shadow-sm ">
             {t("attachments")}
           </legend>
           <input
@@ -251,12 +269,14 @@ export default function ContactForm() {
             onChange={handleFilesChange}
             className="block w-full text-gray-600"
           />
-          {attachments.length > 0 && (
+          {
+          attachments.length > 0 && (
             <ul className="mt-2 max-h-40 overflow-auto">
-              {attachments.map((att) => (
+              {
+              attachments.map((att) => (
                 <li
                   key={att.id}
-                  className="flex justify-between items-center bg-gray-100 rounded px-3 py-1 my-1"
+                  className="flex justify-between items-center bg-white rounded px-3 py-1 my-1"
                 >
                   <span className="truncate max-w-[80%]" title={att.file.name}>
                     {att.file.name} ({(att.file.size / 1024).toFixed(2)} KB)

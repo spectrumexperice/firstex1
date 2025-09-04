@@ -5,13 +5,14 @@
     "about": "من نحن",
     "products": "المنتجات",
     "services": "الخدمات",
-    "contact": "تواصل معنا"
-  },
-  "products": {
-    "speakers": "مكبرات الصوت",
-    "microphones": "الميكروفونات",
-    "distributors": "الموزعون"
+    "contact": "تواصل معنا",
+      "subLogo":"للحلول الصوتية",
+      "welcome":"هلا فيك",
+       "AllProducts":"عرض الكل"
   }
+    
+  
+  
   },
   "search":{
     "box":"ابحث هنا ..."
@@ -67,8 +68,17 @@
   "OurWork":{
     "title":"أعمالنا"
   },
-  "OurPartner":{
-    "title":"شركائنا"
+  "OurPartner": {
+    "title": "شركاؤنا",
+    "loadingPartners": "جاري تحميل الشركاء...",
+    "thankYouMessageTitle": "رسالة شكر من {companyName}",
+    "noThankMessage": "لا توجد رسالة شكر مضافة.",
+    "closeButtonLabel": "إغلاق رسالة الشكر",
+    "infoButtonLabel": "عرض رسالة الشكر لشركة {companyName}",
+    "nextSlider": "السلايدر التالي",
+    "prevSlider": "السلايدر السابق",
+    "look":"شاهد رسالة الشكر"
+   
   },
   "sendMessage": {
     "title": "راسلنا الآن",
@@ -101,10 +111,12 @@
       "email1": "m.spectrum10@",
       "email2": "a.spectrum10@"
     },
+    
     "newsletterTitle": "النشرة البريدية",
     "newsletterDescription": "اشترك لتصلك آخر الأخبار مباشرة على بريدك.",
-    "subscribeButton": "الاشتراك",
-    "copyright": "جميع الحقوق محفوظة لشركة سبكتروم للحلول الصوتية مبتكرة."
+    "subscribeButton": "اشترك الآن",
+    "newsletterPlaceholder": "أدخل بريدك الإلكتروني",
+    "copyright": "© 2025 جميع الحقوق محفوظة - سبكتروم للحلول الصوتية"
   },
   "about": {
     "whoWeAre": {
@@ -184,7 +196,8 @@
     "forgotPassword": "هل نسيت كلمة المرور؟",
     "loginButton": "دخول",
     "noAccount": "لا تملك حسابًا؟",
-    "createAccount": "إنشاء حساب"
+    "createAccount": "إنشاء حساب",
+    "loginSuccess":"تم تسجيل الدخول بنجاح"
   },
   "register": {
     "title": "إنشاء حساب جديد",
@@ -228,6 +241,7 @@
     "title": " ابدأ مشروعك ",
     "personalData": "المعلومات الشخصية",
     "fullName": "الاسم الكامل",
+    "company":" الشركة",
     "email": "البريد الإلكتروني",
     "phone": "رقم الهاتف",
     "projectData": "بيانات المشروع",
@@ -244,6 +258,7 @@
     "submit": "إرسال",
     "errors": {
       "fullNameRequired": "الاسم الكامل مطلوب",
+      "companyRequired":"اسم الشركة مطلوب",
       "emailRequired": "البريد الإلكتروني مطلوب",
       "emailInvalid": "صيغة البريد الإلكتروني غير صحيحة",
       "projectNameRequired": "اسم المشروع مطلوب",
@@ -256,5 +271,29 @@
       "unexpectedError": "حدث خطأ غير متوقع"
     }
  
-}
+},
+"partnerAdmin":{
+  
+},
+
+  "ProductsPage":{
+    "title":"كل المنتجات",
+    "loading":"جاري التحميل",
+    "searchPlaceholder":"ابحث هنا"
+   
+  },
+   "ProductDetail": {
+    "loading": "جاري تحميل المنتج...",
+    "notFound": "المنتج غير موجود.",
+    "allProducts": "جميع المنتجات",
+    "noImage": "لا توجد صورة متاحة",
+    "views": "المشاهدات",
+    "popularity": "الشعبية",
+    "category": "الفئة",
+    "description": "الوصف",
+    "specs": "المواصفات",
+    "attachments": "المرفقات",
+    "relatedProducts": "منتجات ذات صلة"
+  }
+
 }

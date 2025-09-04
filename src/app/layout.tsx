@@ -1,7 +1,9 @@
 import { ReactNode } from 'react';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { Tajawal } from 'next/font/google';
+import Providers from '@/app/providers'; 
 import '@/app/globals.css';
+import Header from './[locale]/component/Header';
 const geistSans = Geist({
   variable: '--font-geist-sans',
   subsets: ['latin'],
@@ -23,7 +25,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${tajawal.variable} antialiased`}
       >
-        {children}
+        <Providers>
+        
+           {children}
+        </Providers>
+      
       </body>
     </html>
   </>;

@@ -1,152 +1,147 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useKeenSlider, KeenSliderPlugin } from "keen-slider/react";
+import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/app/store/store";
+import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons/io";
+import { useLocale } from "next-intl";
 import { useTranslations } from "next-intl";
-
-import work1 from "@/app/assits/w1-1.png";
-import work2 from "@/app/assits/w2.png";
-import work3 from "@/app/assits/w3.jpg";
-import work4 from "@/app/assits/w4.jpg";
-import work5 from "@/app/assits/w5.jpg";
-import work6 from "@/app/assits/w6.jpg";
-import work7 from "@/app/assits/w7.jpg";
-import work8 from "@/app/assits/w8.jpg";
-import work9 from "@/app/assits/w9.png";
-import work10 from "@/app/assits/w10.png";
-import { IoIosArrowDroprightCircle } from "react-icons/io";
-import { IoIosArrowDropleftCircle } from "react-icons/io";
-const works = [
-  work1,
-  work2,
-  work3,
-  work4,
-  work5,
-  work6,
-  work7,
-  work8,
-  work9,
-  work10,
-];
-
+import { setWorksDetails } from "@/app/store/workSlice";
+import fetchworksDetails from "@/app/utilities/fetchWorksDetails";
 const Ourwork = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const { works, loading } = useSelector((state: RootState) => state.works);
+  const locale = useLocale();
+  const isRTL = locale !== "en";
   const t = useTranslations("OurWork");
-
-  const DotPlugin: KeenSliderPlugin = (slider) => {
-    const update = () => {
-      setCurrentSlide(slider.track.details.rel);
-    };
-
-    slider.on("created", update);
-    slider.on("slideChanged", update);
-  };
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const [refCallback, slider] = useKeenSlider<HTMLDivElement>(
-    {
-      loop: true,
-      mode: "free-snap",
-      renderMode: "performance",
-      slides: {
-        perView: 3,
-        spacing: 20,
+  const dispatch=useDispatch()
+  const [sliderRef, slider] = useKeenSlider({
+    loop: true,
+    slides: { perView: 1, spacing: 16 }, // مبدئياً شريحة واحدة ونصف
+    breakpoints: {
+      "(min-width: 640px)": {
+        slides: { perView: 2, spacing: 20 },
       },
-
-      breakpoints: {
-        "(max-width: 768px)": {
-          slides: { perView: 1, spacing: 10 },
-        },
-        "(min-width: 769px) and (max-width: 1024px)": {
-          slides: { perView: 2, spacing: 15 },
-        },
+      "(min-width: 1024px)": {
+        slides: { perView: 3, spacing: 24 },
       },
-      created: (instance) => {
-        intervalRef.current = setInterval(() => {
-          instance.next();
-        }, 2500);
+      "(min-width: 1440px)": {
+        slides: { perView: 4, spacing: 24 },
       },
     },
-    [DotPlugin]
-  );
+    slideChanged(s) {
+      setCurrentSlide(s.track.details.rel);
+    },
+  },
+    [
+    // Autoplay plugin
+    (slider) => {
+      let timeout;
+      let mouseOver = false;
+      function clearNextTimeout() {
+        clearTimeout(timeout);
+      }
+      function nextTimeout() {
+        clearTimeout(timeout);
+        if (mouseOver) return;
+        timeout = setTimeout(() => slider.next(), 2000); // كل ثانيتين
+      }
+      slider.on("created", () => {
+        slider.container.addEventListener("mouseover", () => {
+          mouseOver = true;
+          clearNextTimeout();
+        });
+        slider.container.addEventListener("mouseout", () => {
+          mouseOver = false;
+          nextTimeout();
+        });
+        nextTimeout();
+      });
+      slider.on("dragStarted", clearNextTimeout);
+      slider.on("animationEnded", nextTimeout);
+      slider.on("updated", nextTimeout);
+    },
+  ]
+);
+  useEffect(()=>{
+     async function fetchWorks(){
+      try{
+        dispatch(setWorksDetails({loading: true}))
+        const response =await fetchworksDetails()
+        dispatch(setWorksDetails({works:response.data,loading:false}))
 
-  // تنظيف الـ interval عند إزالة الكومبوننت
-  useEffect(() => {
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, []);
-
+      }catch (error) {
+        dispatch(setWorksDetails({ error: 'فشل تحميل العمل', loading: false }));
+      }
+    }
+    fetchWorks()
+  },[])
   return (
-    <section
-      className="py-16 px-4 lg:px-20 sm:px-10 bg-gray-50"
-      aria-labelledby="our-work-title"
-      dir="rtl"
-    >
+    <section className="py-16 px-4 bg-gray-50" dir={isRTL ? "rtl" : "ltr"}>
       <motion.h2
-        id="our-work-title"
-        initial={{ opacity: 0, y: 50 }}
+        className="text-4xl font-[Cairo] font-extrabold mb-8 text-[#6b252f] text-center"
+        initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="text-4xl font-[Cairo] font-extrabold mb-12 text-[#6b252f] text-center"
       >
-        {t("title")}
+     {t("title")}
       </motion.h2>
 
-      <div className="relative">
-        <motion.div
-          ref={refCallback}
-          className="keen-slider"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          {works.map((image, index) => (
-            <div
-              key={index}
-              className="keen-slider__slide rounded-2xl overflow-hidden shadow-md"
-            >
-              <div className="w-full h-72 overflow-hidden group">
-                <Image
-                  src={image}
-                  alt={`صورة عمل رقم ${index + 1}`}
-                  className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-100"
-                />
+      {
+      loading ? (
+        <div className="text-center text-gray-500">جاري التحميل...</div>
+      ) : works.length === 0 ? (
+        <div className="text-center text-gray-500">لا توجد أعمال متاحة</div>
+      ) : (
+        <div className="relative">
+          <div ref={sliderRef} className="keen-slider">
+            {works.map((work, index) => (
+              <div key={work._id} className="keen-slider__slide">
+                <div className="relative w-full aspect-[4/3] overflow-hidden rounded-xl shadow-md group">
+                  <Image
+                    src={work.imageUrl}
+                    alt={`عمل ${index + 1}`}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="100vw"
+                  />
+                </div>
               </div>
-            </div>
-          ))}
-          {/* أسهم التنقل على الجوانب داخل relative container */}
+            ))}
+          </div>
+
+          {/* Arrows */}
           <button
-            onClick={() => slider?.current?.next()}
-            className="absolute top-1/2 left-0 -translate-y-1/2 z-10 bg-[#6b252f]  hover:bg-bg-[#9f8e8e] text-white p-3 rounded-full ml-2"
+            onClick={() => (isRTL ? slider?.current?.next() : slider?.current?.prev())}
+            className="absolute top-1/2 right-2 transform -translate-y-1/2 z-10 bg-[#6b252f] text-white p-2 rounded-full"
           >
-            <IoIosArrowDropleftCircle />
+            <IoIosArrowDroprightCircle size={24} />
           </button>
           <button
-            onClick={() => slider?.current?.prev()}
-            className="absolute top-1/2 right-0 -translate-y-1/2 z-10 bg-[#6b252f] hover:bg-bg-[#9f8e8e] text-white p-3 rounded-full mr-2"
+            onClick={() => (isRTL ? slider?.current?.prev() : slider?.current?.next())}
+            className="  absolute top-1/2 left-2 transform -translate-y-1/2 z-10 bg-[#6b252f] text-white p-2 rounded-full"
           >
-            <IoIosArrowDroprightCircle />
+            <IoIosArrowDropleftCircle size={24} />
           </button>
-        </motion.div>
-      </div>
 
-      {/**------------------------------ */}
-
-      <div className="flex justify-center mt-6 space-x-2">
-        {works.map((_, idx) => (
-          <button
-            key={idx}
-            onClick={() => slider?.current?.moveToIdx(idx)}
-            className={`w-3 h-3 rounded-full ${
-              currentSlide === idx ? "bg-[#6b252f]" : "bg-gray-300"
-            }`}
-          ></button>
-        ))}
-      </div>
+          {/* Dots */}
+          <div className="flex justify-center mt-7 gap-2">
+            {works.map((_, idx) => (
+              <div
+                key={idx}
+                className={`w-3 h-3 rounded-full cursor-pointer ${
+                  currentSlide === idx ? "bg-[#6b252f]" : "bg-gray-300"
+                }`}
+                onClick={() => slider?.current?.moveToIdx(idx)}
+              ></div>
+            ))}
+          </div>
+        </div>
+      )}
     </section>
   );
 };

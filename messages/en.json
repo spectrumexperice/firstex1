@@ -5,13 +5,13 @@
     "about": "About",
     "products": "Products",
     "services": "Services",
-    "contact": "Contact"
-  },
-  "products": {
-    "speakers": "Speakers",
-    "microphones": "Microphones",
-    "distributors": "Distributors"
+    "contact": "Contact",
+    "subLogo":"audioSolutions",
+    "welcome":"wellcome",
+       "AllProducts":" view all"
   }
+
+
   },
   "search":{
     "box":"search here ..."
@@ -67,8 +67,16 @@
   "OurWork":{
     "title":"Our Works"
   },
-  "OurPartner":{
-    "title":"Our Partner"
+  "OurPartner": {
+    "title": "Our Partners",
+    "loadingPartners": "Loading partners...",
+    "thankYouMessageTitle": "Thank You Message from {companyName}",
+    "noThankMessage": "No thank you message added.",
+    "closeButtonLabel": "Close thank you message",
+    "infoButtonLabel": "View thank you message for {companyName}",
+    "nextSlider": "Next slider",
+    "prevSlider": "Previous slider",
+    "look":"See the thank you note  "
   },
   "sendMessage": {
     "title": "Send Us a Message",
@@ -104,7 +112,8 @@
     "newsletterTitle": "Newsletter",
     "newsletterDescription": "Subscribe to get the latest news directly to your inbox.",
     "subscribeButton": "Subscribe",
-    "copyright": "© All rights reserved for Spectrum Innovative Audio Solutions."
+    "newsletterPlaceholder": "Enter your email address",
+    "copyright": "© All rights reserved to Spectrum Audio Solutions"
   },
   "about": {
     "whoWeAre": {
@@ -184,7 +193,8 @@
     "forgotPassword": "Forgot your password?",
     "loginButton": "Login",
     "noAccount": "Don't have an account?",
-    "createAccount": "Create an account"
+    "createAccount": "Create an account",
+    "loginSuccess":"You have been logged in successfully"
   },
    "register": {
     "title": "Create New Account",
@@ -228,6 +238,7 @@
     "title": "Start Your Project",
     "personalData": "Personal Information",
     "fullName": "Full Name",
+    "company":"Company ",
     "email": "Email",
     "phone": "Phone Number",
     "projectData": "Project Information",
@@ -244,6 +255,7 @@
     "submit": "Submit",
     "errors": {
       "fullNameRequired": "Full name is required",
+      "companyRequired":"Company name is required",
       "emailRequired": "Email is required",
       "emailInvalid": "Invalid email format",
       "projectNameRequired": "Project name is required",
@@ -255,5 +267,27 @@
       "error": "An error occurred while sending the message",
       "unexpectedError": "An unexpected error occurred"
     }
+  },
+  "partnerAdmin":{
+  
+},
+  "ProductsPage":{
+    "title":"all products",
+    "loading":"Loading",
+     "searchPlaceholder":"search here"
+     
+  },
+  "ProductDetail": {
+    "loading": "Loading product...",
+    "notFound": "Product not found.",
+    "allProducts": "All Products",
+    "noImage": "No Image Available",
+    "views": "Views",
+    "popularity": "Popularity",
+    "category": "Category",
+    "description": "Description",
+    "specs": "Specifications",
+    "attachments": "Attachments",
+    "relatedProducts": "Related Products"
   }
 }

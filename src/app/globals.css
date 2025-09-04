@@ -74,11 +74,9 @@
   --sidebar-primary: oklch(0.205 0 0);
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-accent-foreground: oklclh(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-   
-   
 }
 
 .dark {
@@ -115,13 +113,193 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
-
+/* إصلاح الطبقة (layer) */
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    border-color: var(--border);
+    outline-color: var(--ring);
   }
   body {
-    @apply bg-background text-foreground font-[var(--font-arabic)];
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-arabic);
   }
 }
 
+/* تنسيقات محتوى TipTap */
+.prose {
+  max-width: none;
+  line-height: 1.7;
+}
+
+.prose.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+.prose.rtl h1, 
+.prose.rtl h2, 
+.prose.rtl h3, 
+.prose.rtl h4, 
+.prose.rtl h5, 
+.prose.rtl h6 {
+  text-align: right;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  font-weight: bold;
+}
+
+.prose.rtl h1 {
+  font-size: 2.5em;
+}
+
+.prose.rtl h2 {
+  font-size: 2em;
+}
+
+.prose.rtl h3 {
+  font-size: 1.5em;
+}
+
+.prose.rtl p {
+  margin-bottom: 1em;
+}
+
+.prose.rtl ul, 
+.prose.rtl ol {
+  padding-right: 1.5em;
+  padding-left: 0;
+  margin-bottom: 1em;
+}
+
+.prose.rtl ul {
+  list-style-type: disc;
+}
+
+.prose.rtl ol {
+  list-style-type: decimal;
+}
+
+.prose.rtl li {
+  margin-bottom: 0.5em;
+}
+
+.prose.rtl table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1em;
+}
+
+.prose.rtl table th,
+.prose.rtl table td {
+  padding: 0.5em;
+  border: 1px solid var(--border);
+}
+
+.prose.rtl table th {
+  background-color: var(--muted);
+  font-weight: bold;
+}
+
+.prose.rtl img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  margin: 1em 0;
+}
+
+.prose.rtl blockquote {
+  border-right: 4px solid var(--border);
+  padding-right: 1em;
+  margin: 1.5em 0;
+  font-style: italic;
+}
+
+.prose.rtl a {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+.prose.rtl strong {
+  font-weight: bold;
+}
+
+.prose.rtl em {
+  font-style: italic;
+}
+/* تنسيقات محتوى TipTap للغة الإنجليزية */
+.prose.ltr {
+  direction: ltr;
+  text-align: left;
+}
+
+.prose.ltr h1, 
+.prose.ltr h2, 
+.prose.ltr h3, 
+.prose.ltr h4, 
+.prose.ltr h5, 
+.prose.ltr h6 {
+  text-align: left;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  font-weight: bold;
+}
+
+.prose.ltr h1 { font-size: 2.5em; }
+.prose.ltr h2 { font-size: 2em; }
+.prose.ltr h3 { font-size: 1.5em; }
+
+.prose.ltr p {
+  margin-bottom: 1em;
+}
+
+.prose.ltr ul, 
+.prose.ltr ol {
+  padding-left: 1.5em;
+  padding-right: 0;
+  margin-bottom: 1em;
+}
+
+.prose.ltr ul { list-style-type: disc; }
+.prose.ltr ol { list-style-type: decimal; }
+
+.prose.ltr li { margin-bottom: 0.5em; }
+
+.prose.ltr table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1em;
+}
+
+.prose.ltr table th,
+.prose.ltr table td {
+  padding: 0.5em;
+  border: 1px solid var(--border);
+}
+
+.prose.ltr table th {
+  background-color: var(--muted);
+  font-weight: bold;
+}
+
+.prose.ltr img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  margin: 1em 0;
+}
+
+.prose.ltr blockquote {
+  border-left: 4px solid var(--border);
+  padding-left: 1em;
+  margin: 1.5em 0;
+  font-style: italic;
+}
+
+.prose.ltr a {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+.prose.ltr strong { font-weight: bold; }
+.prose.ltr em { font-style: italic; }
