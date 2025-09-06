@@ -10,8 +10,23 @@ import "keen-slider/keen-slider.min.css";
 import { useEffect, useState } from "react";
 
 const PartnersSection = () => {
-  const { partners, loading } = useSelector((state: RootState) => state.partner);
+    interface Partner {
+  _id: string;               // MongoDB ObjectId كـ string
+  companyName: string;
+  logoUrl: string;
+  publicId: string;
+  thankImageUrl?: string | null;
+  thankImagePublicId?: string | null;
+  displayOrder?: number;
+  active?: boolean;
+}
+  const { partners, loading } = useSelector((state: RootState) => state.partner) as {
+  partners: Partner[];
+  loading: boolean;
+};
+
   const t = useTranslations("OurPartner");
+
 
   const [sliderRef, slider] = useKeenSlider<HTMLDivElement>({
     loop: true,
@@ -28,12 +43,12 @@ const PartnersSection = () => {
   });
 
   const [modalOpen, setModalOpen] = useState(false);
-  const [activePartner, setActivePartner] = useState<null | typeof partners[0]>(null);
+  const [activePartner, setActivePartner] = useState<Partner | null>(null);
 
-  const openModal = (partner: typeof partners[0]) => {
-    setActivePartner(partner);
-    setModalOpen(true);
-  };
+ const openModal = (partner: Partner) => {
+  setActivePartner(partner);
+  setModalOpen(true);
+};
 
   const closeModal = () => {
     setModalOpen(false);
