@@ -16,15 +16,12 @@ const PartnersSection = () => {
   logoUrl: string;
   publicId: string;
   thankImageUrl?: string | null;
+  thankMessage?: string | null; // أضف هذا
   thankImagePublicId?: string | null;
   displayOrder?: number;
   active?: boolean;
 }
-  const { partners, loading } = useSelector((state: RootState) => state.partner) as {
-  partners: Partner[];
-  loading: boolean;
-};
-
+  const  partners:Partner[]= useSelector((state: RootState) => state.partner.partners) 
   const t = useTranslations("OurPartner");
 
 
@@ -189,14 +186,11 @@ const PartnersSection = () => {
                       className="object-contain w-full mb-4"
                     />
                   )}
-                  <p className="text-gray-700 whitespace-pre-line">
-                    {
-                      activePartner === null &&(
-                        activePartner.thankMessage || t("noThankMessage")
-                      )
-                   
-                    }
-                  </p>
+                 <p className="text-gray-700 whitespace-pre-line">
+  {activePartner?.thankMessage || t("noThankMessage")}
+</p>
+
+                 
                 </motion.div>
               </motion.div>
             )}
