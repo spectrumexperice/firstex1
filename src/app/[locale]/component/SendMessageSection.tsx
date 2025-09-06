@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import Axios from "../../utilities/axios";
-import AxiosToastError from "../../utilities/AxiosToatError.js";
-import SummaryApi from "../../common/summaryApi.js"
+import Axios from "@/app/utilities/axios.js";
+import AxiosToastError from "@/app/utilities/AxiosToatError";
+import SummaryApi from "@/app/common/summaryApi";
 import toast from "react-hot-toast";
 
 export default function SendMessageSection() {
@@ -24,7 +24,7 @@ export default function SendMessageSection() {
     });
   };
 
-  const [Loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
@@ -52,7 +52,7 @@ export default function SendMessageSection() {
   };
 
   return (
-    <section className="bg-white py-12 px-4 lg:px-8 rtl">
+    <section className="bg-white py-12 px-4 lg:px-8 ">
       <div className="max-w-4xl mx-auto text-center ">
         <h2 className="text-3xl font-bold mb-4 text-[#6b252f] font-[cairo]">
           {t("title")}
@@ -100,10 +100,10 @@ export default function SendMessageSection() {
           />
           <button
             type="submit"
-            disabled={Loading}
+            disabled={loading}
             className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300"
           >
-            {Loading ? t("submitButton.sending") : t("submitButton.send")}
+            {loading ? t("submitButton.sending") : t("submitButton.send")}
           </button>
         </form>
       </div>

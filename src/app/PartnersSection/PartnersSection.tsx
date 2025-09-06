@@ -8,8 +8,6 @@ import type { RootState } from "../store/store";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import { useEffect, useState } from "react";
-
-const PartnersSection = () => {
     interface Partner {
   _id: string;               // MongoDB ObjectId كـ string
   companyName: string;
@@ -21,10 +19,12 @@ const PartnersSection = () => {
   displayOrder?: number;
   active?: boolean;
 }
-  const  partners:Partner[]= useSelector((state: RootState) => state.partner.partners) 
+const PartnersSection = () => {
+
+  const  partners:Partner[]= useSelector((state: RootState) => state.partner.partners || []) 
   const t = useTranslations("OurPartner");
-
-
+  const loading = useSelector((state: RootState) => state.partner.loading);
+ 
   const [sliderRef, slider] = useKeenSlider<HTMLDivElement>({
     loop: true,
     slides: {

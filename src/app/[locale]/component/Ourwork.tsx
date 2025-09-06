@@ -20,6 +20,7 @@ const Ourwork = () => {
   const dispatch=useDispatch()
   const [sliderRef, slider] = useKeenSlider({
     loop: true,
+    rtl: isRTL,
     slides: { perView: 1, spacing: 16 }, // مبدئياً شريحة واحدة ونصف
     breakpoints: {
       "(min-width: 640px)": {
@@ -66,19 +67,19 @@ const Ourwork = () => {
     },
   ]
 );
-  useEffect(()=>{
-     async function fetchWorks(){
-      try{
-        dispatch(setWorksDetails({loading: true}))
-        const response =await fetchworksDetails()
-        dispatch(setWorksDetails({works:response.data,loading:false}))
-
-      }catch (error) {
-        dispatch(setWorksDetails({ error: 'فشل تحميل العمل', loading: false }));
-      }
+ useEffect(() => {
+  async function fetchWorks() {
+    try {
+      dispatch(setWorksDetails({ loading: true }));
+      const response = await fetchworksDetails();
+      dispatch(setWorksDetails({ works: response.data, loading: false }));
+    } catch (error) {
+      dispatch(setWorksDetails({ error: 'فشل تحميل العمل', loading: false }));
     }
-    fetchWorks()
-  },)
+  }
+  fetchWorks();
+}, [dispatch]); // ⚠️ أضف dispatch كمصفوفة تبعيات
+
   return (
     <section className="py-16 px-4 bg-gray-50" dir={isRTL ? "rtl" : "ltr"}>
       <motion.h2
@@ -116,13 +117,13 @@ const Ourwork = () => {
 
           {/* Arrows */}
           <button
-            onClick={() => (isRTL ? slider?.current?.next() : slider?.current?.prev())}
+           onClick={() => slider?.current?.prev()}
             className="absolute top-1/2 right-2 transform -translate-y-1/2 z-10 bg-[#6b252f] text-white p-2 rounded-full"
           >
             <IoIosArrowDroprightCircle size={24} />
           </button>
           <button
-            onClick={() => (isRTL ? slider?.current?.prev() : slider?.current?.next())}
+             onClick={() => slider?.current?.next()}
             className="  absolute top-1/2 left-2 transform -translate-y-1/2 z-10 bg-[#6b252f] text-white p-2 rounded-full"
           >
             <IoIosArrowDropleftCircle size={24} />

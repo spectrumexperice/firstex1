@@ -34,6 +34,7 @@ interface Product {
   active?: boolean;
 }
 
+
 export default function ProductDetailPage() {
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);

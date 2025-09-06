@@ -21,6 +21,7 @@ interface Product {
   category: Category;
   subCategory?: Category;
   images?: { url: string; isMain?: boolean }[];
+  shortDescription?: { ar?: string; en?: string };
 }
 
 export default function CategoryPage() {
@@ -29,20 +30,23 @@ export default function CategoryPage() {
   const rawCategory = Array.isArray(params.category) ? params.category[0] : params.category || "";
 const { slug } = useParams();
 
- console.log("All params:", params);
-console.log("categoryslug value:", slug);
+/*  console.log("All params:", params);
+console.log("categoryslug value:", slug); */
   const [categoryMap, setCategoryMap] = useState<{ [key: string]: Category }>({});
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
-
+  const categoryName = categoryMap && slug && categoryMap[slug]?.name?.ar
+  ? categoryMap[slug].name.ar
+  : slug || "الفئات";
+ 
   // جلب الفئات وبناء الخريطة
   useEffect(() => {
     let mounted = true;
     const fetchAllCategories = async () => {
       try {
         const response = await Axios({ ...SummaryApi.Product.getcategory });
-        console.log("Categories response:", response);
+      /*   console.log("Categories response:", response); */
         const categories: Category[] = response?.data?.data || response?.data || [];
         const map: { [key: string]: Category } = {};
         categories.forEach((cat) => {
@@ -77,22 +81,22 @@ console.log("categoryslug value:", slug);
       // لو عندنا record، استخدم _id لطلب أفضل، وإلا أرسل slug كما هو (backend يدعم _id أو slug)
       const categoryParam = catRecord ? catRecord._id : slug;
 
-      console.log("Requesting products for category param:", categoryParam, "catRecord:", catRecord);
-
+      
+     
       setLoading(true);
       setStatusMessage(null);
       try {
-        console.log("Before Axios call");
+        /* console.log("Before Axios call"); */
         const response = await Axios({
           ...SummaryApi.Product.getAll,
           params: categoryParam ? { category: categoryParam } : {},
         });
-          console.log("Before Axios call");
+          /* console.log("Before Axios call"); */
 
-        console.log("Products full response:", response);
+      
         // قد يعود المنتج ضمن response.data.data أو response.data
         const productsData: Product[] = response?.data?.data || response?.data || [];
-        console.log("Products data length:", productsData.length);
+     
 
         if (!mounted) return;
         setProducts(productsData);
@@ -119,7 +123,8 @@ console.log("categoryslug value:", slug);
   return (
    <div className="p-4 md:p-6 lg:p-8 mt-25 md:mt-20" dir="rtl">
     <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-center md:text-right text-gray-800">
-      {categoryMap?.[slug]?.name?.ar || slug || "الفئات"}
+     {categoryName}
+
     </h1>
 
     {loading ? (
@@ -145,7 +150,8 @@ console.log("categoryslug value:", slug);
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
             {products.map((prod) => {
-              const mainImage = prod.images?.find((i) => i.isMain)?.url || prod.images?.[0]?.url || "/placeholder.png";
+             const mainImage = prod.images?.find((i) => i.isMain)?.url || prod.images?.[0]?.url || "/placeholder.png";
+
               
               return (
                 <Link
@@ -159,9 +165,7 @@ console.log("categoryslug value:", slug);
                       alt={prod.name?.ar || prod.name?.en || "product"}
                       className="w-full h-40 md:h-48 object-cover rounded-t-lg group-hover:scale-110 transition-transform duration-300"
                       loading="lazy"
-                      onError={(e) => {
-                        e.target.src = "/placeholder.png";
-                      }}
+                       onError={(e) => { e.currentTarget.src = "/placeholder.png"; }}
                     />
                   </div>
                   <div className="p-3">

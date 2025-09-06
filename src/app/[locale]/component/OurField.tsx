@@ -1,11 +1,11 @@
 "use client";
 import { motion } from "framer-motion";
 import { FaTools, FaWaveSquare, FaBuilding, FaBullseye } from "react-icons/fa";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 const Ourfields = () => {
   const t = useTranslations("Ourfields");
-
+  const locale = useLocale();
   const services = [
     {
       icon: <FaWaveSquare className="text-[#28a420] w-10 h-10" />,
@@ -32,7 +32,7 @@ const Ourfields = () => {
   return (
     <section
       className="bg-[#b0b0b0] py-20 px-6 font-arabic"
-      dir={t.locale === "ar" ? "rtl" : "ltr"}
+      dir={locale === "ar" ? "rtl" : "ltr"}
       aria-labelledby="fields-title"
     >
       <div className="max-w-6xl mx-auto">

@@ -49,7 +49,7 @@ export default function PartnerAdmin() {
     fetchpartnerdetails();
   }, [dispatch]);
 
-  const handleDeleteClick = (id: String) => {
+  const handleDeleteClick = (id: string) => {
     setSelectedPartnerId(id);
     setShowConfirm(true);
   };
@@ -57,18 +57,18 @@ export default function PartnerAdmin() {
   const ConfirmDeleteHandler = async () => {
     try {
       if (!selectedPartnerId) return;
-      const response = await Axios({
+      const res = await Axios({
         ...SummaryApi.Partner.deletePartner(selectedPartnerId),
       });
-      if (response.data.success) {
+      if (res.data.success) {
         toast.success("تم حذف الشريك بنجاح");
         const response = await fetchpartnerDetails();
         dispatch(setpartnerDetails({ partners: response.data, loading: false }));
       } else {
-        toast.error(response.data.message || "فشل حذف الشريك");
+        toast.error(res.data.message || "فشل حذف الشريك");
       }
     } catch (error: any) {
-      toast.error(error?.response?.data?.message || "حدث خطأ أثناء الحذف");
+      toast.error(error?.res?.data?.message || "حدث خطأ أثناء الحذف");
     } finally {
       setShowConfirm(false);
       setSelectedPartnerId(null);

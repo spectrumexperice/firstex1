@@ -124,6 +124,33 @@ const handleNewImageFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
   // يمكنك عمل state previews: setNewImagePreviews(files.map(f => URL.createObjectURL(f)))
 }; */
   // ================== جلب المنتجات ==================
+  
+ useEffect(() => {
+  const fetchCategories = async () => {
+    try {
+      const { data } = await Axios({
+        ...SummaryApi.Product.getcategory,
+      });
+      dispatch(setCategoriesDetails(data.data));
+
+      if (data?.success && Array.isArray(data?.data)) {
+        setCategoriesList(data.data);
+      } else {
+        console.error("البيانات ليست مصفوفة:", data);
+        setCategoriesList([]);
+      }
+    } catch (err) {
+      toast.error("فشل جلب الفئات");
+      setCategoriesList([]);
+    }
+  };
+
+  fetchCategories();
+}, [dispatch]);
+
+ 
+
+ useEffect(() => {
   const fetchProducts = async () => {
     dispatch(setLoading(true));
     try {
@@ -139,34 +166,10 @@ const handleNewImageFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
       dispatch(setLoading(false));
     }
   };
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const { data } = await Axios({
-          ...SummaryApi.Product.getcategory,
-        });
-        dispatch(setCategoriesDetails(data.data));
 
-        // التأكد من أن البيانات هي مصفوفة
-        if (data?.success && Array.isArray(data?.data)) {
-          setCategoriesList(data.data); // تعيين المصفوفة الصحيحة
-        } else {
-          console.error("البيانات ليست مصفوفة:", data);
-          setCategoriesList([]); // تعيين مصفوفة فارغة إذا كانت البيانات غير صحيحة
-        }
-      } catch (err) {
-        toast.error("فشل جلب الفئات");
-        setCategoriesList([]); // تعيين مصفوفة فارغة في حالة حدوث خطأ
-      }
-    };
+  fetchProducts();
+}, [currentPage, searchTerm, dispatch]);
 
-    fetchCategories();
-  }, );
- 
-
-  useEffect(() => {
-    fetchProducts();
-  }, );
 
   // ================== TipTap editor setup ==================
   const editor = useEditor({

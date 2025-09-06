@@ -59,7 +59,7 @@ const locale = useLocale()
             >
               <div className="mb-4" >{icon}</div>
               <h3 className="text-xl font-medium mb-2 text-[#6b252f]" dir={locale === 'en' ? 'ltr' : 'rtl'}>{title}</h3>
-              <p className="text-gray-700 max-x-xs " dir={locale === 'en' ? 'ltr' : 'rtl'}>{description}</p>
+              <p className="text-gray-700 max-w-xs " dir={locale === 'en' ? 'ltr' : 'rtl'}>{description}</p>
             </motion.div>
           ))}
         </div>

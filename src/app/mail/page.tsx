@@ -187,7 +187,7 @@ const MailAdmin = () => {
   // 10. تأثيرات جانبية
   useEffect(() => {
     fetchMessages();
-  }, );
+  },[fetchMessages] );
 
   useEffect(() => {
     applyFilters(messages);

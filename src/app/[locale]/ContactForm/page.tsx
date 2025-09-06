@@ -10,9 +10,23 @@ type Attachment = { file: File; id: string };
 
 
 
-const initialFormData: FormData = {
+type FormValues = {
+  fullName: string;
+  company: string;
+  email: string;
+  phone: string;
+  projectName: string;
+  projectStatus: string;
+  projectLocation: string;
+  projectType: string;
+  qty: string | null;
+  specifications: string;
+  description: string;
+};
+
+const initialFormData: FormValues = {
   fullName: "",
-  company:"",
+  company: "",
   email: "",
   phone: "",
   projectName: "",
@@ -24,12 +38,14 @@ const initialFormData: FormData = {
   description: "",
 };
 
+
 export default function ContactForm() {
   const locale = useLocale();
 
   const t = useTranslations("form");
    
-  const [formData, setFormData] = useState<FormData>(initialFormData);
+ const [formValues, setFormValues] = useState<FormValues>(initialFormData);
+
   const [attachments, setAttachments] = useState<Attachment[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -37,7 +53,7 @@ export default function ContactForm() {
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormValues((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleFilesChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -61,31 +77,31 @@ export default function ContactForm() {
   };
 
   const validate = () => { //داله التحقق
-    if (!formData.fullName.trim()) {
+    if (!formValues.fullName.trim()) {
       toast.error(t("errors.fullNameRequired"));
       return false;
     }
-     if (!formData.company.trim()) {
+     if (!formValues.company.trim()) {
       toast.error(t("errors.companyRequired"));
       return false;
     }
-    if (!formData.email.trim()) {
+    if (!formValues.email.trim()) {
       toast.error(t("errors.emailRequired"));
       return false;
     }
-    if (!/\S+@\S+\.\S+/.test(formData.email)) {
+    if (!/\S+@\S+\.\S+/.test(formValues.email)) {
       toast.error(t("errors.emailInvalid"));
       return false;
     }
-    if (!formData.projectName.trim()) {
+    if (!formValues.projectName.trim()) {
       toast.error(t("errors.projectNameRequired"));
       return false;
     }
-    if (!formData.projectStatus.trim()) {
+    if (!formValues.projectStatus.trim()) {
       toast.error(t("errors.projectStatusRequired"));
       return false;
     }
-    if (!formData.projectLocation.trim()) {
+    if (!formValues.projectLocation.trim()) {
       toast.error(t("errors.projectLocationRequired"));
       return false;
     }
@@ -99,8 +115,8 @@ export default function ContactForm() {
     setLoading(true);
     try {
       const dataToSend = new FormData();//مهم للملفات المتعدده
-      for (const key in formData) {
-        dataToSend.append(key,(formData as any)[key])
+      for (const key in formValues) {
+        dataToSend.append(key,(formValues as any)[key])
       }
       attachments.forEach((att) => {
         dataToSend.append("attachments", att.file);
@@ -113,7 +129,7 @@ export default function ContactForm() {
        
       if (res.data.success) {
         toast.success(res.data.message || t("messages.success"));
-        setFormData(initialFormData);
+        setFormValues(initialFormData);
         setAttachments([]);
       } else {
         toast.error(res.data.message || t("messages.error"));

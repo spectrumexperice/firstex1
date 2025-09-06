@@ -65,7 +65,7 @@ export default function ResetPassword() {
     toast.error("رابط غير صالح أو مفقود");
     router.push("/forgot-password");
   }
-},);
+},[email, router]);
 
   return (
     <section
