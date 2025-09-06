@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "react-hot-toast";
 import Axios from "@/app/utilities/axios";
 import SummaryApi from "@/app/common/summaryApi";
+import Image from "next/image";
 
 export default function EditPartner() {
   const router = useRouter();
@@ -90,7 +91,7 @@ export default function EditPartner() {
           <Label className="mb-2 block">شعار الشركة (اختياري لتغييره)</Label>
           {currentLogo && (
             <div className="mb-3">
-              <img src={currentLogo} className="h-14 object-contain" />
+              <Image alt="currentLogo" src={currentLogo} className="h-14 object-contain" />
             </div>
           )}
           <Input
@@ -106,7 +107,7 @@ export default function EditPartner() {
           <Label className="mb-2 block">صورة رسالة الشكر (اختياري لتغييره)</Label>
           {currentThankImage && (
             <div className="mb-3">
-              <img src={currentThankImage} className="h-14 object-contain" />
+              <Image alt="ThankImage" src={currentThankImage} className="h-14 object-contain" />
             </div>
           )}
           <Input

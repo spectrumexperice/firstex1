@@ -8,6 +8,7 @@ import { toast } from "react-hot-toast";
 import Link from "next/link";
 import ConfirmModal from "../ConfirmDelet";
 import { MdDelete } from "react-icons/md";
+import Image from "next/image";
 
 const WorkAdmin = () => {
  
@@ -37,7 +38,7 @@ const WorkAdmin = () => {
 
   useEffect(() => {
     fetchWorks();
-  }, []);
+  },);
 
   // معاينة الصورة
   useEffect(() => {
@@ -126,7 +127,7 @@ const WorkAdmin = () => {
       {previewUrl && (
         <div className="mb-6">
           <p className="text-sm text-gray-500 mb-1">📸 معاينة:</p>
-          <img
+          <Image
             src={previewUrl}
             alt="معاينة"
             className="w-48 h-auto rounded border shadow"
@@ -146,7 +147,7 @@ const WorkAdmin = () => {
               key={work._id}
               className="relative group border rounded shadow hover:shadow-lg transition overflow-hidden"
             >
-              <img
+              <Image
                 src={work.imageUrl}
                 alt={`صورة العمل ${work._id}`}
                 className="w-full h-64 object-cover"

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Link } from "@/i18n/navigation";
 import SummaryApi from "@/app/common/summaryApi";
 import Axios from "@/app/utilities/axios";
+import Image from "next/image";
 
 interface Category {
   _id: string;
@@ -153,7 +154,7 @@ console.log("categoryslug value:", slug);
                   className="block border rounded-lg shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 group bg-white"
                 >
                   <div className="overflow-hidden">
-                    <img
+                    <Image
                       src={mainImage}
                       alt={prod.name?.ar || prod.name?.en || "product"}
                       className="w-full h-40 md:h-48 object-cover rounded-t-lg group-hover:scale-110 transition-transform duration-300"

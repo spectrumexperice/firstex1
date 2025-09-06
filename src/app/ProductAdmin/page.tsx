@@ -15,7 +15,8 @@ import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import TextAlign from "@tiptap/extension-text-align";
-import Image from "@tiptap/extension-image";
+
+import Image from "next/image";
 import { Table } from "@tiptap/extension-table";
 import TableRow from "@tiptap/extension-table-row";
 import TableCell from "@tiptap/extension-table-cell";
@@ -115,13 +116,13 @@ const handleSetMainExisting = (index: number) => {
   });
 };
 
-// عند اختيار ملفات جديدة
+/* // عند اختيار ملفات جديدة
 const handleNewImageFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
   const files = Array.from(e.target.files || []);
   setImageFiles(files); // هذه ترسل لاحقاً للـ backend كـ ملفات
   // لو تريد preview محلي:
   // يمكنك عمل state previews: setNewImagePreviews(files.map(f => URL.createObjectURL(f)))
-};
+}; */
   // ================== جلب المنتجات ==================
   const fetchProducts = async () => {
     dispatch(setLoading(true));
@@ -160,12 +161,12 @@ const handleNewImageFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
     };
 
     fetchCategories();
-  }, []);
+  }, );
  
 
   useEffect(() => {
     fetchProducts();
-  }, [currentPage, searchTerm]);
+  }, );
 
   // ================== TipTap editor setup ==================
   const editor = useEditor({
@@ -522,7 +523,7 @@ useEffect(() => {
                 <tr key={product._id} className="border-t hover:bg-gray-50">
                   <td className="px-4 py-2">
                     {product.images?.find((img: any) => img.isMain) ? (
-                      <img
+                      <Image alt="productImage"
                         src={product.images.find((img: any) => img.isMain)!.url}
                         className="w-16 h-16 object-cover rounded"
                       />

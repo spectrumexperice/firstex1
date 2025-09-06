@@ -20,7 +20,7 @@ export default function UserProvider({ children }: { children: React.ReactNode }
    
     getUser();
    
-  }, []);
+  }, );
 
   return <>{children}</>;
 }

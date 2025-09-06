@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { toast } from "react-hot-toast";
 import Axios from "../utilities/axios";
 import SummaryApi from "../common/summaryApi";
+import Image from "next/image";
 
 const AddPartner = () => {
   const router = useRouter();
@@ -117,7 +118,7 @@ const AddPartner = () => {
           <Label className="mb-2 block">شعار الشركة</Label>
           {logoPreview && (
             <div className="mb-3">
-              <img src={logoPreview} alt="Logo Preview" className="h-14 object-contain" />
+              <Image src={logoPreview} alt="Logo Preview" className="h-14 object-contain" />
             </div>
           )}
           <Input
@@ -133,7 +134,7 @@ const AddPartner = () => {
           <Label className="mb-2 block">صورة رسالة الشكر</Label>
           {thankImagePreview && (
             <div className="mb-3">
-              <img
+              <Image
                 src={thankImagePreview}
                 alt="Thank Image Preview"
                 className="h-14 object-contain"

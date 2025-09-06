@@ -32,7 +32,7 @@ export default function Home() {
   useEffect(()=>{
     fetchUser()
     fetchpartnerdetails()
-  },[])
+  },)
   return (
     <>
     

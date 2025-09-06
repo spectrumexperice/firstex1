@@ -8,6 +8,7 @@ import Axios from "../../utilities/axios";
 import AxiosToastError from "../../utilities/AxiosToatError.js";
 import SummaryApi from "../../common/summaryApi.js"
 import { useLocale, useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 export default function ResetPassword() {
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
@@ -64,7 +65,7 @@ export default function ResetPassword() {
     toast.error("رابط غير صالح أو مفقود");
     router.push("/forgot-password");
   }
-}, [email]);
+},);
 
   return (
     <section

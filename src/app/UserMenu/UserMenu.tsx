@@ -48,12 +48,12 @@ const locale = useLocale()
         <Link href="partnerAdmin" className="flex items-center gap-2 hover:text-green-600 transition">
           <Users size={16} /> الشركاء
         </Link>
-        <a href="/mail" className="flex items-center gap-2 hover:text-green-600 transition">
+        <Link href="/mail" className="flex items-center gap-2 hover:text-green-600 transition">
           <Mail size={16} /> الرسائل
-        </a>
-        <a href="/ProductAdmin" className="flex items-center gap-2 hover:text-green-600 transition">
+        </Link>
+        <Link href="/ProductAdmin" className="flex items-center gap-2 hover:text-green-600 transition">
           <AiOutlineProduct size={16} /> ادارة المنتجات
-        </a>
+        </Link>
         <button
           onClick={handleLogOut}
           className="flex items-center gap-2 text-red-600 hover:text-red-800 transition mt-2"

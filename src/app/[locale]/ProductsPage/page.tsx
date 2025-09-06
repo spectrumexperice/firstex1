@@ -5,6 +5,7 @@ import Axios from "@/app/utilities/axios";
 import SummaryApi from "@/app/common/summaryApi";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from '@/i18n/navigation';
+import Image from "next/image";
 
 interface Product {
   _id: string;
@@ -150,7 +151,7 @@ export default function AdvancedProductsPage() {
           {products.map((prod) => (
             <Link key={prod._id} href={`/ProductDetails/${prod.slug}`}>
               <div className="border rounded-lg shadow hover:shadow-lg transition cursor-pointer">
-                <img
+                <Image
                   src={prod.images?.find((i) => i.isMain)?.url || "/placeholder.png"}
                   alt={prod.name}
                   className="w-full h-40 object-cover rounded-t-lg"

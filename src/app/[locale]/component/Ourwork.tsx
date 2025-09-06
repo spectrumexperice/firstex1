@@ -78,7 +78,7 @@ const Ourwork = () => {
       }
     }
     fetchWorks()
-  },[])
+  },)
   return (
     <section className="py-16 px-4 bg-gray-50" dir={isRTL ? "rtl" : "ltr"}>
       <motion.h2

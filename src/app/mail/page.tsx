@@ -187,11 +187,11 @@ const MailAdmin = () => {
   // 10. تأثيرات جانبية
   useEffect(() => {
     fetchMessages();
-  }, []);
+  }, );
 
   useEffect(() => {
     applyFilters(messages);
-  }, [searchTerm, filter, messages]);
+  }, );
 
   // 11. واجهة المستخدم الكاملة
   return (
