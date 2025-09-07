@@ -23,7 +23,8 @@ import TableCell from "@tiptap/extension-table-cell";
 import TableHeader from "@tiptap/extension-table-header";
 import fetchCategoies from "../utilities/fetchCategories";
 import { setCategoriesDetails } from "../store/category";
-
+import TiptapImage   from "@tiptap/extension-image"; // ← هذا
+import fetchProductData from "../utilities/fetchProductData";
 interface ImageItem {
   url: string;
   publicId?: string;
@@ -177,7 +178,7 @@ const handleNewImageFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
       StarterKit,
       Underline,
       TextAlign.configure({ types: ["heading", "paragraph"] }),
-      Image,
+      TiptapImage ,
       Table.configure({ resizable: true }),
       TableRow,
       TableHeader,
@@ -421,7 +422,7 @@ const handleNewImageFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
       });
       if (response.data.success) {
         toast.success(isEditing ? "تم تحديث المنتج" : "تمت إضافة المنتج");
-        fetchProducts();
+        fetchProductData();
         setIsModalOpen(false);
       }
     } catch (error: any) {
@@ -436,7 +437,7 @@ const handleNewImageFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
       await Axios({ ...SummaryApi.Product.delete(id) });
       toast.success("تم الحذف بنجاح");
-      fetchProducts();
+      fetchProductData();
     } catch (error) {
       toast.error("فشل في الحذف");
     }
@@ -659,7 +660,7 @@ useEffect(() => {
                     <option value="">اختيار الفئة الرئيسية</option>
 
                     {categoriesList
-                      .filter((cat) => !cat.parent) // فئات بدون parent هي الفئات الرئيسية
+                      .filter((cat) => !cat.parentId) // فئات بدون parent هي الفئات الرئيسية
                       .map((cat) => (
                         <option key={cat._id} value={cat._id}>
                           {cat.name?.[currentLang] || cat.name?.ar || ""}
@@ -688,7 +689,7 @@ useEffect(() => {
                   <option value="">اختيار الفئة الفرعية</option>
                   {selectedCategoryId &&
                     categoriesList
-                      .filter((cat) => cat.parent === selectedCategoryId)
+                      .filter((cat) => cat.parentId === selectedCategoryId)
                       .map((cat) => (
                         <option key={cat._id} value={cat._id}>
                           {cat.name?.[currentLang] || cat.name?.ar || ""}
@@ -804,8 +805,9 @@ useEffect(() => {
                     key={img.publicId || img.url || idx}
                     className="flex items-center gap-2 mt-2"
                   >
-                    <img
+                    <Image
                       src={img.url}
+                      alt=""
                       className="w-16 h-16 object-cover rounded"
                     />
                     <div className="flex flex-col">

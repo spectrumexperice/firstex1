@@ -19,10 +19,11 @@ const WorkAdmin = () => {
     const [showConfirm, setShowConfirm] = useState(false);
     const dispatch=useDispatch()
     const { works, loading, error } = useSelector((state: any) => state.works);
-  const handleDeleteClick = (id: String) => {
+  const handleDeleteClick = (id: string) => {
     setSelectedWorkId(id);
     setShowConfirm(true);
   };
+
 
   const fetchWorks = async () => {
   try {

@@ -1,14 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import Axios from "../utilities/axios"; // تأكد من مسار ملف Axios الخاص بك
+import Axios from "@/app/utilities/axios";
 import toast from "react-hot-toast";
 
 export default function NewsletterSubscription() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     try {

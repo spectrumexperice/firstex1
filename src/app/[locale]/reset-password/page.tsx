@@ -19,13 +19,13 @@ export default function ResetPassword() {
   });
    const t = useTranslations("resetPassword");
    const locale = useLocale()  
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = (event:React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
     setData((prev) => ({ ...prev, [name]: value }));
   };
 
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (data.newPassword !== data.confirmPassword) {

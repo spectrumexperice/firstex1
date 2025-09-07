@@ -24,5 +24,5 @@ const CategoriesSlice = createSlice({
   },
 });
 
-export const { setCategoriesDetails ,loading,error} = CategoriesSlice.actions;
+export const { setCategoriesDetails, setLoading, setError } = CategoriesSlice.actions;
 export default CategoriesSlice.reducer;

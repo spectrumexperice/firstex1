@@ -163,6 +163,8 @@ console.log("categoryslug value:", slug); */
                     <Image
                       src={mainImage}
                       alt={prod.name?.ar || prod.name?.en || "product"}
+                      height={40}
+                      width={100}
                       className="w-full h-40 md:h-48 object-cover rounded-t-lg group-hover:scale-110 transition-transform duration-300"
                       loading="lazy"
                        onError={(e) => { e.currentTarget.src = "/placeholder.png"; }}

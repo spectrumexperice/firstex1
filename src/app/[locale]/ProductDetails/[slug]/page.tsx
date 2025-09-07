@@ -8,6 +8,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { Link } from "@/i18n/navigation";
 import he from "he";
+import Image from "next/image";
 // ===== Types =====
 interface Product {
   _id: string;
@@ -44,7 +45,7 @@ export default function ProductDetailPage() {
   >("description");
 
   const t = useTranslations("ProductDetail");
-  const locale = useLocale();
+const locale = useLocale() as 'en' | 'ar';
   const router = useRouter();
   const { slug } = useParams(); // assumed URL: /products/[category]/[subCategory]/[slug]
 
@@ -81,33 +82,41 @@ export default function ProductDetailPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Images Slider */}
-        <div className="flex flex-col space-y-3">
-          <div className="w-full h-96 border rounded-lg overflow-hidden flex items-center justify-center">
-            {product.images?.[activeImage] ? (
-              <img
-                src={product.images[activeImage].url}
-                alt={product.name}
-                className="w-full h-full object-contain"
-              />
-            ) : (
-              <div className="text-gray-400">{t("noImage")}</div>
-            )}
-          </div>
-          <div className="flex space-x-2 ltr:space-x-reverse overflow-x-auto">
-            {product.images?.map((img, idx) => (
-              <img
-                key={idx}
-                src={img.url}
-                className={`w-20 h-20 object-cover rounded border cursor-pointer ${
-                  activeImage === idx ? "border-blue-500" : "border-gray-300"
-                }`}
-                onClick={() => setActiveImage(idx)}
-              />
-            ))}
-          </div>
-        </div>
-
+      {/* Images Slider */}
+<div className="flex flex-col space-y-3">
+  <div className="relative w-full h-96 border rounded-lg overflow-hidden flex items-center justify-center">
+    {product.images?.[activeImage] ? (
+      <Image
+        src={product.images[activeImage].url}
+        alt={product.name[locale]}
+        fill
+        sizes="(max-width: 1024px) 100vw, 50vw"
+        className="object-contain"
+      />
+    ) : (
+      <div className="text-gray-400">{t("noImage")}</div>
+    )}
+  </div>
+  <div className="flex space-x-2 ltr:space-x-reverse overflow-x-auto">
+    {product.images?.map((img, idx) => (
+      <div
+        key={idx}
+        className={`relative w-20 h-20 rounded border cursor-pointer ${
+          activeImage === idx ? "border-blue-500 border-2" : "border-gray-300"
+        }`}
+        onClick={() => setActiveImage(idx)}
+      >
+        <Image
+          src={img.url}
+          alt={product.name[locale]}
+          fill
+          sizes="80px"
+          className="object-cover rounded"
+        />
+      </div>
+    ))}
+  </div>
+</div>
         {/* Product Details */}
         <div className="flex flex-col space-y-4">
           <h1 className="text-3xl font-bold">{product.name[locale]}</h1>
@@ -121,7 +130,7 @@ export default function ProductDetailPage() {
           </div>
 
           {/* Tabs */}
-          <div className="border-b border-gray-200 mt-6" >
+          <div className="border-b border-gray-200 mt-6">
             <nav className="flex space-x-8 ">
               <button
                 className={`py-4 px-1 border-b-2 font-medium text-sm ${
@@ -157,27 +166,33 @@ export default function ProductDetailPage() {
           </div>
 
           {/* محتوى التبويب */}
-          <div className="mt-6" >
+          <div className="mt-6">
             {activeTab === "description" && (
               <div
                 className={`prose prose-lg prose-slate max-w-none mt-3 ${
                   locale === "ar" ? "rtl" : "ltr"
                 }`}
                 dangerouslySetInnerHTML={{
-                __html: he.decode(typeof product.description === 'string' ? product.description : product.description?.[locale] || "<p>No description</p>")
-
+                  __html: he.decode(
+                    typeof product.description === "string"
+                      ? product.description
+                      : product.description?.[locale] || "<p>No description</p>"
+                  ),
                 }}
               />
             )}
 
             {activeTab === "specs" && (
               <div className="overflow-x-auto rounded-lg shadow-sm">
-                <table className="table-auto border-collapse border w-full " dir={locale === "en" ? "ltr" : "rtl"}>
-                  <tbody >
+                <table
+                  className="table-auto border-collapse border w-full "
+                  dir={locale === "en" ? "ltr" : "rtl"}
+                >
+                  <tbody>
                     {product.specs?.[locale]?.map((spec, idx) => (
-                      <tr key={idx} className="border-b" >
+                      <tr key={idx} className="border-b">
                         <td className="px-2 py-1 font-semibold">{spec.key}</td>
-                        <td className="px-2 py-1" >{spec.value}</td>
+                        <td className="px-2 py-1">{spec.value}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -219,17 +234,14 @@ export default function ProductDetailPage() {
       </div>
 
       {/* Related Products */}
-      {product.relatedProducts?.length > 0 && (
+      {product.relatedProducts && product.relatedProducts.length > 0 && (
         <div className="mt-12">
           <h2 className="text-2xl font-bold mb-4">{t("relatedProducts")}</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            
-            {
-            product.relatedProducts.map((rp) => (
-              
+            {product.relatedProducts.map((rp) => (
               <Link key={rp._id} href={`/products/${rp.slug}`}>
                 <div className="border rounded-lg shadow hover:shadow-lg transition cursor-pointer">
-                  <img
+                  <Image
                     src={
                       rp.images?.find((i) => i.isMain)?.url ||
                       "/placeholder.png"

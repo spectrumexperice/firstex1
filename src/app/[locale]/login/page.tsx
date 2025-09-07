@@ -21,13 +21,13 @@ export default function Login() {
   const [loading, setLoading] = useState(true);
 
   
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
 
     setData((prev) => ({ ...prev, [name]: value }));
   };
 
- const handleSubmit = async (e) => {
+ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   
   e.preventDefault();
   try {

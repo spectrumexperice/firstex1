@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Axios from "../utilities/axios";
 import SummaryApi from "../common/summaryApi";
 import { toast } from "react-hot-toast";
@@ -48,8 +48,50 @@ const MailAdmin = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filter, setFilter] = useState<"all" | "simple" | "detailed" | "replied" | "unreplied">("all");
 
-  // 4. جلب الرسائل من API
-  const fetchMessages = async () => {
+  
+
+  // 5. تحديث الإحصائيات
+  const updateStats = (msgs: Message[]) => {
+    const newStats = [
+      { name: "رسائل قصيرة", value: msgs.filter(m => m.type === "simple").length },
+      { name: "رسائل مفصلة", value: msgs.filter(m => m.type === "detailed").length },
+      { name: "بلا رد", value: msgs.filter(m => !m.replied).length },
+      { name: "مردود عليها", value: msgs.filter(m => m.replied).length }
+    ];
+    setStats(newStats);
+  };
+
+  // 6. تطبيق الفلاتر والبحث
+  const applyFilters = useCallback((msgs: Message[]) => {
+  let result = [...msgs];
+
+  // تطبيق البحث
+  if (searchTerm) {
+    const term = searchTerm.toLowerCase();
+    result = result.filter(msg => 
+      msg.fullName.toLowerCase().includes(term) ||
+      msg.email.toLowerCase().includes(term) ||
+      (msg.phone && msg.phone.includes(term)) ||
+      (msg.message && msg.message.toLowerCase().includes(term)) ||
+      (msg.company && msg.company.toLowerCase().includes(term))
+    );
+  }
+
+  // تطبيق الفلتر
+  switch (filter) {
+    case "unreplied":
+      result = result.filter(msg => !msg.replied);
+      break;
+    case "replied":
+      result = result.filter(msg => msg.replied);
+      break;
+  }
+
+  setFilteredMessages(result);
+}, [searchTerm, filter]);
+// 4. جلب الرسائل من API
+  useEffect(()=>{
+    const fetchMessages = async () => {
     setLoading(true);
     try {
       const response = await Axios({ ...SummaryApi.MsgAdmin.getAll});
@@ -67,44 +109,8 @@ const MailAdmin = () => {
       setLoading(false);
     }
   };
-
-  // 5. تحديث الإحصائيات
-  const updateStats = (msgs: Message[]) => {
-    const newStats = [
-      { name: "رسائل قصيرة", value: msgs.filter(m => m.type === "simple").length },
-      { name: "رسائل مفصلة", value: msgs.filter(m => m.type === "detailed").length },
-      { name: "بلا رد", value: msgs.filter(m => !m.replied).length },
-      { name: "مردود عليها", value: msgs.filter(m => m.replied).length }
-    ];
-    setStats(newStats);
-  };
-
-  // 6. تطبيق الفلاتر والبحث
-  const applyFilters = (msgs: Message[]) => {
-    let result = [...msgs];
-
-    // تطبيق البحث
-    if (searchTerm) {
-      const term = searchTerm.toLowerCase();
-      result = result.filter(msg => 
-        msg.fullName.toLowerCase().includes(term) ||
-        msg.email.toLowerCase().includes(term) ||
-        (msg.phone && msg.phone.includes(term)) ||
-        (msg.message && msg.message.toLowerCase().includes(term)) ||
-        (msg.company && msg.company.toLowerCase().includes(term))
-      );
-    }
-
-    // تطبيق الفلتر
-    switch (filter) {
-      case "simple": result = result.filter(m => m.type === "simple"); break;
-      case "detailed": result = result.filter(m => m.type === "detailed"); break;
-      case "replied": result = result.filter(m => m.replied); break;
-      case "unreplied": result = result.filter(m => !m.replied); break;
-    }
-
-    setFilteredMessages(result);
-  };
+  fetchMessages()
+  },[applyFilters])
 
   // 7. حذف الرسالة
   const handleDelete = async () => {
@@ -184,14 +190,9 @@ const MailAdmin = () => {
     }
   };
 
-  // 10. تأثيرات جانبية
-  useEffect(() => {
-    fetchMessages();
-  },[fetchMessages] );
+ 
 
-  useEffect(() => {
-    applyFilters(messages);
-  }, );
+ 
 
   // 11. واجهة المستخدم الكاملة
   return (
@@ -228,7 +229,8 @@ const MailAdmin = () => {
             <select
               className="w-full border rounded-full py-2 px-7 pl-10 appearance-none bg-white focus:ring-2 focus:ring-[#6b252f] focus:border-transparent text-gray-600"
               value={filter}
-              onChange={(e) => setFilter(e.target.value as any)}
+            onChange={(e) => setFilter(e.target.value as typeof filter)}
+
             >
               <option value="all">كل الرسائل</option>
               <option value="simple">رسائل قصيرة</option>
@@ -482,7 +484,7 @@ const MailAdmin = () => {
                       </div>
                     )}
 
-                    {selectedMessage.attachments?.length > 0 && (
+                    {selectedMessage && selectedMessage.attachments && selectedMessage.attachments.length > 0 && (
                       <div>
                         <h4 className="text-sm text-gray-500">المرفقات</h4>
                         <div className="flex flex-wrap gap-2 mt-2">
@@ -548,8 +550,7 @@ const MailAdmin = () => {
       <ConfirmModal
         open={showConfirm}
         message="هل أنت متأكد من حذف هذه الرسالة؟"
-        confirmText="حذف"
-        cancelText="إلغاء"
+       
         onConfirm={handleDelete}
         onCancel={() => setShowConfirm(false)}
       />
@@ -566,9 +567,8 @@ const MailAdmin = () => {
                 cy="50%"
                 outerRadius={80}
                 dataKey="value"
-                label={({ name, percent }) =>
-                  `${name}: ${(percent * 100).toFixed(0)}%`
-                }
+              label={(entry) => `${entry.name}: ${((entry.percent ?? 0) * 100).toFixed(0)}%`}
+
                 labelLine={false}
                 isAnimationActive={true}
                 animationDuration={800}

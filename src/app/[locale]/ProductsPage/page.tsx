@@ -16,12 +16,15 @@ interface Product {
   shortDescription?: { ar: string; en: string };
   images: { url: string; isMain: boolean }[];
 }
-
+interface Category {
+  _id: string;
+  name: { ar: string; en: string };
+}
 
 export default function AdvancedProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<string[]>([]);
-  const [subCategories, setSubCategories] = useState<string[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [subCategories, setSubCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
@@ -30,13 +33,13 @@ export default function AdvancedProductsPage() {
   const [totalPages, setTotalPages] = useState(1);
 
   const t = useTranslations("ProductsPage");
-  const locale = useLocale();
+ const locale = useLocale() as 'en' | 'ar';
 
-  // --- Fetch Categories ---
+ 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const { data } = await Axios(SummaryApi.Product.category);
+        const { data } = await Axios(SummaryApi.Product.getcategory);
         if (data.success) setCategories(data.data);
       } catch (error) {
         console.error(error);
@@ -46,17 +49,25 @@ export default function AdvancedProductsPage() {
   }, []);
 
   // --- Fetch SubCategories ---
-  useEffect(() => {
-    const fetchSubCategories = async () => {
-      try {
-        const { data } = await Axios(SummaryApi.Product.subcategory);
-        if (data.success) setSubCategories(data.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchSubCategories();
-  }, []);
+ // --- Fetch SubCategories ---
+useEffect(() => {
+  const fetchSubCategories = async () => {
+    try {
+      if (!activeCategory) return; // نتأكد من وجود parentId
+      const { data } = await Axios({
+        ...SummaryApi.Product.subcategory,
+        params: { parentId: activeCategory },
+      });
+      if (data.success) setSubCategories(data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  fetchSubCategories();
+}, [activeCategory]);
+
+
 
   // --- Fetch Products (Filtered & Search & Pagination) ---
   useEffect(() => {
@@ -105,40 +116,73 @@ export default function AdvancedProductsPage() {
         type="text"
         placeholder={t("searchPlaceholder")}
         value={search}
-        onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+        onChange={(e) => {
+          setSearch(e.target.value);
+          setPage(1);
+        }}
         className="w-full border rounded-lg p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
 
       {/* --- Categories Slider --- */}
       <div className="flex space-x-3 overflow-x-auto mb-4 py-2">
         <button
-          onClick={() => { setActiveCategory(null); setActiveSubCategory(null); setPage(1); }}
-          className={`px-4 py-2 rounded-lg border ${!activeCategory ? "bg-blue-500 text-white" : ""}`}
-        >{t("title")}</button>
+          onClick={() => {
+            setActiveCategory(null);
+            setActiveSubCategory(null);
+            setPage(1);
+          }}
+          className={`px-4 py-2 rounded-lg border ${
+            !activeCategory ? "bg-blue-500 text-white" : ""
+          }`}
+        >
+          {t("title")}
+        </button>
 
         {categories.map((cat) => (
           <button
-            key={cat}
-            onClick={() => { setActiveCategory(cat); setActiveSubCategory(null); setPage(1); }}
-            className={`px-4 py-2 rounded-lg border ${activeCategory === cat ? "bg-blue-500 text-white" : ""}`}
-          >{typeof cat === 'string' ? cat : cat[locale]}</button>
+            key={cat._id}
+            onClick={() => {
+              setActiveCategory(cat._id);
+              setActiveSubCategory(null);
+              setPage(1);
+            }}
+            className={`px-4 py-2 rounded-lg border ${
+              activeCategory === cat._id ? "bg-blue-500 text-white" : ""
+            }`}
+          >
+            {cat.name[locale]}
+          </button>
         ))}
       </div>
 
       {/* --- SubCategories Slider --- */}
       {activeCategory && (
         <div className="flex space-x-3 overflow-x-auto mb-6 py-2">
-          <button
-            onClick={() => { setActiveSubCategory(null); setPage(1); }}
-            className={`px-4 py-2 rounded-lg border ${!activeSubCategory ? "bg-blue-400 text-white" : ""}`}
-          >{t("allSub")}</button>
+          {/* <button
+            onClick={() => {
+              setActiveSubCategory(null);
+              setPage(1);
+            }}
+            className={`px-4 py-2 rounded-lg border ${
+              !activeSubCategory ? "bg-blue-400 text-white" : ""
+            }`}
+          >
+            {t("allSub")}
+          </button> */}
 
           {subCategories.map((sub) => (
             <button
-              key={sub}
-              onClick={() => { setActiveSubCategory(sub); setPage(1); }}
-              className={`px-4 py-2 rounded-lg border ${activeSubCategory === sub ? "bg-blue-500 text-white" : ""}`}
-            >{typeof sub === 'string' ? sub : sub[locale]}</button>
+              key={sub._id}
+              onClick={() => {
+                setActiveSubCategory(sub._id);
+                setPage(1);
+              }}
+              className={`px-4 py-2 rounded-lg border ${
+                activeSubCategory === sub._id ? "bg-blue-500 text-white" : ""
+              }`}
+            >
+              {sub.name[locale]}
+            </button>
           ))}
         </div>
       )}
@@ -151,15 +195,32 @@ export default function AdvancedProductsPage() {
           {products.map((prod) => (
             <Link key={prod._id} href={`/ProductDetails/${prod.slug}`}>
               <div className="border rounded-lg shadow hover:shadow-lg transition cursor-pointer">
-                <Image
-                  src={prod.images?.find((i) => i.isMain)?.url || "/placeholder.png"}
-                  alt={prod.name}
-                  className="w-full h-40 object-cover rounded-t-lg"
-                />
+                <div className="relative w-full h-40 rounded-t-lg overflow-hidden">
+                  <Image
+                    src={
+                      prod.images?.find((i) => i.isMain)?.url ||
+                      "/placeholder.png"
+                    }
+                    alt={
+                      typeof prod.name === "string"
+                        ? prod.name
+                        : prod.name[locale]
+                    }
+                    fill
+                    className="object-cover"
+                  />
+                </div>
                 <div className="p-3">
-                <h2 className="font-semibold">{typeof prod.name === 'string' ? prod.name : prod.name[locale]}</h2>
-<p className="text-sm text-gray-500">{typeof prod.shortDescription === 'string' ? prod.shortDescription : prod.shortDescription?.[locale]}</p>
-
+                  <h2 className="font-semibold">
+                    {typeof prod.name === "string"
+                      ? prod.name
+                      : prod.name[locale]}
+                  </h2>
+                  <p className="text-sm text-gray-500">
+                    {typeof prod.shortDescription === "string"
+                      ? prod.shortDescription
+                      : prod.shortDescription?.[locale]}
+                  </p>
                 </div>
               </div>
             </Link>
@@ -174,8 +235,12 @@ export default function AdvancedProductsPage() {
             <button
               key={p}
               onClick={() => setPage(p)}
-              className={`px-3 py-1 rounded-lg border ${page === p ? "bg-blue-500 text-white" : ""}`}
-            >{p}</button>
+              className={`px-3 py-1 rounded-lg border ${
+                page === p ? "bg-blue-500 text-white" : ""
+              }`}
+            >
+              {p}
+            </button>
           ))}
         </div>
       )}

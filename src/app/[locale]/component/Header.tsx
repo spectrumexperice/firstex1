@@ -360,7 +360,7 @@ useEffect(() => {
             ) : (
               <Link
                 key={link.id}
-                href={link.href}
+                 href={{ pathname: link.href }}
                 className="hover:text-yellow-400 transition"
               >
                 {link.name}
@@ -515,7 +515,7 @@ useEffect(() => {
                   return (
                     <Link
                       key={idx}
-                      href={link.href}
+                      href={{ pathname: link.href }}
                       className="hover:text-indigo-600"
                       onClick={() => setOpenMobileMenu(false)}
                     >

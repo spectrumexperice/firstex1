@@ -10,20 +10,25 @@ import SummaryApi from "../../common/summaryApi.js"
 import { useLocale, useTranslations } from "next-intl";
 export default function VerifyOTP() {
   const [data, setData] = useState(["", "", "", "", "", ""]);
-  const inputRef = useRef([]);
+const inputRef = useRef<(HTMLInputElement | null)[]>([]);
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
   const t = useTranslations("verifyOtp");
   const locale = useLocale()  
-  useEffect(() => {
-    if (inputRef.current[0]) inputRef.current[0].focus();
+useEffect(() => {
+    if (inputRef.current[0]) {
+      inputRef.current[0]?.focus();
+    }
   }, []);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const otp = data.join("");
-
+     if (!email) {
+    toast.error("البريد الإلكتروني غير صالح");
+    return;
+  }
     try {
       const response = await Axios({
         ...SummaryApi.verifyOtp,
@@ -66,14 +71,16 @@ export default function VerifyOTP() {
                 key={"otp" + index}
                 type="text"
                 maxLength={1}
-                ref={(ref) => (inputRef.current[index] = ref)}
+           ref={(el) => {
+                  inputRef.current[index] = el; // تعيين الـ ref هنا بشكل صحيح
+                }} // تعيين المرجع بشكل صحيح
                 value={val}
                 onChange={(e) => {
                   const value = e.target.value;
                   const newData = [...data];
                   newData[index] = value;
                   setData(newData);
-                  if (value && index < 5) inputRef.current[index + 1].focus();
+                   if (value && index < 5) inputRef.current[index + 1]?.focus();
                 }}
                 className="bg-blue-50 w-full max-w-16 p-2 border rounded outline-none text-center font-semibold"
               />

@@ -11,9 +11,19 @@ import { useLocale } from "next-intl";
 import { useTranslations } from "next-intl";
 import { setWorksDetails } from "@/app/store/workSlice";
 import fetchworksDetails from "@/app/utilities/fetchWorksDetails";
+export interface Work {
+  _id: string;
+  imageUrl: string;
+  publicId: string;
+
+}
+
 const Ourwork = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const { works, loading } = useSelector((state: RootState) => state.works);
+ const { works, loading } = useSelector((state: RootState) => state.works) as {
+  works: Work[];
+  loading: boolean;
+};
   const locale = useLocale();
   const isRTL = locale !== "en";
   const t = useTranslations("OurWork");
@@ -40,7 +50,7 @@ const Ourwork = () => {
     [
     // Autoplay plugin
     (slider) => {
-      let timeout;
+      let timeout : ReturnType<typeof setTimeout>;
       let mouseOver = false;
       function clearNextTimeout() {
         clearTimeout(timeout);

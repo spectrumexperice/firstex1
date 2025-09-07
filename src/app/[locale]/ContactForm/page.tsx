@@ -19,7 +19,7 @@ type FormValues = {
   projectStatus: string;
   projectLocation: string;
   projectType: string;
-  qty: string | null;
+  qty: string 
   specifications: string;
   description: string;
 };
@@ -33,7 +33,7 @@ const initialFormData: FormValues = {
   projectStatus: "",
   projectLocation: "",
   projectType: "",
-  qty: null,
+  qty: "",
   specifications: "",
   description: "",
 };
@@ -167,7 +167,7 @@ export default function ContactForm() {
               name="fullName"
               type="text"
               placeholder={t("fullName")}
-              value={formData.fullName}
+              value={formValues.fullName}
               onChange={handleChange}
               className="border border-gray-300 rounded p-3 bg-white focus:outline-none "
               required
@@ -176,7 +176,7 @@ export default function ContactForm() {
               name="email"
               type="email"
               placeholder={t("email")}
-              value={formData.email}
+              value={formValues.email}
               onChange={handleChange}
               className="border border-gray-300 rounded p-3 bg-white focus:outline-none"
               required
@@ -185,7 +185,7 @@ export default function ContactForm() {
               name="company"
               type="text"
               placeholder={t("company")}
-              value={formData.company}
+              value={formValues.company}
               onChange={handleChange}
               className="border border-gray-300 rounded p-3 bg-white focus:outline-none "
               required
@@ -195,7 +195,7 @@ export default function ContactForm() {
               type="tel"
               dir={locale === "en" ? "ltr" : "rtl"}
               placeholder={t("phone")}
-              value={formData.phone}
+              value={formValues.phone}
               onChange={handleChange}
               className="border border-gray-300 rounded p-3 bg-white focus:outline-none"
             />
@@ -211,14 +211,14 @@ export default function ContactForm() {
               name="projectName"
               type="text"
               placeholder={t("projectName")}
-              value={formData.projectName}
+              value={formValues.projectName}
               onChange={handleChange}
               className="border border-gray-300 p-4 rounded-md bg-white"
               required
             />
             <select
               name="projectStatus"
-              value={formData.projectStatus}
+              value={formValues.projectStatus}
               onChange={handleChange}
               className="border border-gray-300 bg-white rounded p-3 focus:outline-none "
               required
@@ -234,7 +234,7 @@ export default function ContactForm() {
               name="projectLocation"
               type="text"
               placeholder={t("projectLocation")}
-              value={formData.projectLocation}
+              value={formValues.projectLocation}
               onChange={handleChange}
               className="border border-gray-300 rounded p-3 focus:outline-none bg-white"
               required
@@ -243,7 +243,7 @@ export default function ContactForm() {
               name="projectType"
               type="text"
               placeholder={t("projectType")}
-              value={formData.projectType}
+              value={formValues.projectType}
               onChange={handleChange}
               className="border border-gray-300 rounded p-3 focus:outline-none bg-white"
             />
@@ -251,7 +251,7 @@ export default function ContactForm() {
               name="qty"
               type="text"
               placeholder={t("qty")}
-              value={formData.qty}
+              value={formValues.qty}
               onChange={handleChange}
               className="border border-gray-300 rounded p-3 focus:outline-none bg-white"
             />
@@ -259,7 +259,7 @@ export default function ContactForm() {
           <textarea
             name="specifications"
             placeholder={t("specifications")}
-            value={formData.specifications}
+            value={formValues.specifications}
             onChange={handleChange}
             rows={3}
             className="w-full mt-4 border border-gray-300 rounded p-3 focus:outline-none bg-white"
@@ -267,7 +267,7 @@ export default function ContactForm() {
           <textarea
             name="description"
             placeholder={t("description")}
-            value={formData.description}
+            value={formValues.description}
             onChange={handleChange}
             rows={3}
             className="w-full mt-4 border border-gray-300 rounded p-3 focus:outline-none bg-white"

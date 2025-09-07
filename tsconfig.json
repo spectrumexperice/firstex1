@@ -24,6 +24,6 @@
       
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/[locale]/utilities/fetchUserDetails.js", "src/app/[locale]/ProductsPage"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/[locale]/utilities/fetchUserDetails.js", "src/app/[locale]/ProductsPage","he.d.ts" ],
   "exclude": ["node_modules"]
 }
