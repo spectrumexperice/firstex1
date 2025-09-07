@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic";
 
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import toast from "react-hot-toast";
