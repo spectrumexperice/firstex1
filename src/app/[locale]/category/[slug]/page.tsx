@@ -74,15 +74,15 @@ const categoryName = categoryMap?.[slugParam]?.name?.ar || slugParam || "الف�
 
     const fetchProducts = async () => {
       // إذا ما في slug، ما نطلب شيء
-      if (!slug) {
+      if (!slugParam) {
         setProducts([]);
         return;
       }
 
       // نتحقق إذا نملك record للفئة
-      const catRecord = categoryMap[slug];
+      const catRecord = categoryMap[slugParam];
       // لو عندنا record، استخدم _id لطلب أفضل، وإلا أرسل slug كما هو (backend يدعم _id أو slug)
-      const categoryParam = catRecord ? catRecord._id : slug;
+      const categoryParam = catRecord ? catRecord._id : slugParam;
 
       
      
@@ -118,10 +118,10 @@ const categoryName = categoryMap?.[slugParam]?.name?.ar || slugParam || "الف�
 
     // اطلب المنتجات فقط إذا خريطة الفئات جاهزة أو نريد الاعتماد على slug مباشرة
     // (نسمح بالطلب حتى لو الخريطة لم تحتوي slug لأن backend يقبل slug)
-    if (slug) fetchProducts();
+    if (slugParam) fetchProducts();
 
     return () => { mounted = false; };
-  }, [slug, categoryMap]);
+  }, [slugParam, categoryMap]);
 
   return (
    <div className="p-4 md:p-6 lg:p-8 mt-25 md:mt-20" dir="rtl">
