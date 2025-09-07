@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import Axios from "@/app/utilities/axios.js";
 import AxiosToastError from "@/app/utilities/AxiosToatError";
@@ -17,16 +17,16 @@ export default function SendMessageSection() {
     message: "",
   });
 
-  const handleOnChange = (e) => {
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
-
+  
   const [loading, setLoading] = useState(false);
 
-  const handleOnSubmit = async (e) => {
+  const handleOnSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     try {

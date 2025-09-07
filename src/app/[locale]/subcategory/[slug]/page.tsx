@@ -74,7 +74,7 @@ export default function CategoryPage() {
       const catRecord = categoryMap[slug];
       const subcategoryParam = catRecord ? catRecord._id : slug;
 
-      console.log("طلب منتجات للفئة الفرعية:", subcategoryParam);
+      /* console.log("طلب منتجات للفئة الفرعية:", subcategoryParam); */
 
       setLoading(true);
       setStatusMessage(null);

@@ -67,7 +67,7 @@ export default function Home() {
       try{
         dispatch(setCategoriesDetails({loading: true}))
         const response =await fetchCategoies()
-        console.log("response : ",response)
+       /*  console.log("response : ",response) */
         dispatch(setCategoriesDetails(response.data))
 
       }catch (error) {
