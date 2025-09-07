@@ -36,9 +36,12 @@ console.log("categoryslug value:", slug); */
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
-  const categoryName = categoryMap && slug && categoryMap[slug]?.name?.ar
-  ? categoryMap[slug].name.ar
-  : slug || "الفئات";
+// تأكد أن slugParam دائمًا string
+const slugParam = Array.isArray(slug) ? slug[0] : slug ?? "";
+
+// استخدمه بدل slug مباشرة
+const categoryName = categoryMap?.[slugParam]?.name?.ar || slugParam || "الفئات";
+
  
   // جلب الفئات وبناء الخريطة
   useEffect(() => {
