@@ -1,22 +1,24 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast, Toaster } from "react-hot-toast";
 import { motion } from "framer-motion";
-import Axios from "../../utilities/axios";
-import AxiosToastError from "../../utilities/AxiosToatError.js";
-import SummaryApi from "../../common/summaryApi.js"
+import Axios from "@/app/utilities/axios.js";
+import AxiosToastError from "@/app/utilities/AxiosToatError.js";
+import SummaryApi from "@/app/common/summaryApi";
 import { useLocale, useTranslations } from "next-intl";
-export default function VerifyOTP() {
+
+function VerifyOTPInner() {
   const [data, setData] = useState(["", "", "", "", "", ""]);
-const inputRef = useRef<(HTMLInputElement | null)[]>([]);
+  const inputRef = useRef<(HTMLInputElement | null)[]>([]);
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
   const t = useTranslations("verifyOtp");
-  const locale = useLocale()  
-useEffect(() => {
+  const locale = useLocale();
+
+  useEffect(() => {
     if (inputRef.current[0]) {
       inputRef.current[0]?.focus();
     }
@@ -25,14 +27,16 @@ useEffect(() => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const otp = data.join("");
-     if (!email) {
-    toast.error("البريد الإلكتروني غير صالح");
-    return;
-  }
+
+    if (!email) {
+      toast.error("البريد الإلكتروني غير صالح");
+      return;
+    }
+
     try {
       const response = await Axios({
         ...SummaryApi.verifyOtp,
-        data: { otp,email},
+        data: { otp, email },
       });
 
       if (response.data.error) {
@@ -41,16 +45,17 @@ useEffect(() => {
       }
 
       toast.success("تم التحقق من الرمز بنجاح");
-
-      
-       router.push(`/${locale}/reset-password?email=${encodeURIComponent(email)}`);
+      router.push(`/${locale}/reset-password?email=${encodeURIComponent(email)}`);
     } catch (err) {
       AxiosToastError(err);
     }
   };
 
   return (
-   <section className="min-h-screen flex items-center justify-center bg-gray-100 px-4"  dir={locale === 'en' ? 'ltr' : 'rtl'}>
+    <section
+      className="min-h-screen flex items-center justify-center bg-gray-100 px-4"
+      dir={locale === "en" ? "ltr" : "rtl"}
+    >
       <Toaster position="top-center" />
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -71,16 +76,16 @@ useEffect(() => {
                 key={"otp" + index}
                 type="text"
                 maxLength={1}
-           ref={(el) => {
-                  inputRef.current[index] = el; // تعيين الـ ref هنا بشكل صحيح
-                }} // تعيين المرجع بشكل صحيح
+                ref={(el) => {
+                  inputRef.current[index] = el;
+                }}
                 value={val}
                 onChange={(e) => {
                   const value = e.target.value;
                   const newData = [...data];
                   newData[index] = value;
                   setData(newData);
-                   if (value && index < 5) inputRef.current[index + 1]?.focus();
+                  if (value && index < 5) inputRef.current[index + 1]?.focus();
                 }}
                 className="bg-blue-50 w-full max-w-16 p-2 border rounded outline-none text-center font-semibold"
               />
@@ -95,5 +100,13 @@ useEffect(() => {
         </form>
       </motion.div>
     </section>
+  );
+}
+
+export default function VerifyOTP() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <VerifyOTPInner />
+    </Suspense>
   );
 }

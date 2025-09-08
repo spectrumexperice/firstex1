@@ -1,15 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter,useSearchParams } from "next/navigation";
+import { useEffect, useState, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { toast, Toaster } from "react-hot-toast";
 import { motion } from "framer-motion";
-import Axios from "../../utilities/axios";
-import AxiosToastError from "../../utilities/AxiosToatError.js";
-import SummaryApi from "../../common/summaryApi.js"
+import Axios from "@/app/utilities/axios.js";
+import AxiosToastError from "@/app/utilities/AxiosToatError.js";
+import SummaryApi from "@/app/common/summaryApi";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-export default function ResetPassword() {
+
+function ResetPasswordInner() {
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
   const router = useRouter();
@@ -17,13 +18,13 @@ export default function ResetPassword() {
     newPassword: "",
     confirmPassword: "",
   });
-   const t = useTranslations("resetPassword");
-   const locale = useLocale()  
-  const handleChange = (event:React.ChangeEvent<HTMLInputElement>) => {
+  const t = useTranslations("resetPassword");
+  const locale = useLocale();
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setData((prev) => ({ ...prev, [name]: value }));
   };
-
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,9 +38,10 @@ export default function ResetPassword() {
       const response = await Axios({
         ...SummaryApi.resetPassword,
         data: {
-          email:email,
+          email: email,
           newPassword: data.newPassword,
-          confirmPassword :data.confirmPassword       },
+          confirmPassword: data.confirmPassword,
+        },
       });
 
       if (response.data.error) {
@@ -48,7 +50,6 @@ export default function ResetPassword() {
       }
 
       toast.success("تم تحديث كلمة المرور بنجاح");
-
 
       setData({
         newPassword: "",
@@ -60,12 +61,13 @@ export default function ResetPassword() {
       AxiosToastError(err);
     }
   };
+
   useEffect(() => {
-  if (!email) {
-    toast.error("رابط غير صالح أو مفقود");
-    router.push("/forgot-password");
-  }
-},[email, router]);
+    if (!email) {
+      toast.error("رابط غير صالح أو مفقود");
+      router.push("/forgot-password");
+    }
+  }, [email, router]);
 
   return (
     <section
@@ -130,5 +132,13 @@ export default function ResetPassword() {
         </form>
       </motion.div>
     </section>
+  );
+}
+
+export default function ResetPassword() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ResetPasswordInner />
+    </Suspense>
   );
 }
