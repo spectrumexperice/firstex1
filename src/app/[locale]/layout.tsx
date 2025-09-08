@@ -1,5 +1,5 @@
 
-import { Geist, Geist_Mono } from 'next/font/google';
+
 import { Tajawal } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
@@ -9,10 +9,7 @@ import Providers from '@/app/providers';
 import UserProvider from '@/app/userProvide';
 import Header from '@/app/[locale]/component/Header';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-});
+
 
 const tajawal = Tajawal({
   subsets: ['arabic'],
@@ -20,10 +17,7 @@ const tajawal = Tajawal({
   variable: '--font-tajawal',
 });
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-});
+
 
 export async function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -57,7 +51,7 @@ setRequestLocale(locale);
 
   return (
     <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'} suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} ${tajawal.variable} antialiased`}>
+      <body className={` ${tajawal.variable} antialiased`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Providers>
             <UserProvider>

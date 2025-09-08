@@ -1,13 +1,10 @@
 import { ReactNode } from 'react';
-import { Geist, Geist_Mono } from 'next/font/google';
+
 import { Tajawal } from 'next/font/google';
 import Providers from '@/app/providers'; 
 import '@/app/globals.css';
 import Header from './[locale]/component/Header';
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-});
+
 
 const tajawal = Tajawal({
   subsets: ['arabic'],
@@ -15,15 +12,12 @@ const tajawal = Tajawal({
   variable: '--font-tajawal',
 });
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-})
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return <>
      <html lang="en" dir="ltr">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${tajawal.variable} antialiased`}
+        className={` ${tajawal.variable} antialiased`}
       >
         <Providers>
         
