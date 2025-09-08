@@ -441,7 +441,7 @@ useEffect(() => {
               </button>
             </SheetTrigger>
 
-            <SheetContent side="left" className="w-64 p-6">
+            <SheetContent side="left" className="w-64 p-6 bg-white shadow-lg">
               <nav className="flex flex-col space-y-4 font-semibold text-gray-700">
                 {navLinks.map((link, idx) => {
                   if (link.dropdown) {
