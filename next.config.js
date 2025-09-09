@@ -1,11 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone', // جرب 'standalone' بدل 'export'
-  trailingSlash: true,
+  reactStrictMode: true,
   images: {
-    unoptimized: true
+    domains: ["res.cloudinary.com"],
   },
-  reactStrictMode: true
-}
+};
 
-module.exports = nextConfig
+import createNextIntlPlugin from 'next-intl/plugin';
+
+const withNextIntl = createNextIntlPlugin();
+
+export default withNextIntl(nextConfig);
