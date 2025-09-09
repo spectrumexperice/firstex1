@@ -1,7 +1,17 @@
 {
-  "build": {
-    "env": {
-      "NODE_VERSION": "20"
+  "version": 3,
+  "installCommand": "npm install --legacy-peer-deps --prefer-offline",
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "framework": "nextjs",
+  "outputDirectory": ".next",
+  "nodeVersion": "20.x",
+  "functions": {
+    "pages/api/**/*.js": {
+      "maxDuration": 30
     }
+  },
+  "env": {
+    "NODE_OPTIONS": "--max_old_space_size=4096"
   }
 }
