@@ -561,26 +561,24 @@ const MailAdmin = () => {
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
-              <Pie
-                data={stats}
-                cx="50%"
-                cy="50%"
-                outerRadius={80}
-                dataKey="value"
-              label={(entry) => `${entry.name}: ${((entry.percent ?? 0) * 100).toFixed(0)}%`}
-
-                labelLine={false}
-                isAnimationActive={true}
-                animationDuration={800}
-                animationEasing="ease-out"
-              >
-                {stats.map((entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
-                  />
-                ))}
-              </Pie>
+          <Pie
+  data={stats}
+  dataKey="value"
+  outerRadius={80}
+  label={({ name, value }: any) => {
+    const total = stats.reduce((sum: number, item: any) => sum + item.value, 0);
+    const percentage = total > 0 ? ((value / total) * 100).toFixed(0) : "0";
+    return `${name}: ${percentage}%`;
+  }}
+  labelLine={false}
+  isAnimationActive={true}
+  animationDuration={800}
+  animationEasing="ease-out"
+>
+  {stats.map((entry, index) => (
+    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+  ))}
+</Pie>
               <Tooltip
                 formatter={(value) => [`${value} رسالة`, "العدد"]}
                 labelFormatter={(label) => `نوع: ${label}`}
