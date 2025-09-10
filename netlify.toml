@@ -1,6 +1,7 @@
+# netlify.toml
 [build]
-  command = "npm run build"
-  publish = "/"  # استخدم "/" لتفادي التعارض مع base directory
+  command = "npm install && npm run build"
+  publish = ".next"  # مجلد البناء، مختلف عن base directory
 
 [build.environment]
   NODE_VERSION = "20"
