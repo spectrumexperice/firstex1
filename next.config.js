@@ -5,6 +5,7 @@ const nextConfig = {
     domains: ["res.cloudinary.com"],
   },
   trailingSlash: true,
+  output: 'standalone', // مهم جدًا للـ Docker/Render
 };
 
 import createNextIntlPlugin from 'next-intl/plugin';
