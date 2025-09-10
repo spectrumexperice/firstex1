@@ -1,7 +1,6 @@
-# netlify.toml
 [build]
   command = "npm install && npm run build"
-  publish = ".next"  # مجلد البناء، مختلف عن base directory
+  publish = "/"  # يترك Netlify يحدد مجلد النشر تلقائياً
 
 [build.environment]
   NODE_VERSION = "20"
