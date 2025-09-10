@@ -19,9 +19,8 @@ RUN npm run build
 # تعيين متغير البيئة لـ Node production
 ENV NODE_ENV=production
 
-# افتح المنفذ 3000
-EXPOSE 3000
+# فتح المنفذ الديناميكي (Render يعطيه عبر $PORT)
+EXPOSE 10000
 
-# أمر التشغيل
-CMD ["sh", "-c", "npm start -- -H 0.0.0.0 -p $PORT"]
-
+# CMD مرن عشان Render
+CMD ["sh", "-c", "npm start -- -H 0.0.0.0 -p ${PORT:-3000}"]
