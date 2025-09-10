@@ -1,7 +1,6 @@
 [build]
   command = "npm install && npm run build"
-  publish = "/"  # يترك Netlify يحدد مجلد النشر تلقائياً
-
+  
 [build.environment]
   NODE_VERSION = "20"
 
