@@ -14,16 +14,21 @@
     "jsx": "preserve",
     "incremental": true,
     "plugins": [
-      {
-        "name": "next"
-      }
+      { "name": "next" }
     ],
-    "baseUrl":".",
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      
+      "@/components/*": ["./src/components/*"],
+      "@/app/*": ["./src/app/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/[locale]/utilities/fetchUserDetails.js", "src/app/[locale]/ProductsPage","he.d.ts" ],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/app/**/*",
+    "he.d.ts"
+  ],
   "exclude": ["node_modules"]
 }
