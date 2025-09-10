@@ -1,9 +1,11 @@
 [build]
   command = "npm run build"
-  publish = ".next"
+  publish = ""   # اتركه فارغ لاستخدام Next.js Runtime
 
 [build.environment]
   NODE_VERSION = "20"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+  # لو تستخدم App Router، أضف السطر التالي
+  inputs = { enableExperimentalAppDir = true }
