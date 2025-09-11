@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -22,28 +18,12 @@
         "name": "next"
       }
     ],
-    "baseUrl": "./src",
+    "baseUrl":".",
     "paths": {
-      "@/*": [
-        "*"
-      ],
-      "@/components/*": [
-        "components/*"
-      ],
-      "@/app/*": [
-        "app/*"
-      ]
+    "@/*": ["src/*"]
+      
     }
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "src/app/**/*",
-    "he.d.ts",
-    ".next/types/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/[locale]/utilities/fetchUserDetails.js", "src/app/[locale]/ProductsPage", "next.config.js"],
+  "exclude": ["node_modules"]
 }

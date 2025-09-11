@@ -1,14 +1,12 @@
-/** @type {import('next').NextConfig} */
+import createNextIntlPlugin from 'next-intl/plugin';
+
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    remotePatterns: [
-      { protocol: 'https', hostname: 'res.cloudinary.com', pathname: '/**' },
-    ],
+    domains: ["res.cloudinary.com"],
   },
-  trailingSlash: true,
-  output: 'standalone', // مهم جدًا للـ Docker/Render
 };
 
-import createNextIntlPlugin from 'next-intl/plugin';
-export default createNextIntlPlugin(nextConfig);
+const withNextIntl = createNextIntlPlugin();
+
+export default withNextIntl(nextConfig);

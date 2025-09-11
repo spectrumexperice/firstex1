@@ -1,33 +1,24 @@
-// eslint.config.js
+import { defineFlatConfig } from '@eslint/eslintrc';
 import nextPlugin from '@next/eslint-plugin-next';
-import reactHooks from 'eslint-plugin-react-hooks';
-import * as tsParser from '@typescript-eslint/parser';
 
-export default [
+export default defineFlatConfig([
   {
-    files: ['**/*.{js,jsx,ts,tsx}'],
     plugins: {
       '@next/next': nextPlugin,
-      'react-hooks': reactHooks,
-    },
-    languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module',
     },
     rules: {
+      // قواعد Next.js الأساسية
       '@next/next/no-html-link-for-pages': 'error',
       '@next/next/no-img-element': 'warn',
-      'react-hooks/rules-of-hooks': 'error',
+      
+      // قواعد إضافية
       'react-hooks/exhaustive-deps': 'warn',
     },
   },
   {
-    files: ['**/*.{ts,tsx}'],
+    files: ['**/*.ts', '**/*.tsx'],
     languageOptions: {
-      parser: tsParser, // 👈 الآن الكائن فيه parseForESLint
-      parserOptions: {
-        ecmaFeatures: { jsx: true },
-      },
+      parser: '@typescript-eslint/parser',
     },
   },
-];
+]);

@@ -1,5 +1,5 @@
 
-
+import '@/app/output.css'
 import { Tajawal } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
