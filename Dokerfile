@@ -1,5 +1,5 @@
 # ===== مرحلة البناء =====
-FROM node:20-alpine AS builder
+FROM node:20 AS builder
 
 # تثبيت مكتبات أساسية يحتاجها sharp
 RUN apk add --no-cache libc6-compat python3 make g++ git
@@ -11,7 +11,7 @@ WORKDIR /app
 COPY package.json package-lock.json* ./
 
 # تثبيت جميع الـ dependencies بما فيها react و next
-RUN npm install
+RUN npm ci
 
 # نسخ باقي المشروع
 COPY . .
