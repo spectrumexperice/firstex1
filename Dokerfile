@@ -1,0 +1,39 @@
+# ===== مرحلة البناء =====
+FROM node:20-alpine AS builder
+
+# تثبيت مكتبات أساسية يحتاجها sharp
+RUN apk add --no-cache libc6-compat python3 make g++ 
+
+WORKDIR /app
+
+# نسخ ملفات package.json
+COPY package.json package-lock.json* ./
+
+# تثبيت dependencies
+RUN npm install
+
+# نسخ باقي المشروع
+COPY . .
+
+# بناء Next.js
+RUN npm run build
+
+# ===== مرحلة التشغيل =====
+FROM node:20-alpine AS runner
+
+WORKDIR /app
+
+# تثبيت مكتبات runtime فقط (لـ sharp وغيره)
+RUN apk add --no-cache libc6-compat
+
+ENV NODE_ENV production
+
+# نسخ فقط ما نحتاجه للتشغيل
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json
+
+EXPOSE 3000
+
+CMD ["npm", "start"]
