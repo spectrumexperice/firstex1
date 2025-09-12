@@ -3,23 +3,23 @@
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 
-import fetchUserDetails from '@/app/utilities/fetchUserDetails';
-import { setUserDetails } from '@/app/store/userSlice';
-import fetchWorksDetails from '@/app/utilities/fetchWorksDetails'
-import fetchPartnerDetails from '@/app/utilities/fetchPartnerDetails';
-import fetchProductData from '@/app/utilities/fetchProductData'
-import fetchCategoies from '@/app/utilities/fetchCategories'
-import { setpartnerDetails } from '@/app/store/partnerSlice';
+import fetchUserDetails from '../utilities/fetchUserDetails';
+import { setUserDetails } from '../store/userSlice';
+import fetchworksDetails from '../utilities/fetchWorksDetails';
+import fetchpartnerDetails from '../utilities/fetchPartnerDetails';
+import fetchProductData from '../utilities/fetchProductData';
+import fetchCategoies from '../utilities/fetchCategories';
+import { setpartnerDetails } from '../store/partnerSlice';
 import { setWorksDetails } from '../store/workSlice';
-import { setLoading, setProductData } from '../store/productSlice';
+import { setProductData,setLoading } from '../store/productSlice';
 import { setCategoriesDetails } from '../store/category';
-import Hero from '@/app/[locale]/component/Hero';
-import WhyChooseUs from '@/app/[locale]/component/WhyChooseUs ';
-import Footer from '@/app/[locale]/component/Footer';
-import Ourfields from '@/app/[locale]/component/OurField';
-import Ourwork from '@/app/[locale]/component/Ourwork';
-import PartnersSection from '@/app/[locale]/PartnersSection/page';
-import SendMessageSection from '@/app/[locale]/component/SendMessageSection';
+import Hero from './component/Hero';
+import WhyChooseUs from './component/WhyChooseUs ';
+import Footer from './component/Footer';
+import Ourfields from './component/OurField';
+import Ourwork from './component/Ourwork';
+import PartnersSection from './PartnersSection/page';
+import SendMessageSection from './component/SendMessageSection';
 import Header from './component/Header';
 import { error } from 'console';
 
@@ -37,7 +37,7 @@ export default function Home() {
     async function fetchpartnerdetails() {
       try {
         dispatch(setpartnerDetails({ loading: true }));
-        const response = await fetchPartnerDetails();
+        const response = await fetchpartnerDetails();
         dispatch(setpartnerDetails({ partners: response.data, loading: false }));
       } catch (error) {
         dispatch(setpartnerDetails({ error: 'فشل تحميل الشركاء', loading: false }));
@@ -46,7 +46,7 @@ export default function Home() {
     async function fetchWorks(){
       try{
         dispatch(setWorksDetails({loading: true}))
-        const response =await fetchWorksDetails()
+        const response =await fetchworksDetails()
         dispatch(setWorksDetails({works:response.data,loading:false}))
 
       }catch (error) {
