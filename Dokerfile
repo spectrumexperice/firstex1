@@ -2,20 +2,22 @@
 FROM node:20-alpine AS builder
 
 # تثبيت مكتبات أساسية يحتاجها sharp
-RUN apk add --no-cache libc6-compat python3 make g++ 
+RUN apk add --no-cache libc6-compat python3 make g++ git
 
+# مجلد العمل
 WORKDIR /app
 
-# نسخ ملفات package.json
+# نسخ ملفات package.json و package-lock.json أولًا
 COPY package.json package-lock.json* ./
 
-# تثبيت dependencies
+# تثبيت جميع الـ dependencies بما فيها react و next
 RUN npm install
 
 # نسخ باقي المشروع
 COPY . .
-
-# بناء Next.js
+RUN ls -l node_modules/react/cjs
+RUN test -f node_modules/react/cjs/react.production.min.js
+# بناء Next.js (production build)
 RUN npm run build
 
 # ===== مرحلة التشغيل =====
@@ -28,12 +30,14 @@ RUN apk add --no-cache libc6-compat
 
 ENV NODE_ENV production
 
-# نسخ فقط ما نحتاجه للتشغيل
+# نسخ الملفات الجاهزة من مرحلة البناء
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 
-EXPOSE 3000
+# فتح المنفذ الذي يستخدمه Render
+EXPOSE 10000
 
-CMD ["npm", "start"]
+# CMD مرن للـ Render
+CMD ["sh", "-c", "npm start -- -H 0.0.0.0 -p ${PORT:-3000}"]
