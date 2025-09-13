@@ -6,7 +6,7 @@ import fetchUserDetails from "../../utilities/fetchUserDetails";
 import Image from "next/image";
 import { FaUserCircle, FaBars } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
-import Logo2 from "@/app/assits/Logo2.png";
+import Logo2 from "src/assits/Logo2.png";
 /* import SearchPage from "../search/page"; */
 
 import { Sheet ,SheetContent, SheetTrigger} from "@/src/components/ui/sheet";

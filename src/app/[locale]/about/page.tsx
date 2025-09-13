@@ -1,10 +1,11 @@
 "use client";
 import { motion } from "framer-motion";
-import teamImage from "@/app/assits/who3.jpg";
-import mission from "@/app/assits/who4.jpg";
+
+import teamImage from 'src/assits/who3.jpg'
+import mission from "src/assits/who4.jpg";
 import Image from "next/image";
-import visionImage from "@/app/assits/success.webp";
-import valuesImage from '@/app/assits/Business-Values.jpg';
+import visionImage from "src/assitssuccess.webp";
+import valuesImage from 'src/assits/Business-Values.jpg';
 import { FaCheckCircle, FaLightbulb, FaBullseye, FaBalanceScale, FaChartLine } from "react-icons/fa";
 import { useLocale, useTranslations } from "next-intl";
 
