@@ -7,12 +7,12 @@ import Image from "next/image";
 import { FaUserCircle, FaBars } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import Logo2 from "@/app/assits/Logo2.png";
-import SearchPage from "../search/page";
+/* import SearchPage from "../search/page"; */
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
 import { GoTriangleDown, GoTriangleUp } from "react-icons/go";
-import UserMenu from "@/app/UserMenu/UserMenu";
+import UserMenu from '@/app/UserMenu/UserMenu'
 import LanguageSwitcher from "./LanguageSwitcher";
 import SummaryApi from "@/app/common/summaryApi";
 import Axios from "@/app/utilities/axios";
