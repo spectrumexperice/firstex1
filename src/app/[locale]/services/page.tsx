@@ -5,11 +5,12 @@ import React, { useState } from "react";
 import { FaTools } from "react-icons/fa";
 import { useLocale, useTranslations } from 'next-intl';
 
-import a1 from '@/app/assits/pic1.png';
-import a2 from '@/app/assits/a2.jpg';
-import a3 from '@/app/assits/a3.jpg';
-import a4 from '@/app/assits/a4-1.jpg';
-import a5 from '@/app/assits/a5.jpg';
+import a1 from 'src/assits/pic1.png';
+import a2 from 'src/assits/a2.jpg';
+import a3 from 'src/assits/a3.jpg';
+import a4 from 'src/assits/a4-1.jpg';
+import a5 from 'src/assits/a5.jpg';
+
 
 const ServicesSection = () => {
   const t = useTranslations('services');

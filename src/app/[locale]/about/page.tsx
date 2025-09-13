@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import teamImage from 'src/assits/who3.jpg'
 import mission from "src/assits/who4.jpg";
 import Image from "next/image";
-import visionImage from "src/assitssuccess.webp";
+import visionImage from "src/assits/success.webp";
 import valuesImage from 'src/assits/Business-Values.jpg';
 import { FaCheckCircle, FaLightbulb, FaBullseye, FaBalanceScale, FaChartLine } from "react-icons/fa";
 import { useLocale, useTranslations } from "next-intl";
