@@ -7,7 +7,10 @@ const nextConfig = {
   },
   eslint:{
     ignoreDuringBuilds:true
-  }
+  },
+  experimental: {
+    webpackBuildWorker: false, // أو true إذا تريد تمكينه مع مراقبة الأخطاء
+  },
 };
 
 const withNextIntl = createNextIntlPlugin();
