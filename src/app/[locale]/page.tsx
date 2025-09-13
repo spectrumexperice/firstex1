@@ -14,7 +14,7 @@ import { setWorksDetails } from '../store/workSlice';
 import { setProductData,setLoading } from '../store/productSlice';
 import { setCategoriesDetails } from '../store/category';
 import Hero from '@/app/[locale]/component/Hero'
-import WhyChooseUs from '@/app/[locale]/component/WhyChooseUs '
+import WhyChooseUs from '@/app/[locale]/component/WhyChooseUs'
 import Footer from '@/app/[locale]/component/Footer'
 import Ourfields from '@/app/[locale]/component/OurField'
 import Ourwork from '@/app/[locale]/component/Ourwork'

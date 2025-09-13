@@ -1,12 +1,12 @@
 
 "use client"
 import {  useDispatch } from "react-redux";
-import fetchUserDetails from "@/app/utilities/fetchUserDetails";
+import fetchUserDetails from '@/app/utilities/fetchUserDetails'
 import {setUserDetails} from '../../store/userSlice'
 import {setpartnerDetails} from '../../store/partnerSlice'
 import { useEffect } from "react";
 import Hero from '@/app/[locale]/component/Hero'
-import WhyChooseUs from '@/app/[locale]/component/WhyChooseUs '
+import WhyChooseUs from '@/app/[locale]/component/WhyChooseUs'
 import Footer from '@/app/[locale]/component/Footer'
 import Ourfields from '@/app/[locale]/component/OurField'
 import Ourwork from '@/app/[locale]/component/Ourwork'

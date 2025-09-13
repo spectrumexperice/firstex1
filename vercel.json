@@ -4,7 +4,7 @@
     { "src": "package.json", "use": "@vercel/next" }
   ],
   "routes": [
-    { "src": "/(ar|en)/(.*)", "dest": "/$1/$2" },
-    { "src": "/(.*)", "dest": "/$1" }
+    { "src": "/ar/(.*)", "dest": "/ar/$1" },
+    { "src": "/en/(.*)", "dest": "/en/$1" }
   ]
 }
