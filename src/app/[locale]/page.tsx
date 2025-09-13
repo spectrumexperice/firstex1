@@ -1,6 +1,6 @@
 'use client';
 
-
+import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 
 import fetchUserDetails from '../utilities/fetchUserDetails';
@@ -24,5 +24,74 @@ import Header from './component/Header';
 import { error } from 'console';
 
 export default function Home() {
- return <h1>Test</h1>;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+   
+
+    async function fetchUser() {
+      const userData = await fetchUserDetails();
+      dispatch(setUserDetails(userData));
+    }
+
+    async function fetchpartnerdetails() {
+      try {
+        dispatch(setpartnerDetails({ loading: true }));
+        const response = await fetchpartnerDetails();
+        dispatch(setpartnerDetails({ partners: response.data, loading: false }));
+      } catch (error) {
+        dispatch(setpartnerDetails({ error: 'فشل تحميل الشركاء', loading: false }));
+      }
+    }
+    async function fetchWorks(){
+      try{
+        dispatch(setWorksDetails({loading: true}))
+        const response =await fetchworksDetails()
+        dispatch(setWorksDetails({works:response.data,loading:false}))
+
+      }catch (error) {
+        dispatch(setWorksDetails({ error: 'فشل تحميل الشركاء', loading: false }));
+      }
+    }
+     async function fetchProduct(){
+      try{
+        dispatch(setLoading(true))
+        const response=await fetchProductData() 
+        dispatch(setProductData(response.data))
+
+      }catch(error){
+        dispatch(setLoading(false))
+      }
+    }
+      async function fetchCategories(){
+      try{
+        dispatch(setCategoriesDetails({loading: true}))
+        const response =await fetchCategoies()
+       /*  console.log("response : ",response) */
+        dispatch(setCategoriesDetails(response.data))
+
+      }catch (error) {
+        dispatch(setCategoriesDetails({ error: 'فشل تحميل الفئات', loading: false }));
+      }
+    }
+    
+    fetchUser();
+    fetchpartnerdetails();
+    fetchWorks()
+    fetchProduct()
+    fetchCategories()
+  }, [dispatch]);
+
+  return (
+    <>
+      <Header />
+      <Hero />
+      <WhyChooseUs />
+      <Ourfields />
+      <Ourwork />
+      <PartnersSection />
+      <SendMessageSection />
+      <Footer />
+    </>
+  );
 }
