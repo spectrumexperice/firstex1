@@ -9,8 +9,17 @@ const nextConfig = {
     ignoreDuringBuilds:true
   },
   experimental: {
-    webpackBuildWorker: false, // أو true إذا تريد تمكينه مع مراقبة الأخطاء
+    webpackBuildWorker: true, // أو true إذا تريد تمكينه مع مراقبة الأخطاء
   },
+  swcMinify: true,
+  compress: true,
+  // تقليل تتبع الملفات بدون التأثير على المشروع
+  outputFileTracingExcludes: {
+    '*': [
+      'node_modules/**/@next/swc*/**/*',
+      'node_modules/**/next/dist/compiled/@next/swc*/**/*'
+    ]
+  }
 };
 
 const withNextIntl = createNextIntlPlugin();
