@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { Link } from "@/src/i18n/navigation";
+import { Link } from "@/i18n/navigation";
 import fetchUserDetails from "../../utilities/fetchUserDetails";
 import Image from "next/image";
 import { FaUserCircle, FaBars } from "react-icons/fa";
@@ -9,7 +9,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import Logo2 from "src/assits/Logo2.png";
 /* import SearchPage from "../search/page"; */
 
-import { Sheet ,SheetContent, SheetTrigger} from "@/src/components/ui/sheet";
+
+import { Sheet ,SheetContent, SheetTrigger} from "@/components/ui/sheet";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
 import { GoTriangleDown, GoTriangleUp } from "react-icons/go";

@@ -7,7 +7,7 @@ import SummaryApi from "../common/summaryApi";
 import { logoutUser } from "../store/userSlice";
 import toast from "react-hot-toast";
 import { AiOutlineProduct } from "react-icons/ai";
-import { Link } from "@/src/i18n/navigation";
+import { Link } from "@/i18n/navigation";
 import { LogOut, Mail, Users,Library  } from "lucide-react";
 import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";

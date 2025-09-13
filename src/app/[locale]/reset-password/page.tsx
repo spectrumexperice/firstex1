@@ -8,7 +8,7 @@ import Axios from "../../utilities/axios";
 import AxiosToastError from "../../utilities/AxiosToatError";
 import SummaryApi from "../../common/summaryApi";
 import { useLocale, useTranslations } from "next-intl";
-import { Link } from "@/src/i18n/navigation";
+import { Link } from "@/i18n/navigation"; 
 
 function ResetPasswordInner() {
   const searchParams = useSearchParams();

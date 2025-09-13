@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import Axios from "@/src/app/utilities/axios";
-import SummaryApi from "@/src/app/common/summaryApi";
+import Axios from "@/app/utilities/axios";
+import SummaryApi from "@/app/common/summaryApi";
 import { useLocale, useTranslations } from "next-intl";
 import { motion } from "framer-motion";
-import { Link } from "@/src/i18n/navigation";
+import { Link } from "@/i18n/navigation"; 
 import he from "he";
 import Image from "next/image";
 // ===== Types =====

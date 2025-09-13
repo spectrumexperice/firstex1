@@ -5,7 +5,7 @@ import type { RootState } from "../store/store";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { MdEdit, MdDelete } from "react-icons/md";
-import { Button } from "@/src/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { setpartnerDetails } from "../store/partnerSlice";
 import fetchpartnerDetails from "../utilities/fetchPartnerDetails";
 import { useEffect, useState } from "react";
