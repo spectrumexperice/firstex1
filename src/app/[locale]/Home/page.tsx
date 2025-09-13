@@ -11,7 +11,7 @@ import Footer from '@/app/[locale]/component/Footer'
 import Ourfields from '@/app/[locale]/component/OurField'
 import Ourwork from '@/app/[locale]/component/Ourwork'
 import fetchPartnerDetails from '@/app/utilities/fetchPartnerDetails'
-import PartnersSection from '@/app/[locale]/PartnersSection'
+import PartnersSection from '@/app/[locale]/component/PartnersSection'
 import SendMessageSection from '@/app/[locale]/component/SendMessageSection'
 export default function Home() {
   const dispatch=useDispatch()
