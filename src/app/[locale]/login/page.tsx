@@ -1,12 +1,12 @@
 "use client";
-import fetchUserDetails from "@/app/utilities/fetchUserDetails";
+import fetchUserDetails from '../../utilities/fetchUserDetails';
 import {setUserDetails} from '../../store/userSlice'
 import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Toaster, toast } from "react-hot-toast";
-import Axios from "@/app/utilities/axios";
-import AxiosToastError from "@/app/utilities/AxiosToatError";
+import Axios from '../../utilities/axios';
+import AxiosToastError from '../../utilities/AxiosToatError';
 import SummaryApi from "../../common/summaryApi";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";

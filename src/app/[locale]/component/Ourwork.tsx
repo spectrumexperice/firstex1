@@ -5,12 +5,12 @@ import Image from "next/image";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/app/store/store";
+import { RootState } from "../../store/store";
 import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons/io";
 import { useLocale } from "next-intl";
 import { useTranslations } from "next-intl";
-import { setWorksDetails } from "@/app/store/workSlice";
-import fetchworksDetails from "@/app/utilities/fetchWorksDetails";
+import { setWorksDetails } from "../../store/workSlice";
+import fetchworksDetails from "../../utilities/fetchWorksDetails";
 export interface Work {
   _id: string;
   imageUrl: string;

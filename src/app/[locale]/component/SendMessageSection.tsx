@@ -2,9 +2,9 @@
 
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import Axios from "@/app/utilities/axios.js";
-import AxiosToastError from "@/app/utilities/AxiosToatError";
-import SummaryApi from "@/app/common/summaryApi";
+import Axios from "../../utilities/axios";
+import AxiosToastError from "../../utilities/AxiosToatError";
+import SummaryApi from "../../common/summaryApi";
 import toast from "react-hot-toast";
 
 export default function SendMessageSection() {

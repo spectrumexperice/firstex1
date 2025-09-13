@@ -3,9 +3,9 @@ export const dynamic = "force-dynamic";
 
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import toast from "react-hot-toast";
-import Axios from "@/app/utilities/axios";
+import Axios from "../../utilities/axios";
 import { useLocale, useTranslations } from "next-intl";
-import SummaryApi from "@/app/common/summaryApi";
+import SummaryApi from "../../common/summaryApi";
 
 type Attachment = { file: File; id: string };
 

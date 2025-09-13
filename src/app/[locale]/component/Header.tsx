@@ -1,22 +1,24 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
-import fetchUserDetails from "@/app/utilities/fetchUserDetails";
+import { Link } from "@/src/i18n/navigation";
+import fetchUserDetails from "../../utilities/fetchUserDetails";
 import Image from "next/image";
 import { FaUserCircle, FaBars } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import Logo2 from "@/app/assits/Logo2.png";
 /* import SearchPage from "../search/page"; */
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+
+import { Sheet ,SheetContent, SheetTrigger} from "@/src/components/ui/sheet";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
 import { GoTriangleDown, GoTriangleUp } from "react-icons/go";
-import UserMenu from '@/app/UserMenu/UserMenu'
+import UserMenu from "../../UserMenu/UserMenu";
 import LanguageSwitcher from "./LanguageSwitcher";
-import SummaryApi from "@/app/common/summaryApi";
-import Axios from "@/app/utilities/axios";
-import { setUserDetails } from "@/app/store/userSlice";
+import SummaryApi from "../../common/summaryApi";
+
+import Axios from "../../utilities/axios";
+import { setUserDetails } from "../../store/userSlice";
 
 // ===== Types خاصة بالتصنيفات =====
 interface Product {

@@ -4,9 +4,9 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Toaster, toast } from "react-hot-toast";
 import { motion } from "framer-motion";
-import Axios from "@/app/utilities/axios.js";
-import AxiosToastError from "@/app/utilities/AxiosToatError.js";
-import SummaryApi from "@/app/common/summaryApi";
+import Axios from "../../utilities/axios";
+import AxiosToastError from "../../utilities/AxiosToatError";
+import SummaryApi from "../../common/summaryApi";
  import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 export default function ForgotPassword() {

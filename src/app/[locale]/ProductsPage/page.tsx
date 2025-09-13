@@ -1,10 +1,10 @@
 "use client";
 export const dynamic = "force-dynamic";
 import { useEffect, useState } from "react";
-import Axios from "@/app/utilities/axios";
-import SummaryApi from "@/app/common/summaryApi";
+import Axios from "../../utilities/axios";
+import SummaryApi from "../../common/summaryApi";
 import { useLocale, useTranslations } from "next-intl";
-import { Link } from '@/i18n/navigation';
+import { Link } from "lucide-react";
 import Image from "next/image";
 
 interface Product {

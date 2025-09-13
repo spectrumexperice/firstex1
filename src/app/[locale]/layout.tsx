@@ -3,11 +3,11 @@ import '@/app/output.css'
 import { Tajawal } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
-import { routing } from '@/i18n/routing';
+import { routing } from '@/src/i18n/routing';
 import { setRequestLocale } from 'next-intl/server';
-import Providers from '@/app/providers';
-import UserProvider from '@/app/userProvide';
-import Header from '@/app/[locale]/component/Header';
+import Providers from '../providers';
+import UserProvider from '../userProvide';
+import Header from './component/Header';
 
 
 

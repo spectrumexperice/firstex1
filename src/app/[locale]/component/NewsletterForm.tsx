@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { toast } from "react-hot-toast";
-import Axios from "@/app/utilities/axios";
-import SummaryApi from "@/app/common/summaryApi";
+import Axios from "../../utilities/axios";
+import SummaryApi from "../../common/summaryApi";
 import { useLocale, useTranslations } from "next-intl";
 
 const NewsletterForm = () => {

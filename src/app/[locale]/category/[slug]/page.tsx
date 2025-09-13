@@ -2,9 +2,9 @@
 
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Link } from "@/i18n/navigation";
-import SummaryApi from "@/app/common/summaryApi";
-import Axios from "@/app/utilities/axios";
+import { Link } from "@/src/i18n/navigation";
+import SummaryApi from "@/src/app/common/summaryApi";
+import Axios from "@/src/app/utilities/axios";
 import Image from "next/image";
 
 interface Category {

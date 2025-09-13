@@ -4,9 +4,9 @@ import { useState, useEffect, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast, Toaster } from "react-hot-toast";
 import { motion } from "framer-motion";
-import Axios from "@/app/utilities/axios.js";
-import AxiosToastError from "@/app/utilities/AxiosToatError.js";
-import SummaryApi from "@/app/common/summaryApi";
+import Axios from "../../utilities/axios";
+import AxiosToastError from "../../utilities/AxiosToatError";
+import SummaryApi from "../../common/summaryApi";
 import { useLocale, useTranslations } from "next-intl";
 
 function VerifyOTPInner() {

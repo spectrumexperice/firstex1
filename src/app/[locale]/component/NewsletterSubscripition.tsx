@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Axios from "@/app/utilities/axios";
+import Axios from "../../utilities/axios";
 import toast from "react-hot-toast";
 
 export default function NewsletterSubscription() {

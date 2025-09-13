@@ -2,8 +2,8 @@
 import { useSelector,useDispatch } from "react-redux";
 import { setWorksDetails } from "../store/workSlice";
 import { useEffect, useState } from "react";
-import Axios from "@/app/utilities/axios";
-import SummaryApi from "@/app/common/summaryApi";
+import Axios from "../utilities/axios";
+import SummaryApi from "../common/summaryApi";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
 import ConfirmModal from "../ConfirmDelet";
