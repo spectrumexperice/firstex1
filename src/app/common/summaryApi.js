@@ -7,7 +7,7 @@
 
 
 
-export const baseURL = "http://localhost:8080";
+export const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
 
 const SummaryApi = {
   register: {
