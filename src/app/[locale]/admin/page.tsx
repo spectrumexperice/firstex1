@@ -53,6 +53,7 @@ const WorkAdmin = () => {
     return () => URL.revokeObjectURL(objectUrl);
   }, [selectedFile]);
 
+
   const handleAddWork = async () => {
     if (!selectedFile) return toast.error("اختر صورة أولاً");
     const formData = new FormData();
@@ -101,17 +102,17 @@ const WorkAdmin = () => {
       <h1 className="text-3xl font-bold mb-6 text-[#6b252f]">📁 إدارة الأعمال</h1>
 
       <div className="flex items-center justify-between flex-wrap gap-4 mb-6">
-        <div className="flex items-center gap-3">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full">
           <input
             type="file"
             accept="image/*"
             onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
-            className="border rounded px-3 py-1 text-sm"
+            className="border rounded px-3 py-1 text-sm w-full sm:w-auto"
           />
           <button
             onClick={handleAddWork}
             disabled={loading || !selectedFile}
-            className={`px-4 py-2 rounded text-white transition ${
+            className={`w-full sm:w-auto px-4 py-2 rounded text-white transition ${
               loading
                 ? "bg-gray-500 cursor-not-allowed"
                 : "bg-[#6b252f] hover:bg-[#5a1f28]"

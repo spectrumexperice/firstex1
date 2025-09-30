@@ -203,7 +203,7 @@ const MailAdmin = () => {
 
   // 11. واجهة المستخدم الكاملة
   return (
-    <section className="p-6 max-w-7xl mx-auto mt-20" dir="rtl">
+    <section className="p-6 lg:max-w-7xl mx-auto mt-20" dir="rtl">
       <Link
         href="/"
         className="text-[#6b252f] hover:underline mt-2 flex mb-5 justify-end"
