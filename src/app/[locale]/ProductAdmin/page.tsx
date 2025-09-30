@@ -3,11 +3,11 @@ import he from "he"; // npm i he
 import { TbArrowBackUpDouble } from "react-icons/tb";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store/store";
-import Axios from "../utilities/axios";
+import { RootState } from "@/app/store/store";
+import Axios from "@/app/utilities/axios";
 import { toast } from "react-hot-toast";
-import SummaryApi from "../common/summaryApi";
-import { setLoading, setProductData } from "../store/productSlice";
+import SummaryApi from "@/app/common/summaryApi";
+import { setProductData ,setLoading } from "@/app/store/productSlice";
 import Link from "next/link";
 import { FaHome } from "react-icons/fa";
 // TipTap imports
@@ -21,10 +21,10 @@ import { Table } from "@tiptap/extension-table";
 import TableRow from "@tiptap/extension-table-row";
 import TableCell from "@tiptap/extension-table-cell";
 import TableHeader from "@tiptap/extension-table-header";
-import fetchCategoies from "../utilities/fetchCategories";
-import { setCategoriesDetails } from "../store/category";
+import fetchCategoies from "@/app/utilities/fetchCategories";
+import { setCategoriesDetails } from "@/app/store/category";
 import TiptapImage   from "@tiptap/extension-image"; // ← هذا
-import fetchProductData from "../utilities/fetchProductData";
+import fetchProductData from "@/app/utilities/fetchProductData";
 interface ImageItem {
   url: string;
   publicId?: string;
