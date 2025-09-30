@@ -14,7 +14,7 @@ import { Sheet ,SheetContent, SheetTrigger} from "@/components/ui/sheet";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
 import { GoTriangleDown, GoTriangleUp } from "react-icons/go";
-import UserMenu from "../../UserMenu/UserMenu";
+import UserMenu from "../UserMenu/UserMenu";
 import LanguageSwitcher from "./LanguageSwitcher";
 import SummaryApi from "../../common/summaryApi";
 
@@ -278,13 +278,13 @@ useEffect(() => {
     { id: "home", name: t("nav.home"), href: `/Home` },
     { id: "about", name: t("nav.about"), href: `/about` },
     { id: "services", name: t("nav.services"), href: "/services" },
-    {
+     {
       id: "products",
       name: t("nav.products"),
      
       dropdown: true, // وجوده يكفي لإظهار الـ ProductsDropdown
-    },
-    { id: "contact", name: t("nav.contact"), href: "/ContactForm" },
+    }, 
+    { id: "contact", name: t("nav.contact"), href: "/Contactform" },
   ];
 
   return (
@@ -318,6 +318,20 @@ useEffect(() => {
             {t("nav.subLogo")}
           </span>
         </Link>
+        <motion.div
+          animate={{ scale: [1, 1.1, 1], rotate: [0, 2, -2, 0] }}
+          transition={{
+            repeat: Infinity,
+            duration: 2,
+            ease: "easeInOut",
+            repeatType: "loop",
+          }}
+          className="bg-yellow-300 flex items-center justify-center rounded-md px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2"
+        >
+          <p className="text-xs sm:text-sm md:text-base font-[cairo]">
+            {locale === "ar" ? "نسخة تجريبية" : "Trial version"}
+          </p>
+        </motion.div>
 
         {/* Navigation Links (Desktop) */}
         <nav className="hidden md:flex space-x-6 ltr:space-x-reverse font-semibold text-gray-100 dark:text-gray-300 md:font-medium md:space-x-4 md:ml-6 gap-1 font-[cairo]">
@@ -326,11 +340,11 @@ useEffect(() => {
               <div
                 key={link.id}
                 className="relative"
-                onMouseEnter={() => setOpenProductsDropdown(true)}
-                onMouseLeave={() => setOpenProductsDropdown(false)}
+                /* onMouseEnter={() => setOpenProductsDropdown(true)}
+                onMouseLeave={() => setOpenProductsDropdown(false)} */
                 ref={productsDropdownRef}
               >
-                <button className="flex items-center gap-1 hover:text-yellow-400" >
+                <button className="flex items-center gap-1 hover:text-yellow-400">
                   {t("nav.products")}
                   <svg
                     className="w-4 h-4 mt-1"
@@ -363,7 +377,7 @@ useEffect(() => {
             ) : (
               <Link
                 key={link.id}
-                 href={{ pathname: link.href }}
+                href={{ pathname: link.href }}
                 className="hover:text-yellow-400 transition"
               >
                 {link.name}
@@ -373,7 +387,7 @@ useEffect(() => {
         </nav>
 
         {/* Search Bar */}
-       {/*  <div className=" flex items-center">
+        {/*  <div className=" flex items-center">
           <SearchPage />
         </div>
  */}
@@ -389,7 +403,9 @@ useEffect(() => {
                     isAdmin ? "cursor-pointer" : "cursor-default"
                   }`}
                 >
-                  <p className="text-white hidden lg:block">{t("nav.welcome")}</p>
+                  <p className="text-white hidden lg:block">
+                    {t("nav.welcome")}
+                  </p>
                   {isAdmin &&
                     (openUserMenu ? <GoTriangleUp /> : <GoTriangleDown />)}
                 </div>
@@ -430,9 +446,6 @@ useEffect(() => {
             </div>
           )}
 
-        
-
-
           {/* Mobile Menu Hamburger */}
           <Sheet open={openMobileMenu} onOpenChange={setOpenMobileMenu}>
             <SheetTrigger asChild>
@@ -470,37 +483,55 @@ useEffect(() => {
                         {/* نفس هيكل الدروب داون: Category -> Sub -> Products */}
                         <ul className="pl-4 mt-2 flex flex-col space-y-2">
                           <li>
-                            <Link
+                            {/* <Link
                               href="/ProductsPage"
                               className="block px-2 py-1 bg-gray-100 hover:bg-yellow-200 rounded"
                               onClick={() => setOpenMobileMenu(false)}
                             >
                               {t("nav.AllProducts")}
-                            </Link>
+                            </Link> */}
                           </li>
                           {categories.map((cat) => (
-                            <details key={cat.name[locale]} className="group" open={false}>
+                            <details
+                              key={cat.name[locale]}
+                              className="group"
+                              open={false}
+                            >
                               <summary className="cursor-pointer px-2 py-1 bg-gray-100 hover:bg-yellow-200 rounded">
-                             {cat.name?.[locale] || cat.name?.ar || cat.name?.en || ""}
+                                {cat.name?.[locale] ||
+                                  cat.name?.ar ||
+                                  cat.name?.en ||
+                                  ""}
                               </summary>
 
                               <ul className="pl-4 mt-1 flex flex-col space-y-1">
                                 {cat.subCategories?.map((sub) => (
-                                  <details key={sub.name[locale]} className="group" open={false}>
+                                  <details
+                                    key={sub.name[locale]}
+                                    className="group"
+                                    open={false}
+                                  >
                                     <summary className="cursor-pointer px-2 py-1 bg-gray-50 hover:bg-yellow-100 rounded">
-                                    {sub.name?.[locale] || sub.name?.ar || sub.name?.en || ""}
+                                      {sub.name?.[locale] ||
+                                        sub.name?.ar ||
+                                        sub.name?.en ||
+                                        ""}
                                     </summary>
 
                                     <ul className="pl-4 mt-1 flex flex-col space-y-1">
                                       {sub.products?.map((prod) => (
                                         <li key={prod._id}>
                                           <Link
-                                           href={ `/ProductDetails/${prod.slug}`}
+                                            href={`/ProductDetails/${prod.slug}`}
                                             className="block px-2 py-1 hover:bg-yellow-100 rounded"
-                                            onClick={() => setOpenMobileMenu(false)}
+                                            onClick={() =>
+                                              setOpenMobileMenu(false)
+                                            }
                                           >
-                                         {prod.name?.[locale] || prod.name?.ar || prod.name?.en || ""}
-                                         
+                                            {prod.name?.[locale] ||
+                                              prod.name?.ar ||
+                                              prod.name?.en ||
+                                              ""}
                                           </Link>
                                         </li>
                                       ))}

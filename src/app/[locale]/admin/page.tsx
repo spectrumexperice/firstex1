@@ -1,14 +1,15 @@
 "use client";
 import { useSelector,useDispatch } from "react-redux";
-import { setWorksDetails } from "../store/workSlice";
+import { setWorksDetails } from "@/app/store/workSlice";
 import { useEffect, useState } from "react";
-import Axios from "../utilities/axios";
-import SummaryApi from "../common/summaryApi";
+import Axios from "@/app/utilities/axios";
+import SummaryApi from "@/app/common/summaryApi";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
-import ConfirmModal from "../ConfirmDelet";
+import ConfirmModal from "@/app/ConfirmDelet";
 import { MdDelete } from "react-icons/md";
 import Image from "next/image";
+
 
 const WorkAdmin = () => {
  
@@ -39,7 +40,7 @@ const WorkAdmin = () => {
 
   useEffect(() => {
     fetchWorks();
-  },);
+  },[]);
 
   // معاينة الصورة
   useEffect(() => {
@@ -96,7 +97,7 @@ const WorkAdmin = () => {
     }
   };
   return (
-    <div className="max-w-5xl mx-auto p-6" dir="rtl">
+    <div className="max-w-5xl mx-auto p-6 mt-20" dir="rtl">
       <h1 className="text-3xl font-bold mb-6 text-[#6b252f]">📁 إدارة الأعمال</h1>
 
       <div className="flex items-center justify-between flex-wrap gap-4 mb-6">
@@ -130,6 +131,8 @@ const WorkAdmin = () => {
           <p className="text-sm text-gray-500 mb-1">📸 معاينة:</p>
           <Image
             src={previewUrl}
+            width={200}
+            height={200}
             alt="معاينة"
             className="w-48 h-auto rounded border shadow"
           />
@@ -151,6 +154,8 @@ const WorkAdmin = () => {
               <Image
                 src={work.imageUrl}
                 alt={`صورة العمل ${work._id}`}
+                width={400}     // حدد قيمة مناسبة
+                height={256}    // أو خليها متناسبة مع التصميم
                 className="w-full h-64 object-cover"
               />
               <button

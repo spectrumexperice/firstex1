@@ -6,7 +6,7 @@ export default function CallButton() {
   return (
     <a
       href="tel:+966 59 710 6802" // ضع رقم الهاتف الصحيح هنا
-      className="fixed bottom-30 left-6 z-50 bg-blue-600 text-white rounded-full p-2 shadow-xl hover:bg-blue-700 transition"
+      className=" bg-blue-600 text-white rounded-full p-2 shadow-xl hover:bg-blue-700 transition"
       aria-label="Call us"
     >
       <Phone className="w-5 h-5" />

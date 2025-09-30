@@ -6,12 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "react-hot-toast";
-import Axios from "../utilities/axios";
-import SummaryApi from "../common/summaryApi";
+import Axios from "@/app/utilities/axios";
+import SummaryApi from "@/app/common/summaryApi";
 import Image from "next/image";
 
 const AddPartner = () => {
   const router = useRouter();
+  
   const [companyName, setCompanyName] = useState("");
   const [displayOrder, setDisplayOrder] = useState<number | null>(null);
   const [logoFile, setLogoFile] = useState<File | null>(null);
@@ -118,7 +119,8 @@ const AddPartner = () => {
           <Label className="mb-2 block">شعار الشركة</Label>
           {logoPreview && (
             <div className="mb-3">
-              <Image src={logoPreview} alt="Logo Preview" className="h-14 object-contain" />
+              <Image src={logoPreview} width={140}
+              height={56} alt="Logo Preview" className="h-14 object-contain" />
             </div>
           )}
           <Input
@@ -136,6 +138,8 @@ const AddPartner = () => {
             <div className="mb-3">
               <Image
                 src={thankImagePreview}
+                width={140}    // عرض ثابت للمعاينة
+                 height={56}
                 alt="Thank Image Preview"
                 className="h-14 object-contain"
               />

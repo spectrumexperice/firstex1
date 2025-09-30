@@ -43,7 +43,7 @@ const ServicesSection = () => {
 
   return (
     <section 
-      className="bg-white font-arabic py-16 pt-30"
+      className="bg-white font-arabic  pt-30 mt-20 py-10"
       dir={locale === 'en' ? 'ltr' : 'rtl'}
       lang={locale}
     >

@@ -32,20 +32,20 @@ const AboutPage = () => {
 
   return (
     <section 
-      className="bg-white font-arabic pt-30 pb-10"
+      className="bg-white font-arabic pt-30 pb-10 mt-20 py-10"
       dir={locale === 'en' ? 'ltr' : 'rtl'}
       lang={locale} // إضافة سمة اللغة لتحسين إمكانية الوصول
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8"> {/* تحسين الهوامش */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 "> {/* تحسين الهوامش */}
         
         {/* قسم من نحن */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-12 lg:mb-16"
+          className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-12 lg:mb-16 "
           {...animationSettings}
         >
           <div>
             <h3 
-              className="text-2xl md:text-3xl font-extrabold text-[#6b252f] font-[Cairo] pb-3"
+              className="text-2xl md:text-3xl font-extrabold text-[#6b252f] font-[Cairo] pb-3 "
               dir={locale === 'en' ? 'ltr' : 'rtl'}
               style={{ fontFeatureSettings: "'pnum'" }}
             >

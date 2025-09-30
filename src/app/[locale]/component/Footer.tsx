@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaEnvelope, FaPhoneAlt } from "react-icons/fa";
 import ScrollToTopButton from "../../ScrollToTopButton";
-import CallButton from "../../CallButton";
-import WhatsAppButton from "../../WhatsAppButton";
+import CallButton from "@/app/CallButton";
+import WhatsAppButton from "@/app/WhatsAppButton";
 import { useLocale, useTranslations } from "next-intl";
 import NewsletterForm from "./NewsletterForm";
 
@@ -69,7 +69,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  href={`/${locale}/ContactForm`}
+                  href={`/${locale}/Contactform`}
                   className="hover:text-yellow-400 transition"
                 >
                   {t("links.contact")}
@@ -161,7 +161,7 @@ const Footer = () => {
           &copy; {new Date().getFullYear()} {t("copyright")}
         </div>
       </footer>
-      <div className="">
+      <div className=" fixed bottom-6 left-6 z-50 flex flex-col gap-2 ">
         <ScrollToTopButton />
         <CallButton />
         <WhatsAppButton />

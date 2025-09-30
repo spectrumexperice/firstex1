@@ -1,20 +1,21 @@
 "use client";
 
 import { useSelector } from "react-redux";
-import type { RootState } from "../store/store";
+import type { RootState } from "@/app/store/store"; 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { MdEdit, MdDelete } from "react-icons/md";
 import { Button } from "@/components/ui/button";
-import { setpartnerDetails } from "../store/partnerSlice";
-import fetchpartnerDetails from "../utilities/fetchPartnerDetails";
+import { setpartnerDetails } from "@/app/store/partnerSlice"; 
+import fetchpartnerDetails from "@/app/utilities/fetchPartnerDetails";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import SummaryApi from "../common/summaryApi";
+import SummaryApi from "@/app/common/summaryApi";
 import toast from "react-hot-toast";
-import Axios from "../utilities/axios";
-import ConfirmModal from "../ConfirmDelet";
-import Link from "next/link";
+import Axios from "@/app/utilities/axios";
+import ConfirmModal from "@/app/ConfirmDelet";
+import { Link } from "@/i18n/navigation";
+import { useLocale } from "next-intl";
 
 type Partner = {
   _id: string;
@@ -27,6 +28,7 @@ type Partner = {
 
 export default function PartnerAdmin() {
   const router = useRouter();
+  const locale=useLocale()
   const dispatch = useDispatch();
   const { partners } = useSelector((state: RootState) => state.partner);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -142,7 +144,7 @@ export default function PartnerAdmin() {
 
                 <div className="flex justify-center mt-4 gap-4">
                   <button
-                    onClick={() => router.push(`../edit-partner/${partner._id}`)}
+                    onClick={() => router.push(`/${locale}/edit-partner/${partner._id}`)}
                     className="text-blue-600 hover:text-blue-800 flex items-center gap-1"
                   >
                     <MdEdit /> تعديل

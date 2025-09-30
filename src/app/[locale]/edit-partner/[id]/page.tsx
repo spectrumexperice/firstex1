@@ -6,8 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label"; 
 import { Button } from "@/components/ui/button";
 import { toast } from "react-hot-toast";
-import Axios from "../../utilities/axios";
-import SummaryApi from "../../common/summaryApi";
+import Axios from "@/app/utilities/axios";
+import SummaryApi from "@/app/common/summaryApi";
 import Image from "next/image";
 
 export default function EditPartner() {
@@ -58,7 +58,7 @@ export default function EditPartner() {
 
       if (res.data.success) {
         toast.success("تم تحديث بيانات الشريك");
-        router.push("/dashboard/partnerAdmin");
+        router.push("/partnerAdmin");
       }
     } catch (error: any) {
       toast.error(error?.response?.data?.message || "فشل التحديث");
@@ -91,7 +91,10 @@ export default function EditPartner() {
           <Label className="mb-2 block">شعار الشركة (اختياري لتغييره)</Label>
           {currentLogo && (
             <div className="mb-3">
-              <Image alt="currentLogo" src={currentLogo} className="h-14 object-contain" />
+              <Image 
+              width={140} // حسب التصميم
+              height={56} // نسبة ارتفاع مناسبة
+              alt="currentLogo" src={currentLogo} className="h-14 object-contain" />
             </div>
           )}
           <Input
@@ -107,7 +110,8 @@ export default function EditPartner() {
           <Label className="mb-2 block">صورة رسالة الشكر (اختياري لتغييره)</Label>
           {currentThankImage && (
             <div className="mb-3">
-              <Image alt="ThankImage" src={currentThankImage} className="h-14 object-contain" />
+              <Image  width={140}
+               height={56} alt="ThankImage" src={currentThankImage} className="h-14 object-contain" />
             </div>
           )}
           <Input

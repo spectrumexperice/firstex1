@@ -1,11 +1,11 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import Axios from "../utilities/axios";
-import SummaryApi from "../common/summaryApi";
+import Axios from "../../utilities/axios";
+import SummaryApi from "../../common/summaryApi";
 import { toast } from "react-hot-toast";
 import { MdDelete, MdOutlineMarkEmailRead, MdContactMail, MdReply, MdFileDownload, MdFilterAlt, MdSearch } from "react-icons/md";
-import ConfirmModal from '../ConfirmDelet'
+import ConfirmModal from '../../ConfirmDelet'
 import Link from "next/link";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip ,Legend} from "recharts";
 
@@ -79,13 +79,20 @@ const MailAdmin = () => {
 
   // تطبيق الفلتر
   switch (filter) {
-    case "unreplied":
-      result = result.filter(msg => !msg.replied);
-      break;
-    case "replied":
-      result = result.filter(msg => msg.replied);
-      break;
-  }
+  case "simple":
+    result = result.filter(msg => msg.type === "simple");
+    break;
+  case "detailed":
+    result = result.filter(msg => msg.type === "detailed");
+    break;
+  case "unreplied":
+    result = result.filter(msg => !msg.replied);
+    break;
+  case "replied":
+    result = result.filter(msg => msg.replied);
+    break;
+}
+
 
   setFilteredMessages(result);
 }, [searchTerm, filter]);
@@ -196,7 +203,7 @@ const MailAdmin = () => {
 
   // 11. واجهة المستخدم الكاملة
   return (
-    <section className="p-6 max-w-7xl mx-auto" dir="rtl">
+    <section className="p-6 max-w-7xl mx-auto mt-20" dir="rtl">
       <Link
         href="/"
         className="text-[#6b252f] hover:underline mt-2 flex mb-5 justify-end"

@@ -224,11 +224,11 @@ export default function ContactForm() {
               className="border border-gray-300 bg-white rounded p-3 focus:outline-none "
               required
             >
-              <option  value="">اختر حالة المشروع</option>
-              <option value="مخطط">مخطط</option>
-              <option value="قيد التنفيذ">قيد التنفيذ</option>
-              <option value="مكتمل">مكتمل</option>
-              <option value="آخر">آخر</option>
+              <option  value="">{locale === "ar"?"اختر حالة المشروع":"Choose project status"}</option>
+              <option value="مخطط">{locale === "ar"?"مخطط":"planned"}</option>
+              <option value="قيد التنفيذ">{locale === "ar"?"قيد التنفيذ":"Under implementation"}</option>
+              <option value="مكتمل">{locale === "ar"?"مكتمل":"complete"}</option>
+              <option value="آخر">{locale === "ar"?"آخر":"Other"}</option>
             </select>
 
             <input
