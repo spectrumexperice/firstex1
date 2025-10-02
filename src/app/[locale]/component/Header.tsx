@@ -177,6 +177,7 @@ const Header = () => {
   const [categories, setCategories] = useState<Category[]>([]);
 
   const [scrolled, setScrolled] = useState(false);
+  
   const [openUserMenu, setOpenUserMenu] = useState(false);
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
   const [openProductsDropdown, setOpenProductsDropdown] = useState(false);
@@ -291,10 +292,10 @@ useEffect(() => {
     <header
       dir={locale === "en" ? "ltr" : "rtl"}
       className={`fixed top-4 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? "bg-[#6b252f] shadow-md" : "bg-[#6b252f] shadow-md"
+        scrolled ? "hidden shadow-md" : "bg-[#6b252f] shadow-md"
       } font-arabic`}
     >
-      <div className="container mx-auto flex items-center justify-between h-20 px-4 lg:px-8">
+      <div className="container mx-auto  flex items-center justify-between h-20 px-4 lg:px-8">
         {/* Logo */}
         <Link
           href="/Home"
@@ -314,11 +315,11 @@ useEffect(() => {
             height={70}
             className="object-contain lg:hidden"
           />
-          <span className="text-sm ml-1 pt-1 text-yellow-200 dark:text-gray-200 hidden lg:block md:block">
+          <span className="text-sm ml-1 pt-1  text-gray-300 dark:text-gray-200 block">
             {t("nav.subLogo")}
           </span>
         </Link>
-        <motion.div
+       {/*  <motion.div
           animate={{ scale: [1, 1.1, 1], rotate: [0, 2, -2, 0] }}
           transition={{
             repeat: Infinity,
@@ -326,12 +327,12 @@ useEffect(() => {
             ease: "easeInOut",
             repeatType: "loop",
           }}
-          className="bg-yellow-300 flex items-center justify-center rounded-md px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2"
+          className="bg-yellow-300 flex items-center justify-center rounded-md px-2 py-1 hidden lg:block "
         >
           <p className="text-xs sm:text-sm md:text-base font-[cairo]">
             {locale === "ar" ? "نسخة تجريبية" : "Trial version"}
           </p>
-        </motion.div>
+        </motion.div> */}
 
         {/* Navigation Links (Desktop) */}
         <nav className="hidden md:flex space-x-6 ltr:space-x-reverse font-semibold text-gray-100 dark:text-gray-300 md:font-medium md:space-x-4 md:ml-6 gap-1 font-[cairo]">
@@ -441,8 +442,8 @@ useEffect(() => {
           </div>
 
           {!isAdmin && (
-            <div className="hidden md:flex items-center space-x-6 ltr:space-x-reverse text-yellow-400">
-              <LanguageSwitcher />
+            <div className="hidden md:flex items-center space-x-6 ltr:space-x-reverse text-gray-300">
+              <LanguageSwitcher/>
             </div>
           )}
 
@@ -451,7 +452,7 @@ useEffect(() => {
             <SheetTrigger asChild>
               <button
                 aria-label="Open menu"
-                className="md:hidden text-yellow-400 text-2xl ml-2"
+                className="md:hidden text-gray-300 text-2xl ml-2"
               >
                 <FaBars />
               </button>
@@ -560,7 +561,7 @@ useEffect(() => {
 
                 {/* زر تغيير اللغة */}
                 {!isAdmin && (
-                  <div className="p-1 bg-blue-500 flex items-center justify-center mt-4 rounded">
+                  <div className="p-1 bg-gray-500 flex items-center justify-center mt-4 rounded">
                     <LanguageSwitcher />
                   </div>
                 )}

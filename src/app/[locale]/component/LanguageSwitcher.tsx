@@ -39,13 +39,13 @@ function LanguageSwitcherInner() {
 
   return (
     <div className="flex items-center space-x-2">
-      <GrLanguage className="text-yellow-400 w-5 h-5" />
+      <GrLanguage className="text-gray-300 w-5 h-5" />
       {routing.locales.map((locale) =>
         locale === currentLocale ? null : (
           <button
             key={locale}
             onClick={() => changeLanguage(locale)}
-            className="px-2 py-1 rounded transition text-white hover:text-yellow-400 "
+            className="px-2 py-1 rounded transition text-white hover:text-gray-300 "
           >
             {localeNames[locale]}
           </button>

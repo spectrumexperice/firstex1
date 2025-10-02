@@ -158,7 +158,7 @@ const Footer = () => {
           dir={locale === "en" ? "ltr" : "rtl"}
           className="text-center mt-10 text-gray-400 text-xs "
         >
-          &copy; {new Date().getFullYear()} {t("copyright")}
+        {t("copyright")}   &copy; {new Date().getFullYear()} 
         </div>
       </footer>
       <div className=" fixed bottom-6 left-6 z-50 flex flex-col gap-2 ">
