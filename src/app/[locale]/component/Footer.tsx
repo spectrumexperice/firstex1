@@ -69,7 +69,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  href={`/${locale}/Contactform`}
+                  href={`/${locale}/ContactForm`}
                   className="hover:text-yellow-400 transition"
                 >
                   {t("links.contact")}
