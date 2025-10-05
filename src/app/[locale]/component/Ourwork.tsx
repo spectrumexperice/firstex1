@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useKeenSlider } from "keen-slider/react";
-import "keen-slider/keen-slider.min.css";
+
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons/io";
@@ -28,6 +28,7 @@ const Ourwork = () => {
   const isRTL = locale !== "en";
   const t = useTranslations("OurWork");
   const dispatch=useDispatch()
+
   const [sliderRef, slider] = useKeenSlider({
     loop: true,
     rtl: isRTL,
@@ -58,7 +59,7 @@ const Ourwork = () => {
       function nextTimeout() {
         clearTimeout(timeout);
         if (mouseOver) return;
-        timeout = setTimeout(() => slider.next(), 2000); // كل ثانيتين
+        timeout = setTimeout(() => slider.next(), 3000); // كل ثانيتين
       }
       slider.on("created", () => {
         slider.container.addEventListener("mouseover", () => {
@@ -77,18 +78,11 @@ const Ourwork = () => {
     },
   ]
 );
- useEffect(() => {
-  async function fetchWorks() {
-    try {
-      dispatch(setWorksDetails({ loading: true }));
-      const response = await fetchworksDetails();
-      dispatch(setWorksDetails({ works: response.data, loading: false }));
-    } catch (error) {
-      dispatch(setWorksDetails({ error: 'فشل تحميل العمل', loading: false }));
-    }
-  }
-  fetchWorks();
-}, [dispatch]); // ⚠️ أضف dispatch كمصفوفة تبعيات
+
+
+
+
+
 
   return (
     <section className="py-16 px-4 bg-gray-50" dir={isRTL ? "rtl" : "ltr"}>
@@ -119,6 +113,7 @@ const Ourwork = () => {
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                     sizes="100vw"
+                    priority={index === 0} // فقط الصورة الأولى
                   />
                 </div>
               </div>

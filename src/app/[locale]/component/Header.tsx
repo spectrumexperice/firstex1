@@ -2,14 +2,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import fetchUserDetails from "../../utilities/fetchUserDetails";
 import Image from "next/image";
 import { FaUserCircle, FaBars } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import Logo2 from "src/assits/Logo2.png";
 /* import SearchPage from "../search/page"; */
-
-
 import { Sheet ,SheetContent, SheetTrigger} from "@/components/ui/sheet";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
@@ -17,9 +14,9 @@ import { GoTriangleDown, GoTriangleUp } from "react-icons/go";
 import UserMenu from "../UserMenu/UserMenu";
 import LanguageSwitcher from "./LanguageSwitcher";
 import SummaryApi from "../../common/summaryApi";
-
 import Axios from "../../utilities/axios";
-import { setUserDetails } from "../../store/userSlice";
+import fetchUserDetails from "@/app/utilities/fetchUserDetails";
+import { setUserDetails } from "@/app/store/userSlice";
 
 // ===== Types خاصة بالتصنيفات =====
 interface Product {
@@ -188,62 +185,39 @@ const Header = () => {
 
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
+ 
   const isAdmin = user?.role === "ADMIN";
+  
+useEffect(() => {
+  const handleScroll = () => {
+    if (window.scrollY > 50) setScrolled(true);
+    else setScrolled(false);
+  };
 
-  // Scroll effect
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  const handleResize = () => {
+    if (window.innerWidth >= 768) setOpenMobileMenu(false);
+  };
 
-  // Close dropdowns on outside click
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
-        setOpenUserMenu(false);
-      }
-      if (
-        productsDropdownRef.current &&
-        !productsDropdownRef.current.contains(e.target as Node)
-      ) {
-        setOpenProductsDropdown(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  const handleClickOutside = (e) => {
+    if (menuRef.current && !menuRef.current.contains(e.target)) {
+      setOpenUserMenu(false);
+    }
+    if (productsDropdownRef.current && !productsDropdownRef.current.contains(e.target)) {
+      setOpenProductsDropdown(false);
+    }
+  };
 
-  // Close mobile menu on resize
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 768) {
-        setOpenMobileMenu(false);
-      }
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  window.addEventListener("scroll", handleScroll);
+  window.addEventListener("resize", handleResize);
+  document.addEventListener("mousedown", handleClickOutside);
 
-  // Fetch user (بدون تغيير)
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        if (!user?._id) {
-          const userData = await fetchUserDetails();
-          if (userData) {
-            dispatch(setUserDetails(userData));
-          }
-        }
-      } catch (error) {
-        console.error("Failed to fetch user:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchUser();
-  }, [dispatch, user?._id]);
-
+  return () => {
+    window.removeEventListener("scroll", handleScroll);
+    window.removeEventListener("resize", handleResize);
+    document.removeEventListener("mousedown", handleClickOutside);
+  };
+  
+}, []);
   // ===== جلب التصنيفات بهيكل هرمي من getGroup فقط =====
 useEffect(() => {
   const fetchData = async () => {
@@ -268,9 +242,28 @@ useEffect(() => {
     } catch (error) {
       console.error("Failed to fetch grouped products:", error);
     }
+    
   };
   fetchData();
 }, []);
+// Fetch user (بدون تغيير)
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        if (!user?._id) {
+          const userData = await fetchUserDetails();
+          if (userData) {
+            dispatch(setUserDetails(userData));
+          }
+        }
+      } catch (error) {
+        console.error("Failed to fetch user:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchUser();
+  }, [dispatch, user?._id]);
 
   // ================================================
 
@@ -306,6 +299,7 @@ useEffect(() => {
             alt="شعار الشركة"
             width={140}
             height={70}
+            priority
             className="object-contain hidden lg:block"
           />
           <Image
@@ -313,6 +307,7 @@ useEffect(() => {
             alt="شعار الشركة"
             width={110}
             height={70}
+            priority
             className="object-contain lg:hidden"
           />
           <span className="text-sm ml-1 pt-1  text-gray-300 dark:text-gray-200 block">
@@ -396,7 +391,8 @@ useEffect(() => {
         <div className="flex items-center space-x-4 ltr:space-x-reverse text-gray-300 dark:text-gray-300">
           {/* User menu (كما هو) */}
           <div className="relative" ref={menuRef}>
-            {user?._id && (
+            {
+            user?._id && (
               <>
                 <div
                   onClick={() => isAdmin && setOpenUserMenu((prev) => !prev)}
@@ -430,7 +426,8 @@ useEffect(() => {
               </>
             )}
 
-            {!user?._id && (
+            {
+            !user?._id && (
               <Link href={`/login`}>
                 <FaUserCircle
                   className={`text-xl hover:text-[#b0b0b0] transition cursor-pointer ${
@@ -460,7 +457,8 @@ useEffect(() => {
 
             <SheetContent side="left" className="w-64 p-6 bg-white shadow-lg">
               <nav className="flex flex-col space-y-4 font-semibold text-gray-700">
-                {navLinks.map((link, idx) => {
+                {
+                navLinks.map((link, idx) => {
                   if (link.dropdown) {
                     return (
                       <details key={idx} className="group" open={false}>
@@ -492,7 +490,7 @@ useEffect(() => {
                               {t("nav.AllProducts")}
                             </Link> */}
                           </li>
-                          {categories.map((cat) => (
+                          {/* {categories.map((cat) => (
                             <details
                               key={cat.name[locale]}
                               className="group"
@@ -541,7 +539,7 @@ useEffect(() => {
                                 ))}
                               </ul>
                             </details>
-                          ))}
+                          ))} */}
                         </ul>
                       </details>
                     );

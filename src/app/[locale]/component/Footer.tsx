@@ -140,18 +140,7 @@ const Footer = () => {
             </div>
           </div>
 
-         {/*  <div>
-            <h3 className="text-xl font-semibold mb-4">
-              {t("newsletterTitle")}
-            </h3>
-            <p
-              dir={locale === "en" ? "ltr" : "rtl"}
-              className="text-gray-300 mb-4 text-sm"
-            >
-              {t("newsletterDescription")}
-            </p>
-            <NewsletterForm />
-          </div> */}
+      
         </div>
 
         <div

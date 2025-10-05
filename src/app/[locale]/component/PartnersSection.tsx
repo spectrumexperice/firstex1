@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
 import { useKeenSlider } from "keen-slider/react";
-import "keen-slider/keen-slider.min.css";
+
 import { useEffect, useState } from "react";
     interface Partner {
   _id: string;               // MongoDB ObjectId كـ string
@@ -54,7 +54,7 @@ const PartnersSection = () => {
 
   return (
     <section
-      className="bg-[#f9f9f9] py-4 px-4 lg:px-20"
+      className="bg-[#f9f9f9] py-4 px-4 lg:px-20 font-[Cairo]"
       aria-labelledby="partners-title"
       dir="rtl"
     >

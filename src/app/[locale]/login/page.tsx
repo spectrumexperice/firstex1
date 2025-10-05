@@ -18,7 +18,7 @@ export default function Login() {
   const t = useTranslations("login");
   const locale = useLocale()   
   const dispatch=useDispatch()
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -55,7 +55,7 @@ export default function Login() {
       setData({ email: "", password: "" });
 
       // الانتقال للصفحة الرئيسية
-         window.location.href = `/${locale}/Home`; // استخدم مسارًا محددًا
+         router.push(`/${locale}/Home`); // استخدم مسارًا محددًا
 
       toast.success(response.data.message);
     }

@@ -5,34 +5,37 @@ import fetchUserDetails from "../../utilities/fetchUserDetails";
 import {setUserDetails} from '../../store/userSlice'
 import {setpartnerDetails} from '../../store/partnerSlice'
 import { useEffect } from "react";
-import Hero from "../component/Hero";
-import WhyChooseUs from "../component/WhyChooseUs";
-import Footer from "../component/Footer";
-import Ourfields from "../component/OurField";
-import Ourwork from "../component/Ourwork";
 import fetchpartnerDetails from "../../utilities/fetchPartnerDetails";
-import PartnersSection from "../component/PartnersSection";
-import SendMessageSection from "../component/SendMessageSection";
+import dynamic from "next/dynamic";
+import fetchworksDetails from "@/app/utilities/fetchWorksDetails";
+import { setWorksDetails } from "@/app/store/workSlice";
+// Dynamic Imports
+const Hero = dynamic(() => import("../component/Hero"));
+const WhyChooseUs = dynamic(() => import("../component/WhyChooseUs"));
+const Ourfields = dynamic(() => import("../component/OurField"));
+const Ourwork = dynamic(() => import("../component/Ourwork"));
+const PartnersSection = dynamic(() => import("../component/PartnersSection"));
+const SendMessageSection = dynamic(() => import("../component/SendMessageSection"));
+const Footer = dynamic(() => import("../component/Footer"));
 export default function Home() {
   const dispatch=useDispatch()
-  const fetchUser=async()=>{
-   const userData=await fetchUserDetails() 
-   
-   dispatch(setUserDetails(userData))
-  }
-  const fetchpartnerdetails=async()=>{
-   try {
-        dispatch(setpartnerDetails({ loading: true }));
-        const response = await fetchpartnerDetails();
-        dispatch(setpartnerDetails({ partners: response.data, loading: false }));
-      } catch (error) {
-        dispatch(setpartnerDetails({ error: "فشل تحميل الشركاء", loading: false }));
-      }
-  }
-  useEffect(()=>{
-    fetchUser()
-    fetchpartnerdetails()
-  },)
+  useEffect(() => {
+  (async () => {
+    try {
+      const [userData, partnerRes,workRes] = await Promise.all([
+        fetchUserDetails(),
+        fetchpartnerDetails(),
+        fetchworksDetails()
+      ]);
+      dispatch(setUserDetails(userData));
+      dispatch(setpartnerDetails({ partners: partnerRes.data, loading: false }));
+        dispatch(setWorksDetails({ works: workRes.data, loading: false }));
+    } catch {
+      dispatch(setpartnerDetails({ error: "فشل تحميل ", loading: false }));
+    }
+  })();
+}, []);
+
   return (
     <>
     
