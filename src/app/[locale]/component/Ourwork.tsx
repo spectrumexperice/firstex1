@@ -59,7 +59,7 @@ const Ourwork = () => {
       function nextTimeout() {
         clearTimeout(timeout);
         if (mouseOver) return;
-        timeout = setTimeout(() => slider.next(), 3000); // كل ثانيتين
+        timeout = setTimeout(() => slider.next(), 2000); // كل ثانيتين
       }
       slider.on("created", () => {
         slider.container.addEventListener("mouseover", () => {
@@ -79,7 +79,18 @@ const Ourwork = () => {
   ]
 );
 
-
+ useEffect(() => {
+  async function fetchWorks() {
+    try {
+      dispatch(setWorksDetails({ loading: true }));
+      const response = await fetchworksDetails();
+      dispatch(setWorksDetails({ works: response.data, loading: false }));
+    } catch (error) {
+      dispatch(setWorksDetails({ error: 'فشل تحميل العمل', loading: false }));
+    }
+  }
+  fetchWorks();
+}, [dispatch]); // ⚠️ أضف dispatch كمصفوفة تبعيات
 
 
 
