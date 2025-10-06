@@ -2,7 +2,7 @@
 
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-
+import Head from "next/head";
 import fetchUserDetails from '../utilities/fetchUserDetails';
 import { setUserDetails } from '../store/userSlice';
 import fetchworksDetails from '../utilities/fetchWorksDetails';
@@ -53,6 +53,15 @@ useEffect(() => {
 
   return (
     <>
+    <Head>
+        <title>سبكتروم | حلول صوتية متكاملة</title>
+        <meta name="description" content="نحن في سبكتروم نقدم حلول صوتية متكاملة مع أحدث الأنظمة والتقنيات العالمية. استشارات، تصميم، وتنفيذ مشاريع صوتية باحترافية." />
+        <meta name="keywords" content="حلول صوتية, أنظمة صوتية, تركيب صوتيات, استشارات صوتية, مشاريع صوتية, سبكتروم" />
+        <link rel="canonical" href="https://s-spectrum.com/" />
+        <meta property="og:title" content="سبكتروم | حلول صوتية متكاملة" />
+        <meta property="og:description" content="نحن في سبكتروم نقدم حلول صوتية متكاملة مع أحدث الأنظمة والتقنيات العالمية." />
+        <meta property="og:type" content="website" />
+      </Head>
       <Header />
       <Hero />
       <WhyChooseUs />
