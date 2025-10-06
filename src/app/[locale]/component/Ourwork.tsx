@@ -3,14 +3,14 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useKeenSlider } from "keen-slider/react";
-
+import "keen-slider/keen-slider.min.css";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store/store";
+import { RootState } from "@/app/store/store";
 import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons/io";
 import { useLocale } from "next-intl";
 import { useTranslations } from "next-intl";
-import { setWorksDetails } from "../../store/workSlice";
-import fetchworksDetails from "../../utilities/fetchWorksDetails";
+import { setWorksDetails } from "@/app/store/workSlice";
+import fetchworksDetails from "@/app/utilities/fetchWorksDetails";
 export interface Work {
   _id: string;
   imageUrl: string;
@@ -28,10 +28,14 @@ const Ourwork = () => {
   const isRTL = locale !== "en";
   const t = useTranslations("OurWork");
   const dispatch=useDispatch()
-
   const [sliderRef, slider] = useKeenSlider({
     loop: true,
-    rtl: isRTL,
+    rtl:isRTL,
+    defaultAnimation:{
+        duration:400,
+       easing: (t: number) => (t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3)/2)
+    },
+    renderMode:"performance",
     slides: { perView: 1, spacing: 16 }, // مبدئياً شريحة واحدة ونصف
     breakpoints: {
       "(min-width: 640px)": {
@@ -78,7 +82,6 @@ const Ourwork = () => {
     },
   ]
 );
-
  useEffect(() => {
   async function fetchWorks() {
     try {
@@ -92,10 +95,8 @@ const Ourwork = () => {
   fetchWorks();
 }, [dispatch]); // ⚠️ أضف dispatch كمصفوفة تبعيات
 
-
-
-
   return (
+    
     <section className="py-16 px-4 bg-gray-50" dir={isRTL ? "rtl" : "ltr"}>
       <motion.h2
         className="text-4xl font-[Cairo] font-extrabold mb-8 text-[#6b252f] text-center"
@@ -117,14 +118,15 @@ const Ourwork = () => {
           <div ref={sliderRef} className="keen-slider">
             {works.map((work, index) => (
               <div key={work._id} className="keen-slider__slide">
-                <div className="relative w-full aspect-[4/3] overflow-hidden rounded-xl shadow-md group">
+                <div className="relative w-full aspect-[4/3] overflow-hidden rounded-xl shadow-md group ">
                   <Image
                     src={work.imageUrl}
                     alt={`عمل ${index + 1}`}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                     sizes="100vw"
-                    priority={index === 0} // فقط الصورة الأولى
+                    priority={index < 2}
+                    
                   />
                 </div>
               </div>

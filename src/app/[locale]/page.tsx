@@ -48,7 +48,7 @@ useEffect(() => {
   }
 
   fetchAll();
-}, [dispatch]);
+}, [dispatch]); 
 
 
   return (

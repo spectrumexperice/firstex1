@@ -198,11 +198,11 @@ useEffect(() => {
     if (window.innerWidth >= 768) setOpenMobileMenu(false);
   };
 
-  const handleClickOutside = (e) => {
-    if (menuRef.current && !menuRef.current.contains(e.target)) {
+  const handleClickOutside = (e:MouseEvent) => {
+    if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
       setOpenUserMenu(false);
     }
-    if (productsDropdownRef.current && !productsDropdownRef.current.contains(e.target)) {
+    if (productsDropdownRef.current && !productsDropdownRef.current.contains(e.target as Node)) {
       setOpenProductsDropdown(false);
     }
   };
@@ -218,6 +218,27 @@ useEffect(() => {
   };
   
 }, []);
+// Fetch user (بدون تغيير)
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const token=localStorage.getItem('accessToken')
+        if (token &&!user?._id) {
+          const userData = await fetchUserDetails();
+          console.log("userData from API:", userData);
+          if (userData) {
+            dispatch(setUserDetails(userData));
+          }
+          
+        }
+      } catch (error) {
+        console.error("Failed to fetch user:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchUser();
+  }, [dispatch, user?._id]);
   // ===== جلب التصنيفات بهيكل هرمي من getGroup فقط =====
 useEffect(() => {
   const fetchData = async () => {
@@ -246,24 +267,7 @@ useEffect(() => {
   };
   fetchData();
 }, []);
-// Fetch user (بدون تغيير)
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        if (!user?._id) {
-          const userData = await fetchUserDetails();
-          if (userData) {
-            dispatch(setUserDetails(userData));
-          }
-        }
-      } catch (error) {
-        console.error("Failed to fetch user:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchUser();
-  }, [dispatch, user?._id]);
+
 
   // ================================================
 
@@ -393,6 +397,7 @@ useEffect(() => {
           <div className="relative" ref={menuRef}>
             {
             user?._id && (
+             
               <>
                 <div
                   onClick={() => isAdmin && setOpenUserMenu((prev) => !prev)}

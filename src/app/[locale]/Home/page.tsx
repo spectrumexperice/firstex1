@@ -19,6 +19,7 @@ const SendMessageSection = dynamic(() => import("../component/SendMessageSection
 const Footer = dynamic(() => import("../component/Footer"));
 export default function Home() {
   const dispatch=useDispatch()
+  
   useEffect(() => {
   (async () => {
     try {
