@@ -9,6 +9,7 @@ import AxiosToastError from "../../utilities/AxiosToatError";
 import SummaryApi from "../../common/summaryApi";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation"; 
+import Head from "next/head";
 
 function ResetPasswordInner() {
   const searchParams = useSearchParams();
@@ -70,68 +71,85 @@ function ResetPasswordInner() {
   }, [email, router]);
 
   return (
-    <section
-      className="min-h-screen flex items-center justify-center bg-gray-100 px-4"
-      dir={locale === "en" ? "ltr" : "rtl"}
-    >
-      <div className="w-full max-w-md mb-4">
-        <Link
-          href={`/${locale}`}
-          className="inline-flex items-center text-[#6b252f] hover:underline"
-        >
-          ← {locale === "ar" ? "العودة للصفحة الرئيسية" : "Back to Home"}
-        </Link>
-      </div>
-      <Toaster position="top-center" />
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="max-w-md w-full bg-white p-8 rounded-lg shadow-md"
+    <>
+      <Head>
+        <title>سبكتروم | {t("title")}</title>
+        <meta name="description" content="اعاده تعين كلمة المرور" />
+        <meta name="keywords" content="سبكتروم, اعادة التعين" />
+        <meta name="robots" content="index, follow" />
+      </Head>
+      <section
+        className="min-h-screen flex items-center justify-center bg-gray-100 px-4"
+        dir={locale === "en" ? "ltr" : "rtl"}
       >
-        <h2 className="text-2xl font-bold mb-4 text-center text-[#6b252f]">
-          {t("title")}
-        </h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="relative">
-            <label htmlFor="newPassword" className="block mb-1 font-medium">
-              {t("newPasswordLabel")}
-            </label>
-            <input
-              type="password"
-              id="newPassword"
-              name="newPassword"
-              value={data.newPassword}
-              onChange={handleChange}
-              required
-              placeholder={t("newPasswordPlaceholder")}
-              className="w-full border border-gray-300 rounded p-2 pr-10 focus:outline-none focus:border-[#6b252f]"
-            />
+        <noscript>
+          <div>
+            <h1>{t("title")}</h1>
+           
           </div>
-          <div className="relative">
-            <label htmlFor="confirmPassword" className="block mb-1 font-medium">
-              {t("confirmPasswordLabel")}
-            </label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              value={data.confirmPassword}
-              onChange={handleChange}
-              required
-              placeholder={t("confirmPasswordPlaceholder")}
-              className="w-full border border-gray-300 rounded p-2 pr-10 focus:outline-none focus:border-[#6b252f]"
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-[#6b252f] hover:bg-[#4c1e21] text-white py-2 rounded font-semibold transition"
+        </noscript>
+        <div className="w-full max-w-md mb-4">
+          <Link
+            href={`/${locale}/`}
+            className="inline-flex items-center text-[#6b252f] hover:underline"
           >
-            {t("submit")}
-          </button>
-        </form>
-      </motion.div>
-    </section>
+            ← {locale === "ar" ? "العودة للصفحة الرئيسية" : "Back to Home"}
+          </Link>
+        </div>
+        <Toaster position="top-center" />
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="max-w-md w-full bg-white p-8 rounded-lg shadow-md"
+        >
+          <h2 className="text-2xl font-bold mb-4 text-center text-[#6b252f]">
+            {t("title")}
+          </h2>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="relative">
+              <label htmlFor="newPassword" className="block mb-1 font-medium">
+                {t("newPasswordLabel")}
+              </label>
+              <input
+                type="password"
+                id="newPassword"
+                name="newPassword"
+                value={data.newPassword}
+                onChange={handleChange}
+                required
+                placeholder={t("newPasswordPlaceholder")}
+                className="w-full border border-gray-300 rounded p-2 pr-10 focus:outline-none focus:border-[#6b252f]"
+              />
+            </div>
+            <div className="relative">
+              <label
+                htmlFor="confirmPassword"
+                className="block mb-1 font-medium"
+              >
+                {t("confirmPasswordLabel")}
+              </label>
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                value={data.confirmPassword}
+                onChange={handleChange}
+                required
+                placeholder={t("confirmPasswordPlaceholder")}
+                className="w-full border border-gray-300 rounded p-2 pr-10 focus:outline-none focus:border-[#6b252f]"
+              />
+            </div>
+            <button
+              type="submit"
+              className="w-full bg-[#6b252f] hover:bg-[#4c1e21] text-white py-2 rounded font-semibold transition"
+            >
+              {t("submit")}
+            </button>
+          </form>
+        </motion.div>
+      </section>
+    </>
   );
 }
 

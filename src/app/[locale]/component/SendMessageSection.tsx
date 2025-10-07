@@ -6,6 +6,7 @@ import Axios from "../../utilities/axios";
 import AxiosToastError from "../../utilities/AxiosToatError";
 import SummaryApi from "../../common/summaryApi";
 import toast from "react-hot-toast";
+import Head from "next/head";
 
 export default function SendMessageSection() {
   const t = useTranslations("sendMessage");
@@ -52,61 +53,76 @@ export default function SendMessageSection() {
   };
 
   return (
-    <section className="bg-white py-12 px-4 lg:px-8 ">
-      <div className="max-w-4xl mx-auto text-center ">
-        <h2 className="text-3xl font-bold mb-4 text-[#6b252f] font-[cairo]">
-          {t("title")}
-        </h2>
-        <p className="text-gray-600 mb-8">{t("subtitle")}</p>
+    <>
+      <Head>
+        <title>سبكتروم | {t("title")}</title>
+        <meta name="description" content={t("subtitle")} />
+        <meta name="keywords" content="رسائل, تواصل, اتصل بنا, سبكتروم" />
+        <meta name="robots" content="index, follow" />
+        <meta property="og:title" content={`سبكتروم | ${t("title")}`} />
+        <meta property="og:description" content={t("subtitle")} />
+        <meta property="og:type" content="website" />
+      </Head>
+      <section className="bg-white py-12 px-4 lg:px-8 ">
+        <noscript>
+          <h1>{t("title")}</h1>
+          <p>{t("subtitle")}</p>
+        </noscript>
+        <div className="max-w-4xl mx-auto text-center ">
+          <h2 className="text-3xl font-bold mb-4 text-[#6b252f] font-[cairo]">
+            {t("title")}
+          </h2>
+          <p className="text-gray-600 mb-8">{t("subtitle")}</p>
 
-        <form
-           dir={locale === 'en' ? 'ltr' : 'rtl'}
-          onSubmit={handleOnSubmit}
-          className="grid grid-cols-1 gap-6 text-right"
-        >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <form
+            dir={locale === "en" ? "ltr" : "rtl"}
+            onSubmit={handleOnSubmit}
+            className="grid grid-cols-1 gap-6 text-right"
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleOnChange}
+                type="text"
+                placeholder={t("fields.fullName")}
+                className="border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+              <input
+                name="email"
+                value={formData.email}
+                onChange={handleOnChange}
+                type="email"
+                placeholder={t("fields.email")}
+                className="border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </div>
             <input
-              name="fullName"
-              value={formData.fullName}
+              name="phone"
+              value={formData.phone}
               onChange={handleOnChange}
               type="text"
-              placeholder={t("fields.fullName")}
+              placeholder={t("fields.phone")}
               className="border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
-            <input
-              name="email"
-              value={formData.email}
+            <textarea
+              name="message"
+              value={formData.message}
               onChange={handleOnChange}
-              type="email"
-              placeholder={t("fields.email")}
+              rows={5}
+              placeholder={t("fields.message")}
               className="border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
-          </div>
-          <input
-            name="phone"
-            value={formData.phone}
-            onChange={handleOnChange}
-            type="text"
-            placeholder={t("fields.phone")}
-            className="border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          />
-          <textarea
-            name="message"
-            value={formData.message}
-            onChange={handleOnChange}
-            rows={5}
-            placeholder={t("fields.message")}
-            className="border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          />
-          <button
-            type="submit"
-            disabled={loading}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300"
-          >
-            {loading ? t("submitButton.sending") : t("submitButton.send")}
-          </button>
-        </form>
-      </div>
-    </section>
+            <button
+              type="submit"
+              disabled={loading}
+              className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300"
+            >
+              {loading ? t("submitButton.sending") : t("submitButton.send")}
+            </button>
+          </form>
+        </div>
+      </section>
+    </>
   );
 }

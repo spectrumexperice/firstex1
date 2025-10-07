@@ -45,7 +45,7 @@ const Footer = () => {
             <ul className="space-y-2 text-gray-300 text-sm">
               <li>
                 <Link
-                  href={`/${locale}/Home`}
+                  href={`/${locale}/`}
                   className="hover:text-yellow-400 transition"
                 >
                   {t("links.home")}

@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import Axios from "../../utilities/axios";
 import { useLocale, useTranslations } from "next-intl";
 import SummaryApi from "../../common/summaryApi";
+import Head from "next/head";
 
 type Attachment = { file: File; id: string };
 
@@ -143,183 +144,209 @@ export default function ContactForm() {
   };
 
   return (
-    <section
-      dir={locale === "en" ? "ltr" : "rtl"}
-      className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-md my-10 font-[cairo] mt-20"
-    >
-      <h2 className="text-3xl font-bold mb-6 text-[#6b252f] text-center mt-10">
-        {t("title")}
-      </h2>
+    <>
+      <Head>
+        <title>سبكتروم | {t("title")}</title>
+        <meta name="description" content={t("subtitle")} />
+        <meta name="keywords" content="اتصل بنا, مشروع, رسائل, سبكتروم" />
+        <meta name="robots" content="index, follow" />
+        <meta property="og:title" content={`سبكتروم | ${t("title")}`} />
+        <meta property="og:description" content={t("subtitle")} />
+        <meta property="og:type" content="website" />
+      </Head>
+      <section
+        dir={locale === "en" ? "ltr" : "rtl"}
+        className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-md my-10 font-[cairo] mt-20"
+      >
+        <noscript>
+          <h1>{t("title")}</h1>
+          <p>{t("subtitle")}</p>
+        </noscript>
 
-      <form onSubmit={handleSubmit} className="space-y-6  mt-10">
-        <fieldset
-          className="border border-gray-300 p-4 rounded-md bg-gray-50"
-          aria-labelledby="personal-data-legend"
-        >
-          <legend
-            id="personal-data-legend"
-            className="px-3 font-semibold text-lg text-gray-800 bg-white rounded-md shadow-sm"
+        <h2 className="text-3xl font-bold mb-6 text-[#6b252f] text-center mt-10">
+          {t("title")}
+        </h2>
+
+        <form onSubmit={handleSubmit} className="space-y-6  mt-10">
+          <fieldset
+            className="border border-gray-300 p-4 rounded-md bg-gray-50"
+            aria-labelledby="personal-data-legend"
           >
-            
-            {t("personalData")}
-          </legend>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input
-              name="fullName"
-              type="text"
-              placeholder={t("fullName")}
-              value={formValues.fullName}
-              onChange={handleChange}
-              className="border border-gray-300 rounded p-3 bg-white focus:outline-none "
-              required
-            />
-            <input
-              name="email"
-              type="email"
-              placeholder={t("email")}
-              value={formValues.email}
-              onChange={handleChange}
-              className="border border-gray-300 rounded p-3 bg-white focus:outline-none"
-              required
-            />
-             <input
-              name="company"
-              type="text"
-              placeholder={t("company")}
-              value={formValues.company}
-              onChange={handleChange}
-              className="border border-gray-300 rounded p-3 bg-white focus:outline-none "
-              required
-            />
-            <input
-              name="phone"
-              type="tel"
-              dir={locale === "en" ? "ltr" : "rtl"}
-              placeholder={t("phone")}
-              value={formValues.phone}
-              onChange={handleChange}
-              className="border border-gray-300 rounded p-3 bg-white focus:outline-none"
-            />
-          </div>
-        </fieldset>
-
-        <fieldset className="border border-gray-300 p-4 rounded-md bg-gray-50">
-          <legend className="px-3 font-semibold text-lg text-gray-800 bg-white rounded-md shadow-sm ">
-            {t("projectData")}
-          </legend>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input
-              name="projectName"
-              type="text"
-              placeholder={t("projectName")}
-              value={formValues.projectName}
-              onChange={handleChange}
-              className="border border-gray-300 p-4 rounded-md bg-white"
-              required
-            />
-            <select
-              name="projectStatus"
-              value={formValues.projectStatus}
-              onChange={handleChange}
-              className="border border-gray-300 bg-white rounded p-3 focus:outline-none "
-              required
+            <legend
+              id="personal-data-legend"
+              className="px-3 font-semibold text-lg text-gray-800 bg-white rounded-md shadow-sm"
             >
-              <option  value="">{locale === "ar"?"اختر حالة المشروع":"Choose project status"}</option>
-              <option value="مخطط">{locale === "ar"?"مخطط":"planned"}</option>
-              <option value="قيد التنفيذ">{locale === "ar"?"قيد التنفيذ":"Under implementation"}</option>
-              <option value="مكتمل">{locale === "ar"?"مكتمل":"complete"}</option>
-              <option value="آخر">{locale === "ar"?"آخر":"Other"}</option>
-            </select>
+              {t("personalData")}
+            </legend>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input
+                name="fullName"
+                type="text"
+                placeholder={t("fullName")}
+                value={formValues.fullName}
+                onChange={handleChange}
+                className="border border-gray-300 rounded p-3 bg-white focus:outline-none "
+                required
+              />
+              <input
+                name="email"
+                type="email"
+                placeholder={t("email")}
+                value={formValues.email}
+                onChange={handleChange}
+                className="border border-gray-300 rounded p-3 bg-white focus:outline-none"
+                required
+              />
+              <input
+                name="company"
+                type="text"
+                placeholder={t("company")}
+                value={formValues.company}
+                onChange={handleChange}
+                className="border border-gray-300 rounded p-3 bg-white focus:outline-none "
+                required
+              />
+              <input
+                name="phone"
+                type="tel"
+                dir={locale === "en" ? "ltr" : "rtl"}
+                placeholder={t("phone")}
+                value={formValues.phone}
+                onChange={handleChange}
+                className="border border-gray-300 rounded p-3 bg-white focus:outline-none"
+              />
+            </div>
+          </fieldset>
 
-            <input
-              name="projectLocation"
-              type="text"
-              placeholder={t("projectLocation")}
-              value={formValues.projectLocation}
-              onChange={handleChange}
-              className="border border-gray-300 rounded p-3 focus:outline-none bg-white"
-              required
-            />
-            <input
-              name="projectType"
-              type="text"
-              placeholder={t("projectType")}
-              value={formValues.projectType}
-              onChange={handleChange}
-              className="border border-gray-300 rounded p-3 focus:outline-none bg-white"
-            />
-            <input
-              name="qty"
-              type="text"
-              placeholder={t("qty")}
-              value={formValues.qty}
-              onChange={handleChange}
-              className="border border-gray-300 rounded p-3 focus:outline-none bg-white"
-            />
-          </div>
-          <textarea
-            name="specifications"
-            placeholder={t("specifications")}
-            value={formValues.specifications}
-            onChange={handleChange}
-            rows={3}
-            className="w-full mt-4 border border-gray-300 rounded p-3 focus:outline-none bg-white"
-          />
-          <textarea
-            name="description"
-            placeholder={t("description")}
-            value={formValues.description}
-            onChange={handleChange}
-            rows={3}
-            className="w-full mt-4 border border-gray-300 rounded p-3 focus:outline-none bg-white"
-          />
-        </fieldset>
+          <fieldset className="border border-gray-300 p-4 rounded-md bg-gray-50">
+            <legend className="px-3 font-semibold text-lg text-gray-800 bg-white rounded-md shadow-sm ">
+              {t("projectData")}
+            </legend>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input
+                name="projectName"
+                type="text"
+                placeholder={t("projectName")}
+                value={formValues.projectName}
+                onChange={handleChange}
+                className="border border-gray-300 p-4 rounded-md bg-white"
+                required
+              />
+              <select
+                name="projectStatus"
+                value={formValues.projectStatus}
+                onChange={handleChange}
+                className="border border-gray-300 bg-white rounded p-3 focus:outline-none "
+                required
+              >
+                <option value="">
+                  {locale === "ar"
+                    ? "اختر حالة المشروع"
+                    : "Choose project status"}
+                </option>
+                <option value="مخطط">
+                  {locale === "ar" ? "مخطط" : "planned"}
+                </option>
+                <option value="قيد التنفيذ">
+                  {locale === "ar" ? "قيد التنفيذ" : "Under implementation"}
+                </option>
+                <option value="مكتمل">
+                  {locale === "ar" ? "مكتمل" : "complete"}
+                </option>
+                <option value="آخر">{locale === "ar" ? "آخر" : "Other"}</option>
+              </select>
 
-        <fieldset className="border border-gray-300 p-4 rounded-md bg-gray-50">
-          <legend className="px-3 font-semibold text-lg text-gray-800 bg-white rounded-md shadow-sm ">
-            {t("attachments")}
-          </legend>
-          <input
-            type="file"
-            multiple
-            accept="image/*,application/pdf"
-            onChange={handleFilesChange}
-            className="block w-full text-gray-600"
-          />
-          {
-          attachments.length > 0 && (
-            <ul className="mt-2 max-h-40 overflow-auto">
-              {
-              attachments.map((att) => (
-                <li
-                  key={att.id}
-                  className="flex justify-between items-center bg-white rounded px-3 py-1 my-1"
-                >
-                  <span className="truncate max-w-[80%]" title={att.file.name}>
-                    {att.file.name} ({(att.file.size / 1024).toFixed(2)} KB)
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => removeAttachment(att.id)}
-                    className="text-red-600 font-bold hover:text-red-800"
-                    aria-label={t("removeFile")}
+              <input
+                name="projectLocation"
+                type="text"
+                placeholder={t("projectLocation")}
+                value={formValues.projectLocation}
+                onChange={handleChange}
+                className="border border-gray-300 rounded p-3 focus:outline-none bg-white"
+                required
+              />
+              <input
+                name="projectType"
+                type="text"
+                placeholder={t("projectType")}
+                value={formValues.projectType}
+                onChange={handleChange}
+                className="border border-gray-300 rounded p-3 focus:outline-none bg-white"
+              />
+              <input
+                name="qty"
+                type="text"
+                placeholder={t("qty")}
+                value={formValues.qty}
+                onChange={handleChange}
+                className="border border-gray-300 rounded p-3 focus:outline-none bg-white"
+              />
+            </div>
+            <textarea
+              name="specifications"
+              placeholder={t("specifications")}
+              value={formValues.specifications}
+              onChange={handleChange}
+              rows={3}
+              className="w-full mt-4 border border-gray-300 rounded p-3 focus:outline-none bg-white"
+            />
+            <textarea
+              name="description"
+              placeholder={t("description")}
+              value={formValues.description}
+              onChange={handleChange}
+              rows={3}
+              className="w-full mt-4 border border-gray-300 rounded p-3 focus:outline-none bg-white"
+            />
+          </fieldset>
+
+          <fieldset className="border border-gray-300 p-4 rounded-md bg-gray-50">
+            <legend className="px-3 font-semibold text-lg text-gray-800 bg-white rounded-md shadow-sm ">
+              {t("attachments")}
+            </legend>
+            <input
+              type="file"
+              multiple
+              accept="image/*,application/pdf"
+              onChange={handleFilesChange}
+              className="block w-full text-gray-600"
+            />
+            {attachments.length > 0 && (
+              <ul className="mt-2 max-h-40 overflow-auto">
+                {attachments.map((att) => (
+                  <li
+                    key={att.id}
+                    className="flex justify-between items-center bg-white rounded px-3 py-1 my-1"
                   >
-                    ✕
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
-        </fieldset>
+                    <span
+                      className="truncate max-w-[80%]"
+                      title={att.file.name}
+                    >
+                      {att.file.name} ({(att.file.size / 1024).toFixed(2)} KB)
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => removeAttachment(att.id)}
+                      className="text-red-600 font-bold hover:text-red-800"
+                      aria-label={t("removeFile")}
+                    >
+                      ✕
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </fieldset>
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full bg-[#6b252f] hover:bg-[#4c1e21] text-white py-3 rounded font-semibold transition disabled:opacity-50"
-        >
-          {loading ? t("loading") : t("submit")}
-        </button>
-      </form>
-    </section>
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-[#6b252f] hover:bg-[#4c1e21] text-white py-3 rounded font-semibold transition disabled:opacity-50"
+          >
+            {loading ? t("loading") : t("submit")}
+          </button>
+        </form>
+      </section>
+    </>
   );
 }

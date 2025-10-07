@@ -295,7 +295,7 @@ useEffect(() => {
       <div className="container mx-auto  flex items-center justify-between h-20 px-4 lg:px-8">
         {/* Logo */}
         <Link
-          href="/Home"
+          href="/"
           className="flex flex-col items-center ltr:space-x-reverse cursor-pointer pr-3"
         >
           <Image

@@ -21,6 +21,10 @@ const Hero = () => {
         <meta property="og:type" content="website" />
       </Head>
       <section className="relative w-full h-screen overflow-hidden " dir="rtl">
+        <noscript>
+          <h1>{t("title")}</h1>
+          <p>{t("description")}</p>
+        </noscript>
         {/* خلفية الفيديو */}
         <motion.video
           initial={{ opacity: 0, y: 20 }}

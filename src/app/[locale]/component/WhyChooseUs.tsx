@@ -53,6 +53,10 @@ const locale = useLocale()
         className="bg-white py-20 px-6 font-arabic"
         dir="rtl"
       >
+        <noscript>
+          <h1>سبكتروم | حلول صوتية احترافية</h1>
+          <p>معالجة صوتية، عزل صوت، أنظمة صوتية، سبكتروم</p>
+        </noscript>
         <div className="max-w-6xl mx-auto text-center">
           <motion.h2
             id="why-choose-us-title"

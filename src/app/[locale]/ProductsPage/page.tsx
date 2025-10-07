@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import Axios from "../../utilities/axios";
 import SummaryApi from "../../common/summaryApi";
 import { useLocale, useTranslations } from "next-intl";
-import { Link } from "lucide-react";
+import { Link } from "@/i18n/navigation"; 
 import Image from "next/image";
+import Head from "next/head";
 
 interface Product {
   _id: string;
@@ -106,59 +107,72 @@ useEffect(() => {
 
     fetchProducts();
   }, [activeCategory, activeSubCategory, search, page]);
-
+  
   return (
-    <div className="p-6 mt-25" dir={locale === "en" ? "ltr" : "rtl"}>
-      <h1 className="text-3xl font-bold mb-6">{t("title")}</h1>
+    <>
+        <Head>
+        <title>منتجاتنا | Spectrum</title>
+        <meta name="description" content="تصفح أحدث المنتجات المتوفرة لدينا." />
+        <meta name="keywords" content="منتجات عوازل صوتيه" />
+        <meta name="robots" content="index, follow" />
+      </Head>
+      <div className="p-6 mt-25" dir={locale === "en" ? "ltr" : "rtl"}>
+       <noscript>
+          <div>
+            <h1>{t("title")}</h1>
+           
+          </div>
+        </noscript>
+        <h1 className="text-3xl font-bold mb-6">{t("title")}</h1>
 
-      {/* --- Search --- */}
-      <input
-        type="text"
-        placeholder={t("searchPlaceholder")}
-        value={search}
-        onChange={(e) => {
-          setSearch(e.target.value);
-          setPage(1);
-        }}
-        className="w-full border rounded-lg p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-
-      {/* --- Categories Slider --- */}
-      <div className="flex space-x-3 overflow-x-auto mb-4 py-2">
-        <button
-          onClick={() => {
-            setActiveCategory(null);
-            setActiveSubCategory(null);
+        {/* --- Search --- */}
+        <input
+          type="text"
+          placeholder={t("searchPlaceholder")}
+          value={search}
+          onChange={(e) => {
+            setSearch(e.target.value);
             setPage(1);
           }}
-          className={`px-4 py-2 rounded-lg border ${
-            !activeCategory ? "bg-blue-500 text-white" : ""
-          }`}
-        >
-          {t("title")}
-        </button>
+          className="w-full border rounded-lg p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
 
-        {categories.map((cat) => (
+        {/* --- Categories Slider --- */}
+        <div className="flex space-x-3 overflow-x-auto mb-4 py-2">
           <button
-            key={cat._id}
             onClick={() => {
-              setActiveCategory(cat._id);
+              setActiveCategory(null);
               setActiveSubCategory(null);
               setPage(1);
             }}
             className={`px-4 py-2 rounded-lg border ${
-              activeCategory === cat._id ? "bg-blue-500 text-white" : ""
+              !activeCategory ? "bg-blue-500 text-white" : ""
             }`}
           >
-            {cat.name[locale]}
+            {t("title")}
           </button>
-        ))}
-      </div>
 
-      {/* --- SubCategories Slider --- */}
-      {activeCategory && (
-        <div className="flex space-x-3 overflow-x-auto mb-6 py-2">
-          {/* <button
+          {categories.map((cat) => (
+            <button
+              key={cat._id}
+              onClick={() => {
+                setActiveCategory(cat._id);
+                setActiveSubCategory(null);
+                setPage(1);
+              }}
+              className={`px-4 py-2 rounded-lg border ${
+                activeCategory === cat._id ? "bg-blue-500 text-white" : ""
+              }`}
+            >
+              {cat.name[locale]}
+            </button>
+          ))}
+        </div>
+
+        {/* --- SubCategories Slider --- */}
+        {activeCategory && (
+          <div className="flex space-x-3 overflow-x-auto mb-6 py-2">
+            {/* <button
             onClick={() => {
               setActiveSubCategory(null);
               setPage(1);
@@ -170,80 +184,81 @@ useEffect(() => {
             {t("allSub")}
           </button> */}
 
-          {subCategories.map((sub) => (
-            <button
-              key={sub._id}
-              onClick={() => {
-                setActiveSubCategory(sub._id);
-                setPage(1);
-              }}
-              className={`px-4 py-2 rounded-lg border ${
-                activeSubCategory === sub._id ? "bg-blue-500 text-white" : ""
-              }`}
-            >
-              {sub.name[locale]}
-            </button>
-          ))}
-        </div>
-      )}
+            {subCategories.map((sub) => (
+              <button
+                key={sub._id}
+                onClick={() => {
+                  setActiveSubCategory(sub._id);
+                  setPage(1);
+                }}
+                className={`px-4 py-2 rounded-lg border ${
+                  activeSubCategory === sub._id ? "bg-blue-500 text-white" : ""
+                }`}
+              >
+                {sub.name[locale]}
+              </button>
+            ))}
+          </div>
+        )}
 
-      {/* --- Products Grid --- */}
-      {loading ? (
-        <p>{t("loading")}</p>
-      ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {products.map((prod) => (
-            <Link key={prod._id} href={`/ProductDetails/${prod.slug}`}>
-              <div className="border rounded-lg shadow hover:shadow-lg transition cursor-pointer">
-                <div className="relative w-full h-40 rounded-t-lg overflow-hidden">
-                  <Image
-                    src={
-                      prod.images?.find((i) => i.isMain)?.url ||
-                      "/placeholder.png"
-                    }
-                    alt={
-                      typeof prod.name === "string"
+        {/* --- Products Grid --- */}
+        {loading ? (
+          <p>{t("loading")}</p>
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {products.map((prod) => (
+              <Link key={prod._id} href={`/ProductDetails/${prod.slug}`}>
+                <div className="border rounded-lg shadow hover:shadow-lg transition cursor-pointer">
+                  <div className="relative w-full h-40 rounded-t-lg overflow-hidden">
+                    <Image
+                      src={
+                        prod.images?.find((i) => i.isMain)?.url ||
+                        "/placeholder.png"
+                      }
+                      alt={
+                        typeof prod.name === "string"
+                          ? prod.name
+                          : prod.name[locale]
+                      }
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="p-3">
+                    <h2 className="font-semibold">
+                      {typeof prod.name === "string"
                         ? prod.name
-                        : prod.name[locale]
-                    }
-                    fill
-                    className="object-cover"
-                  />
+                        : prod.name[locale]}
+                    </h2>
+                    <p className="text-sm text-gray-500">
+                      {typeof prod.shortDescription === "string"
+                        ? prod.shortDescription
+                        : prod.shortDescription?.[locale]}
+                    </p>
+                  </div>
                 </div>
-                <div className="p-3">
-                  <h2 className="font-semibold">
-                    {typeof prod.name === "string"
-                      ? prod.name
-                      : prod.name[locale]}
-                  </h2>
-                  <p className="text-sm text-gray-500">
-                    {typeof prod.shortDescription === "string"
-                      ? prod.shortDescription
-                      : prod.shortDescription?.[locale]}
-                  </p>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      )}
+              </Link>
+            ))}
+          </div>
+        )}
 
-      {/* --- Pagination --- */}
-      {totalPages > 1 && (
-        <div className="flex justify-center space-x-2 mt-6">
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
-            <button
-              key={p}
-              onClick={() => setPage(p)}
-              className={`px-3 py-1 rounded-lg border ${
-                page === p ? "bg-blue-500 text-white" : ""
-              }`}
-            >
-              {p}
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
+        {/* --- Pagination --- */}
+        {totalPages > 1 && (
+          <div className="flex justify-center space-x-2 mt-6">
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+              <button
+                key={p}
+                onClick={() => setPage(p)}
+                className={`px-3 py-1 rounded-lg border ${
+                  page === p ? "bg-blue-500 text-white" : ""
+                }`}
+              >
+                {p}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+    </>
   );
 }

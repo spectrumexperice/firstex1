@@ -54,11 +54,18 @@ const ServicesSection = () => {
         <meta property="og:description" content={t("subtitle")} />
         <meta property="og:type" content="website" />
       </Head>
+
       <section
         className="bg-white font-arabic  pt-30 mt-20 py-10"
         dir={locale === "en" ? "ltr" : "rtl"}
         lang={locale}
       >
+        <noscript>
+          <div>
+            <h1>{t("title")}</h1>
+           
+          </div>
+        </noscript>
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div
             initial={{ opacity: 0, y: -30 }}

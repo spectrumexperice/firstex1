@@ -54,6 +54,12 @@ const AboutPage = () => {
         dir={locale === "en" ? "ltr" : "rtl"}
         lang={locale} // إضافة سمة اللغة لتحسين إمكانية الوصول
       >
+        <noscript>
+          <div>
+            <h1>{t("title")}</h1>
+           
+          </div>
+        </noscript>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 ">
           {" "}
           {/* تحسين الهوامش */}

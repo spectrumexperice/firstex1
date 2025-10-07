@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 
 // استيراد useTranslations
 import { useLocale, useTranslations } from "next-intl";
+import Head from "next/head";
 
 export default function Register() {
   const t = useTranslations("register");
@@ -67,123 +68,152 @@ export default function Register() {
   };
 
   return (
-    <section
-      className="mx-auto min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-gray-100 to-gray-300 py-12 px-4"
-       dir={locale === 'en' ? 'ltr' : 'rtl'}
-    >
-       <div className="w-full max-w-md mb-4">
-        <Link
-          href={`/${locale}`}
-          className="inline-flex items-center text-[#6b252f] hover:underline"
-        >
-          ← {locale === "ar" ? "العودة للصفحة الرئيسية" : "Back to Home"}
-        </Link>
-      </div>
-      <Toaster position="top-center" reverseOrder={false} />
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="w-full max-w-md bg-white p-8 rounded-2xl shadow-2xl"
+    <>
+      <Head>
+        <title>سبكتروم | {t("title")}</title>
+        <meta
+          name="description"
+          content="تسجيل مستخدم جديد في سبكتروم."
+        />
+        <meta
+          name="keywords"
+          content="سبكتروم, تسجيل مستخدم"
+        />
+        <meta name="robots" content="index, follow" />
+      </Head>
+      <section
+        className="mx-auto min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-gray-100 to-gray-300 py-12 px-4"
+        dir={locale === "en" ? "ltr" : "rtl"}
       >
-        <h1 className="text-3xl font-bold text-[#6b252f] mb-6 text-center">
-          {t("title")}
-        </h1>
-        <form onSubmit={handleSubmit} className="grid gap-4 mt-6">
-          <div className="grid gap-1">
-            <label htmlFor="name" className="block mb-1 font-semibold">
-              {t("nameLabel")}
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={data.name}
-              onChange={handleChange}
-              placeholder={t("namePlaceholder")}
-              required
-              className="w-full border border-gray-300 rounded p-2 focus:outline-none focus:border-[#6b252f]"
-            />
-          </div>
-
+        <noscript>
           <div>
-            <label htmlFor="email" className="block mb-1 font-semibold">
-              {t("emailLabel")}
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={data.email}
-              onChange={handleChange}
-              placeholder={t("emailPlaceholder")}
-              required
-              className="w-full border border-gray-300 rounded p-2 focus:outline-none focus:border-[#6b252f]"
-            />
+            <h1>{t("title")}</h1>
+           
           </div>
-
-          <div className="relative">
-            <label htmlFor="password" className="block mb-1 font-semibold">
-              {t("passwordLabel")}
-            </label>
-            <input
-              type={showPassword ? "text" : "password"}
-              id="password"
-              name="password"
-              value={data.password}
-              onChange={handleChange}
-              placeholder={t("passwordPlaceholder")}
-              required
-              className="w-full border border-gray-300 rounded p-2 pr-10 focus:outline-none focus:border-[#6b252f]"
-            />
-            <button
-              type="button"
-              onClick={() => setShowPassword((prev) => !prev)}
-              className="absolute top-8 right-3 text-gray-500"
-              aria-label={showPassword ? t("hidePasswordAria") : t("showPasswordAria")}
-            >
-              {showPassword ? "👁️" : "🙈"}
-            </button>
-          </div>
-
-          <div className="relative">
-            <label htmlFor="confirmPassword" className="block mb-1 font-semibold">
-              {t("confirmPasswordLabel")}
-            </label>
-            <input
-              type={showConfirmPassword ? "text" : "password"}
-              id="confirmPassword"
-              name="confirmPassword"
-              value={data.confirmPassword}
-              onChange={handleChange}
-              placeholder={t("confirmPasswordPlaceholder")}
-              required
-              className="w-full border border-gray-300 rounded p-2 pr-10 focus:outline-none focus:border-[#6b252f]"
-            />
-            <button
-              type="button"
-              onClick={() => setShowConfirmPassword((prev) => !prev)}
-              className="absolute top-8 right-3 text-gray-500"
-              aria-label={showConfirmPassword ? t("hideConfirmPasswordAria") : t("showConfirmPasswordAria")}
-            >
-              {showConfirmPassword ? "👁️" : "🙈"}
-            </button>
-          </div>
-
-          <button
-            type="submit"
-            className="w-full bg-[#6b252f] hover:bg-[#4c1e21] text-white py-2 rounded font-semibold transition"
+        </noscript>
+        <div className="w-full max-w-md mb-4">
+          <Link
+            href={`/${locale}/`}
+            className="inline-flex items-center text-[#6b252f] hover:underline"
           >
-            {t("submitButton")}
-          </button>
-        </form>
-        <p className="mt-4 text-center text-gray-600">
-          {t("haveAccount")}{" "}
-          <Link  href='login' className="text-[#6b252f] hover:underline">
-            {t("login")}
+            ← {locale === "ar" ? "العودة للصفحة الرئيسية" : "Back to Home"}
           </Link>
-        </p>
-      </motion.div>
-    </section>
+        </div>
+        <Toaster position="top-center" reverseOrder={false} />
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="w-full max-w-md bg-white p-8 rounded-2xl shadow-2xl"
+        >
+          <h1 className="text-3xl font-bold text-[#6b252f] mb-6 text-center">
+            {t("title")}
+          </h1>
+          <form onSubmit={handleSubmit} className="grid gap-4 mt-6">
+            <div className="grid gap-1">
+              <label htmlFor="name" className="block mb-1 font-semibold">
+                {t("nameLabel")}
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={data.name}
+                onChange={handleChange}
+                placeholder={t("namePlaceholder")}
+                required
+                className="w-full border border-gray-300 rounded p-2 focus:outline-none focus:border-[#6b252f]"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="email" className="block mb-1 font-semibold">
+                {t("emailLabel")}
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={data.email}
+                onChange={handleChange}
+                placeholder={t("emailPlaceholder")}
+                required
+                className="w-full border border-gray-300 rounded p-2 focus:outline-none focus:border-[#6b252f]"
+              />
+            </div>
+
+            <div className="relative">
+              <label htmlFor="password" className="block mb-1 font-semibold">
+                {t("passwordLabel")}
+              </label>
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                name="password"
+                value={data.password}
+                onChange={handleChange}
+                placeholder={t("passwordPlaceholder")}
+                required
+                className="w-full border border-gray-300 rounded p-2 pr-10 focus:outline-none focus:border-[#6b252f]"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute top-8 right-3 text-gray-500"
+                aria-label={
+                  showPassword ? t("hidePasswordAria") : t("showPasswordAria")
+                }
+              >
+                {showPassword ? "👁️" : "🙈"}
+              </button>
+            </div>
+
+            <div className="relative">
+              <label
+                htmlFor="confirmPassword"
+                className="block mb-1 font-semibold"
+              >
+                {t("confirmPasswordLabel")}
+              </label>
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                id="confirmPassword"
+                name="confirmPassword"
+                value={data.confirmPassword}
+                onChange={handleChange}
+                placeholder={t("confirmPasswordPlaceholder")}
+                required
+                className="w-full border border-gray-300 rounded p-2 pr-10 focus:outline-none focus:border-[#6b252f]"
+              />
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword((prev) => !prev)}
+                className="absolute top-8 right-3 text-gray-500"
+                aria-label={
+                  showConfirmPassword
+                    ? t("hideConfirmPasswordAria")
+                    : t("showConfirmPasswordAria")
+                }
+              >
+                {showConfirmPassword ? "👁️" : "🙈"}
+              </button>
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-[#6b252f] hover:bg-[#4c1e21] text-white py-2 rounded font-semibold transition"
+            >
+              {t("submitButton")}
+            </button>
+          </form>
+          <p className="mt-4 text-center text-gray-600">
+            {t("haveAccount")}{" "}
+            <Link href="login" className="text-[#6b252f] hover:underline">
+              {t("login")}
+            </Link>
+          </p>
+        </motion.div>
+      </section>
+    </>
   );
 }

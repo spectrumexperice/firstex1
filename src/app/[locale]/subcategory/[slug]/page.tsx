@@ -6,6 +6,7 @@ import { Link } from "@/i18n/navigation";
 import SummaryApi from "@/app/common/summaryApi";
 import Axios from "@/app/utilities/axios";
 import Image from "next/image";
+import Head from "next/head";
 interface Category {
   _id: string;
   name: { ar: string; en: string };
@@ -111,79 +112,105 @@ export default function CategoryPage() {
   }, [slug, categoryMap]);
 
   return (
-    <div className="p-4 md:p-6 lg:p-8 mt-25 md:mt-20" dir="rtl">
-      <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-center md:text-right text-gray-800">
-        {categoryMap[slug]?.name?.ar || slug || "المنتجات"}
-      </h1>
+    <>
+    <Head>
+        <title>سبكتروم | فئات المنتجات</title>
+        <meta name="description" content="ابحث الان عن فئات المنتجات الصوتية"/>
+        <meta
+          name="keywords"
+          content="عوازل صوتية, أنظمة صوتية, سبكتروم"
+        />
+        <meta property="og:title" content="سبكتروم | عوازل صوتية"/>
+        <meta property="og:description" content="عوازل صوتية" />
+        <meta property="og:type" content="website" />
+      </Head>
+      <div className="p-4 md:p-6 lg:p-8 mt-25 md:mt-20" dir="rtl">
+         <noscript>
+          <div>
+            <h1>{categoryMap[slug]?.name?.ar || slug || "المنتجات"}</h1>
+           
+          </div>
+        </noscript>
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-center md:text-right text-gray-800">
+          {categoryMap[slug]?.name?.ar || slug || "المنتجات"}
+        </h1>
 
-      {loading ? (
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
-          {[...Array(8)].map((_, i) => (
-            <div key={i} className="border rounded-lg shadow">
-              <div className="w-full h-40 bg-gray-200 animate-pulse rounded-t-lg"></div>
-              <div className="p-3">
-                <div className="h-4 bg-gray-200 animate-pulse rounded mb-2"></div>
-                <div className="h-3 bg-gray-200 animate-pulse rounded w-2/3"></div>
+        {loading ? (
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
+            {[...Array(8)].map((_, i) => (
+              <div key={i} className="border rounded-lg shadow">
+                <div className="w-full h-40 bg-gray-200 animate-pulse rounded-t-lg"></div>
+                <div className="p-3">
+                  <div className="h-4 bg-gray-200 animate-pulse rounded mb-2"></div>
+                  <div className="h-3 bg-gray-200 animate-pulse rounded w-2/3"></div>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <>
-          {statusMessage && (
-            <p className="col-span-full text-center text-gray-500 py-8">{statusMessage}</p>
-          )}
+            ))}
+          </div>
+        ) : (
+          <>
+            {statusMessage && (
+              <p className="col-span-full text-center text-gray-500 py-8">
+                {statusMessage}
+              </p>
+            )}
 
-          {products.length === 0 && !statusMessage ? (
-            <div className="col-span-full text-center py-12">
-              <div className="text-gray-400 text-6xl mb-4">📦</div>
-              <h3 className="text-gray-600 text-xl font-semibold">لا توجد منتجات</h3>
-              <p className="text-gray-500 mt-2">لم يتم العثور على منتجات في هذه الفئة</p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
-              {products.map((prod) => {
-                const mainImage =
-                  prod.images?.find((i) => i.isMain)?.url ||
-                  prod.images?.[0]?.url ||
-                  "/placeholder.png";
+            {products.length === 0 && !statusMessage ? (
+              <div className="col-span-full text-center py-12">
+                <div className="text-gray-400 text-6xl mb-4">📦</div>
+                <h3 className="text-gray-600 text-xl font-semibold">
+                  لا توجد منتجات
+                </h3>
+                <p className="text-gray-500 mt-2">
+                  لم يتم العثور على منتجات في هذه الفئة
+                </p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
+                {products.map((prod) => {
+                  const mainImage =
+                    prod.images?.find((i) => i.isMain)?.url ||
+                    prod.images?.[0]?.url ||
+                    "/placeholder.png";
 
-                return (
-                  <Link
-                    key={prod._id}
-                    href={`/ProductDetails/${prod.slug}`}
-                    className="block border rounded-lg shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 group bg-white"
-                  >
-                    <div className="overflow-hidden">
-                      <Image
-                        src={mainImage}
-                        alt={prod.name?.ar || prod.name?.en || "product"}
-                        height={40}
-                        width={100}
-                        className="w-full h-40 md:h-48 object-cover rounded-t-lg group-hover:scale-110 transition-transform duration-300"
-                        loading="lazy"
-                        onError={(e) => {
-                          (e.target as HTMLImageElement).src = "/placeholder.png";
-                        }}
-                      />
-                    </div>
-                    <div className="p-3">
-                      <h2 className="font-semibold text-center text-gray-800 group-hover:text-blue-600 transition-colors text-sm md:text-base line-clamp-2">
-                        {prod.name?.ar || prod.name?.en}
-                      </h2>
-                      {prod.shortDescription?.ar && (
-                        <p className="text-xs text-gray-600 mt-2 line-clamp-2 hidden md:block">
-                          {prod.shortDescription.ar}
-                        </p>
-                      )}
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-          )}
-        </>
-      )}
-    </div>
+                  return (
+                    <Link
+                      key={prod._id}
+                      href={`/ProductDetails/${prod.slug}`}
+                      className="block border rounded-lg shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 group bg-white"
+                    >
+                      <div className="overflow-hidden">
+                        <Image
+                          src={mainImage}
+                          alt={prod.name?.ar || prod.name?.en || "product"}
+                          height={40}
+                          width={100}
+                          className="w-full h-40 md:h-48 object-cover rounded-t-lg group-hover:scale-110 transition-transform duration-300"
+                          loading="lazy"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src =
+                              "/placeholder.png";
+                          }}
+                        />
+                      </div>
+                      <div className="p-3">
+                        <h2 className="font-semibold text-center text-gray-800 group-hover:text-blue-600 transition-colors text-sm md:text-base line-clamp-2">
+                          {prod.name?.ar || prod.name?.en}
+                        </h2>
+                        {prod.shortDescription?.ar && (
+                          <p className="text-xs text-gray-600 mt-2 line-clamp-2 hidden md:block">
+                            {prod.shortDescription.ar}
+                          </p>
+                        )}
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </>
   );
 }

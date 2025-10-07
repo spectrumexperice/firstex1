@@ -11,6 +11,7 @@ import { useLocale } from "next-intl";
 import { useTranslations } from "next-intl";
 import { setWorksDetails } from "@/app/store/workSlice";
 import fetchworksDetails from "@/app/utilities/fetchWorksDetails";
+import { Head } from "next/document";
 export interface Work {
   _id: string;
   imageUrl: string;
@@ -96,72 +97,91 @@ const Ourwork = () => {
 }, [dispatch]); // ⚠️ أضف dispatch كمصفوفة تبعيات
 
   return (
-    
-    <section className="py-16 px-4 bg-gray-50" dir={isRTL ? "rtl" : "ltr"}>
-      <motion.h2
-        className="text-4xl font-[Cairo] font-extrabold mb-8 text-[#6b252f] text-center"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-      >
-     {t("title")}
-      </motion.h2>
+    <>
+      <Head>
+        <title>سبكتروم | {t("title")}</title>
+        <meta
+          name="description"
+          content="اكتشف أعمال سبكتروم في مجال الصوتيات — مشاريع احترافية وابتكار مستمر"
+        />
+        <meta name="robots" content="index, follow" />
+        <meta property="og:title" content={`سبكتروم | ${t("title")}`} />
+        <meta
+          property="og:description"
+          content="اعرض أعمالنا الصوتية المميزة وحلولنا الاحترافية."
+        />
+      </Head>
+      <section className="py-16 px-4 bg-gray-50" dir={isRTL ? "rtl" : "ltr"}>
+        <noscript>
+          <h1>{t("title")}</h1>
+          <p>
+            اكتشف أعمال سبكتروم في مجال الصوتيات — مشاريع احترافية وابتكار
+            مستمر.
+          </p>
+        </noscript>
+        <motion.h2
+          className="text-4xl font-[Cairo] font-extrabold mb-8 text-[#6b252f] text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          {t("title")}
+        </motion.h2>
 
-      {
-      loading ? (
-        <div className="text-center text-gray-500">جاري التحميل...</div>
-      ) : works.length === 0 ? (
-        <div className="text-center text-gray-500">لا توجد أعمال متاحة</div>
-      ) : (
-        <div className="relative">
-          <div ref={sliderRef} className="keen-slider">
-            {works.map((work, index) => (
-              <div key={work._id} className="keen-slider__slide">
-                <div className="relative w-full aspect-[4/3] overflow-hidden rounded-xl shadow-md group ">
-                  <Image
-                    src={work.imageUrl}
-                    alt={`عمل ${index + 1}`}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    sizes="100vw"
-                    priority={index < 2}
-                    
-                  />
+        {loading ? (
+          <div className="text-center text-gray-500">جاري التحميل...</div>
+        ) : works.length === 0 ? (
+          <div className="text-center text-gray-500">لا توجد أعمال متاحة</div>
+        ) : (
+          <div className="relative">
+            <div ref={sliderRef} className="keen-slider">
+              {works.map((work, index) => (
+                <div key={work._id} className="keen-slider__slide">
+                  <div className="relative w-full aspect-[4/3] overflow-hidden rounded-xl shadow-md group ">
+                    <Image
+                      src={work.imageUrl}
+                      alt={`عمل ${index + 1}`}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="100vw"
+                      priority={index < 2}
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
 
-          {/* Arrows */}
-          <button
-           onClick={() => slider?.current?.prev()}
-            className="absolute top-1/2 right-2 transform -translate-y-1/2 z-10 bg-[#6b252f] text-white p-2 rounded-full"
-          >
-            <IoIosArrowDroprightCircle size={24} />
-          </button>
-          <button
-             onClick={() => slider?.current?.next()}
-            className="  absolute top-1/2 left-2 transform -translate-y-1/2 z-10 bg-[#6b252f] text-white p-2 rounded-full"
-          >
-            <IoIosArrowDropleftCircle size={24} />
-          </button>
+            {/* Arrows */}
+            <button
+              onClick={() => slider?.current?.prev()}
+              className="absolute top-1/2 right-2 transform -translate-y-1/2 z-10 bg-[#6b252f] text-white p-2 rounded-full"
+            >
+              <IoIosArrowDroprightCircle size={24} />
+            </button>
+            <button
+              onClick={() => slider?.current?.next()}
+              className="  absolute top-1/2 left-2 transform -translate-y-1/2 z-10 bg-[#6b252f] text-white p-2 rounded-full"
+            >
+              <IoIosArrowDropleftCircle size={24} />
+            </button>
 
-          {/* Dots */}
-          <div className="flex justify-center mt-7 gap-2">
-            {works.map((_, idx) => (
-              <div
-                key={idx}
-                className={`w-3 h-3 rounded-full cursor-pointer ${
-                  currentSlide === idx ? "bg-[#6b252f]" : "bg-gray-300"
-                }`}
-                onClick={() => slider?.current?.moveToIdx(idx)}
-              ></div>
-            ))}
+            {/* Dots */}
+            <div className="flex justify-center mt-7 gap-2">
+              {works.map((_, idx) => (
+                <div
+                  key={idx}
+                  className={`w-3 h-3 rounded-full cursor-pointer ${
+                    currentSlide === idx ? "bg-[#6b252f]" : "bg-gray-300"
+                  }`}
+                  onClick={() => slider?.current?.moveToIdx(idx)}
+                ></div>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
-    </section>
+        )}
+      </section>
+    </>
   );
 };
 
