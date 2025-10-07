@@ -56,7 +56,7 @@ const AboutPage = () => {
       >
         <noscript>
           <div>
-            <h1>{t("title")}</h1>
+            <h1>{t("whoWeAre.title")}</h1>
            
           </div>
         </noscript>

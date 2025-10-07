@@ -11,7 +11,7 @@ import { useLocale } from "next-intl";
 import { useTranslations } from "next-intl";
 import { setWorksDetails } from "@/app/store/workSlice";
 import fetchworksDetails from "@/app/utilities/fetchWorksDetails";
-import { Head } from "next/document";
+import Head from "next/head";
 export interface Work {
   _id: string;
   imageUrl: string;
