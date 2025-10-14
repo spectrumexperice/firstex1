@@ -273,7 +273,7 @@ useEffect(() => {
 
   // navLinks: فقط نحتاج وجود dropdown = true
   const navLinks = [
-    { id: "home", name: t("nav.home"), href: `/Home` },
+    { id: "home", name: t("nav.home"), href: `/` },
     { id: "about", name: t("nav.about"), href: `/about` },
     { id: "services", name: t("nav.services"), href: "/services" },
      {

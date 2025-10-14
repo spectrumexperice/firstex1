@@ -1,0 +1,93 @@
+"use client";
+import { motion } from "framer-motion";
+import { useLocale, useTranslations } from "next-intl";
+type ContentProps = {
+  t: (key: string) => string;
+  locale: string;
+};
+export default function HeroSection() {
+    const t = useTranslations("hero");
+   const locale = useLocale() 
+return (
+      <section className="relative w-full h-screen overflow-hidden " dir="rtl">
+        <noscript>
+          <h1>{t("title")}</h1>
+          <p>{t("description")}</p>
+        </noscript>
+        {/* خلفية الفيديو */}
+        <motion.video
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.6 }}
+          viewport={{ once: true }}
+          autoPlay
+          muted
+          loop
+          preload="none"
+          playsInline
+          poster="/video/fallback.jpeg"
+          aria-label="عرض فيديو تعريفي لحلول الصوت"
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+        >
+          <source src="/video/show.mp4" type="video/mp4" />
+          متصفحك لا يدعم تشغيل الفيديو
+        </motion.video>
+
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-black opacity-60 backdrop-blur-sm z-10" />
+
+        {/* محتوى القسم */}
+        <motion.div
+          className="relative z-20 text-center mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl flex flex-col justify-center items-center h-full"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: { opacity: 0, y: 60 },
+            visible: {
+              opacity: 1,
+              y: 0,
+              transition: { staggerChildren: 0.3, duration: 1 },
+            },
+          }}
+        >
+          <motion.h1
+            className="text-4xl md:text-6xl font-[Cairo] font-bold mb-4 text-white drop-shadow-lg pb-2"
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0 },
+            }}
+          >
+            {t("title")}
+          </motion.h1>
+
+          <motion.h2
+            className="sr-only"
+            variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}
+          >
+            {t("subtitle")}
+          </motion.h2>
+
+          <motion.p
+            className="text-lg md:text-xl mb-8 text-gray-200 drop-shadow-[0_4px_4px_rgba(0,0,0,0.7)]"
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0 },
+            }}
+          >
+            {t("description")}
+          </motion.p>
+
+          <motion.a
+            href={`/${locale}/services`}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="bg-gradient-to-r from-[#c9c8c8] to-[#997e7e]
+      hover:from-[#a3a2a2] hover:to-[#776262] text-white px-6 py-3 
+      rounded-full font-semibold transition duration-300 shadow-xl"
+          >
+            {t("cta")}
+          </motion.a>
+        </motion.div>
+      </section>
+)
+}

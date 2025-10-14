@@ -145,13 +145,13 @@ export default function ContactForm() {
 
   return (
     <>
-      <Head>
+      <Head>ب
         <title>سبكتروم | {t("title")}</title>
-        <meta name="description" content={t("subtitle")} />
+        <meta name="description" content={t("title")} />
         <meta name="keywords" content="اتصل بنا, مشروع, رسائل, سبكتروم" />
         <meta name="robots" content="index, follow" />
         <meta property="og:title" content={`سبكتروم | ${t("title")}`} />
-        <meta property="og:description" content={t("subtitle")} />
+        <meta property="og:description" content={t("title")} />
         <meta property="og:type" content="website" />
       </Head>
       <section
@@ -160,7 +160,7 @@ export default function ContactForm() {
       >
         <noscript>
           <h1>{t("title")}</h1>
-          <p>{t("subtitle")}</p>
+          <p>{t("title")}</p>
         </noscript>
 
         <h2 className="text-3xl font-bold mb-6 text-[#6b252f] text-center mt-10">
