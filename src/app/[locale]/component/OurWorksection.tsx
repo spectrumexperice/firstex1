@@ -1,12 +1,22 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { setWorksDetails } from "@/app/store/workSlice";
 import fetchworksDetails from "@/app/utilities/fetchWorksDetails";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
+import type { Swiper as SwiperType } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { EffectCube, Navigation, Autoplay } from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/effect-cube";
+import "swiper/css/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
-import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons/io";
+import {
+  IoIosArrowDropleftCircle,
+  IoIosArrowDroprightCircle,
+} from "react-icons/io";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useLocale } from "next-intl";
@@ -15,155 +25,227 @@ export interface Work {
   _id: string;
   imageUrl: string;
   publicId: string;
-
 }
 export default function OurWorkSection() {
-    const locale = useLocale();
-
+  const locale = useLocale();
+const slider = useRef<SwiperType | null>(null);
   const t = useTranslations("OurWork");
-    const [currentSlide, setCurrentSlide] = useState(0);
-     const { works, loading } = useSelector((state: RootState) => state.works) as {
-      works: Work[];
-      loading: boolean;
-    };
-      const isRTL = locale !== "en";
-       const dispatch=useDispatch()
-  const [sliderRef, slider] = useKeenSlider({
-    loop: true,
-    rtl:isRTL,
-    defaultAnimation:{
-        duration:400,
-       easing: (t: number) => (t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3)/2)
-    },
-    renderMode:"performance",
-    slides: { perView: 1, spacing: 16 }, // مبدئياً شريحة واحدة ونصف
-    breakpoints: {
-      "(min-width: 640px)": {
-        slides: { perView: 2, spacing: 20 },
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const { works, loading } = useSelector((state: RootState) => state.works) as {
+    works: Work[];
+    loading: boolean;
+  };
+  const isRTL = locale !== "en";
+  const dispatch = useDispatch();
+/*   const [sliderRef, slider] = useKeenSlider(
+    {
+      loop: true,
+      rtl: isRTL,
+      defaultAnimation: {
+        duration: 400,
+        easing: (t: number) =>
+          t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2,
       },
-      "(min-width: 1024px)": {
-        slides: { perView: 3, spacing: 24 },
+      renderMode: "performance",
+      slides: { perView: 1, spacing: 20 }, // مبدئياً شريحة واحدة ونصف
+      breakpoints: {
+        "(min-width: 640px)": {
+          slides: { perView: 2, spacing: 20 },
+        },
+        "(min-width: 1024px)": {
+          slides: { perView: 3, spacing: 24 },
+        },
+        "(min-width: 1440px)": {
+          slides: { perView: 4, spacing: 24 },
+        },
       },
-      "(min-width: 1440px)": {
-        slides: { perView: 4, spacing: 24 },
+      slideChanged(s) {
+        setCurrentSlide(s.track.details.rel);
       },
     },
-    slideChanged(s) {
-      setCurrentSlide(s.track.details.rel);
-    },
-  },
     [
-    // Autoplay plugin
-    (slider) => {
-      let timeout : ReturnType<typeof setTimeout>;
-      let mouseOver = false;
-      function clearNextTimeout() {
-        clearTimeout(timeout);
-      }
-      function nextTimeout() {
-        clearTimeout(timeout);
-        if (mouseOver) return;
-        timeout = setTimeout(() => slider.next(), 2000); // كل ثانيتين
-      }
-      slider.on("created", () => {
-        slider.container.addEventListener("mouseover", () => {
-          mouseOver = true;
-          clearNextTimeout();
-        });
-        slider.container.addEventListener("mouseout", () => {
-          mouseOver = false;
+      // Autoplay plugin
+      (slider) => {
+        let timeout: ReturnType<typeof setTimeout>;
+        let mouseOver = false;
+        function clearNextTimeout() {
+          clearTimeout(timeout);
+        }
+        function nextTimeout() {
+          clearTimeout(timeout);
+          if (mouseOver) return;
+          timeout = setTimeout(() => slider.next(), 2000); // كل ثانيتين
+        }
+        slider.on("created", () => {
+          slider.container.addEventListener("mouseover", () => {
+            mouseOver = true;
+
+            clearNextTimeout();
+          });
+          slider.container.addEventListener("mouseout", () => {
+            mouseOver = false;
+            nextTimeout();
+          });
           nextTimeout();
         });
-        nextTimeout();
-      });
-      slider.on("dragStarted", clearNextTimeout);
-      slider.on("animationEnded", nextTimeout);
-      slider.on("updated", nextTimeout);
-    },
-  ]
-);
- useEffect(() => {
-  async function fetchWorks() {
-    try {
-      dispatch(setWorksDetails({ loading: true }));
-      const response = await fetchworksDetails();
-      dispatch(setWorksDetails({ works: response.data, loading: false }));
-    } catch (error) {
-      dispatch(setWorksDetails({ error: 'فشل تحميل العمل', loading: false }));
+        slider.on("dragStarted", clearNextTimeout);
+        slider.on("animationEnded", nextTimeout);
+        slider.on("updated", nextTimeout);
+      },
+    ],
+  ); */
+  useEffect(() => {
+    async function fetchWorks() {
+      try {
+        dispatch(setWorksDetails({ loading: true }));
+        const response = await fetchworksDetails();
+        dispatch(setWorksDetails({ works: response.data, loading: false }));
+      } catch (error) {
+        dispatch(setWorksDetails({ error: "فشل تحميل العمل", loading: false }));
+      }
     }
-  }
-  fetchWorks();
-}, [dispatch]); // ⚠️ أضف dispatch كمصفوفة تبعيات
-    return(
-         <section className="py-16 px-4 bg-gray-50" dir={isRTL ? "rtl" : "ltr"}>
-        <noscript>
-          <h1>{t("title")}</h1>
-          <p>
-            اكتشف أعمال سبكتروم في مجال الصوتيات — مشاريع احترافية وابتكار
-            مستمر.
-          </p>
-        </noscript>
-        <motion.h2
-          className="text-4xl font-[Cairo] font-extrabold mb-8 text-[#6b252f] text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+    fetchWorks();
+  }, [dispatch]); // ⚠️ أضف dispatch كمصفوفة تبعيات
+
+  useEffect(() => {
+  const interval = setInterval(() => {
+    setCurrentSlide((prev) => (prev + 1) % works.length);
+  }, 2500);
+
+  return () => clearInterval(interval);
+}, [works.length]);
+  return (
+    
+    
+  <section className=" mt-10 mb-20 px-4 bg-gradient-to-br from-gray-50 via-white to-gray-100 " dir={isRTL ? "rtl" : "ltr"}>
+      
+      <noscript>
+       
+
+             <h2 className="text-3xl md:text-4xl font-bold text-[#6b252f]  font-[Cairo]">
+             {t("title")}
+           </h2>
+
+         
+      
+        <p>
+          اكتشف أعمال سبكتروم في مجال الصوتيات — مشاريع احترافية وابتكار مستمر.
+        </p>
+      </noscript>
+       <div className="mb-8 flex items-center justify-center gap-6">
+           <span className="h-px flex-1 max-w-[140px] bg-[#6b252f]"></span>
+          <motion.h2
+        className="text-4xl font-[Cairo] font-extrabold text-[#6b252f] text-center"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+      >
+        {t("title")}
+      </motion.h2>
+          <span className="h-px flex-1 max-w-[140px] bg-[#6b252f]"></span>
+       </div>
+     
+     
+
+      {loading ? (
+        <div className="text-center text-gray-500">جاري التحميل...</div>
+      ) : works.length === 0 ? (
+        <div className="text-center text-gray-500">لا توجد أعمال متاحة</div>
+      ) : (
+        <>
+          <div className="hidden lg:block relative max-w-6xl mx-auto ">
+
+  <div className="flex items-center justify-center gap-4">
+
+    {works.map((work, index) => {
+      const offset = index - currentSlide;
+
+      // نخلي فقط 3 عناصر حول المركز
+      if (Math.abs(offset) > 4) return null;
+
+      const isCenter = offset === 0;
+
+      return (
+        <div
+          key={work._id}
+          className="transition-all duration-500 ease-out flex-shrink-0"
+          style={{
+            transform: isCenter
+              ? "scale(1.15)"
+              : `scale(${0.9 - Math.abs(offset) * 0.05})`,
+
+            opacity: isCenter ? 1 : 0.4,
+            filter: isCenter ? "blur(0px)" : "blur(2px)",
+            zIndex: isCenter ? 10 : 5 - Math.abs(offset),
+          }}
         >
-          {t("title")}
-        </motion.h2>
-
-        {loading ? (
-          <div className="text-center text-gray-500">جاري التحميل...</div>
-        ) : works.length === 0 ? (
-          <div className="text-center text-gray-500">لا توجد أعمال متاحة</div>
-        ) : (
-          <div className="relative">
-            <div ref={sliderRef} className="keen-slider">
-              {works.map((work, index) => (
-                <div key={work._id} className="keen-slider__slide">
-                  <div className="relative w-full aspect-[4/3] overflow-hidden rounded-xl shadow-md group ">
-                    <Image
-                      src={work.imageUrl}
-                      alt={`عمل ${index + 1}`}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      sizes="100vw"
-                      priority={index < 2}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Arrows */}
-            <button
-              onClick={() => slider?.current?.prev()}
-              className="absolute top-1/2 right-2 transform -translate-y-1/2 z-10 bg-[#6b252f] text-white p-2 rounded-full"
-            >
-              <IoIosArrowDroprightCircle size={24} />
-            </button>
-            <button
-              onClick={() => slider?.current?.next()}
-              className="  absolute top-1/2 left-2 transform -translate-y-1/2 z-10 bg-[#6b252f] text-white p-2 rounded-full"
-            >
-              <IoIosArrowDropleftCircle size={24} />
-            </button>
-
-            {/* Dots */}
-            <div className="flex justify-center mt-7 gap-2">
-              {works.map((_, idx) => (
-                <div
-                  key={idx}
-                  className={`w-3 h-3 rounded-full cursor-pointer ${
-                    currentSlide === idx ? "bg-[#6b252f]" : "bg-gray-300"
-                  }`}
-                  onClick={() => slider?.current?.moveToIdx(idx)}
-                ></div>
-              ))}
-            </div>
+          <div className="w-[320px] h-[420px] rounded-2xl overflow-hidden shadow-2xl">
+            <img
+              src={work.imageUrl}
+              className="w-full h-full object-cover"
+            />
           </div>
-        )}
-      </section>
-    )
+        </div>
+      );
+    })}
+
+  </div>
+  
+</div>
+
+
+{/**sm-md section */}
+<div className="block lg:hidden relative max-w-xl mx-auto">
+
+  <Swiper
+    modules={[Navigation, Autoplay]}
+    slidesPerView={1.2}
+    centeredSlides={true}
+    spaceBetween={16}
+    loop={true}
+    autoplay={{
+      delay: 2500,
+      disableOnInteraction: false,
+    }}
+    onSwiper={(swiper) => (slider.current = swiper)}
+  >
+    {works.map((work) => (
+      <SwiperSlide key={work._id}>
+        <div className="w-full h-[300px] bg-black rounded-2xl overflow-hidden">
+          <img
+            src={work.imageUrl}
+            className="w-full h-full object-cover block"
+            alt="work"
+          />
+        </div>
+      </SwiperSlide>
+    ))}
+  </Swiper>
+
+  {/* زر السابق */}
+  <button
+    onClick={() => slider?.current?.slidePrev()}
+    className="absolute top-1/2 left-2 -translate-y-1/2 z-10
+    text-white p-2 rounded-full
+    bg-white/20 backdrop-blur-md border border-white/30 shadow-lg"
+  >
+    <IoIosArrowDropleftCircle size={28} />
+  </button>
+
+  {/* زر التالي */}
+  <button
+    onClick={() => slider?.current?.slideNext()}
+    className="absolute top-1/2 right-2 -translate-y-1/2 z-10
+    text-white p-2 rounded-full
+    bg-white/20 backdrop-blur-md border border-white/30 shadow-lg"
+  >
+    <IoIosArrowDroprightCircle size={28} />
+  </button>
+
+</div>
+        </>
+      )}
+    </section>
+  );
 }

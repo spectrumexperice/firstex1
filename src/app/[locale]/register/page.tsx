@@ -60,7 +60,7 @@ export default function Register() {
           password: "",
           confirmPassword: "",
         });
-        router.push('/login');
+        router.push('/${locale}/login');
       }
     } catch (error) {
       AxiosToastError(error);

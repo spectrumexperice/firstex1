@@ -69,7 +69,7 @@ const AddPartner = () => {
 
       if (response.data.success) {
         toast.success("تم إضافة الشريك بنجاح");
-        router.push("../partnerAdmin");
+        router.push("./partnerAdmin");
         setCompanyName("");
         setDisplayOrder(null);
         setLogoFile(null);

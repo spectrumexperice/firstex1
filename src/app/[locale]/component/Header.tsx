@@ -163,7 +163,7 @@ const ProductsDropdown = ({ categories }: { categories: Category[] }) => {
   );
 };
 
-const Header = () => {
+ const Header = () => {
   // "ar" أو "en"
   const t = useTranslations("header");
   const locale = useLocale();
@@ -219,26 +219,18 @@ useEffect(() => {
   
 }, []);
 // Fetch user (بدون تغيير)
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const token=localStorage.getItem('accessToken')
-        if (token &&!user?._id) {
-          const userData = await fetchUserDetails();
-          console.log("userData from API:", userData);
-          if (userData) {
-            dispatch(setUserDetails(userData));
-          }
-          
-        }
-      } catch (error) {
-        console.error("Failed to fetch user:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchUser();
-  }, [dispatch, user?._id]);
+useEffect(() => {
+  const token = localStorage.getItem("accessToken");
+
+  if (!token) return;
+
+  const initUser = async () => {
+    const userData = await fetchUserDetails();
+    dispatch(setUserDetails(userData));
+  };
+
+  initUser();
+}, []);
   // ===== جلب التصنيفات بهيكل هرمي من getGroup فقط =====
 useEffect(() => {
   const fetchData = async () => {
@@ -286,12 +278,16 @@ useEffect(() => {
   ];
 
   return (
-    <header
-      dir={locale === "en" ? "ltr" : "rtl"}
-      className={`fixed top-4 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? "hidden shadow-md" : "bg-[#6b252f] shadow-md"
-      } font-arabic`}
-    >
+   <header  className={`
+  fixed top-0 left-0 right-0 z-50  
+  transition-all duration-700 ease-out
+  ${scrolled 
+    ? 'bg-[#6b252f]  backdrop-blur-xl border-b border-white/10 py-2 shadow-2xl ' 
+    : 'bg-[#6b252f]  backdrop-blur-xl border-b'
+  }
+  font-arabic
+
+`}>
       <div className="container mx-auto  flex items-center justify-between h-20 px-4 lg:px-8">
         {/* Logo */}
         <Link
@@ -334,12 +330,12 @@ useEffect(() => {
         </motion.div> */}
 
         {/* Navigation Links (Desktop) */}
-        <nav className="hidden md:flex space-x-6 ltr:space-x-reverse font-semibold text-gray-100 dark:text-gray-300 md:font-medium md:space-x-4 md:ml-6 gap-1 font-[cairo]">
+        <nav className="hidden lg:flex  items-center  gap-4 font-semibold text-gray-100 dark:text-gray-300 md:font-medium md:space-x-4 md:ml-6  font-[cairo]">
           {navLinks.map((link) =>
             link.dropdown ? (
               <div
                 key={link.id}
-                className="relative"
+                className="relative "
                 /* onMouseEnter={() => setOpenProductsDropdown(true)}
                 onMouseLeave={() => setOpenProductsDropdown(false)} */
                 ref={productsDropdownRef}
@@ -454,14 +450,14 @@ useEffect(() => {
             <SheetTrigger asChild>
               <button
                 aria-label="Open menu"
-                className="md:hidden text-gray-300 text-2xl ml-2"
+                className="lg:hidden text-gray-300 text-2xl ml-2"
               >
                 <FaBars />
               </button>
             </SheetTrigger>
 
-            <SheetContent side="left" className="w-64 p-6 bg-white shadow-lg">
-              <nav className="flex flex-col space-y-4 font-semibold text-gray-700">
+            <SheetContent side="left" className="w-64 p-6 bg-white shadow-lg spac">
+              <nav className="flex flex-col  space-y-4 font-semibold text-gray-700">
                 {
                 navLinks.map((link, idx) => {
                   if (link.dropdown) {
@@ -485,7 +481,7 @@ useEffect(() => {
                         </summary>
 
                         {/* نفس هيكل الدروب داون: Category -> Sub -> Products */}
-                        <ul className="pl-4 mt-2 flex flex-col space-y-2">
+                        <ul className="pl-4 mt-2 flex flex-col space-y-2 ">
                           <li>
                             {/* <Link
                               href="/ProductsPage"
@@ -554,7 +550,7 @@ useEffect(() => {
                     <Link
                       key={idx}
                       href={{ pathname: link.href }}
-                      className="hover:text-indigo-600"
+                      className="hover:text-indigo-600 "
                       onClick={() => setOpenMobileMenu(false)}
                     >
                       {link.name}

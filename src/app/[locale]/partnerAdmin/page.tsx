@@ -90,7 +90,7 @@ export default function PartnerAdmin() {
           </Link>
         </div>
         <Button
-          onClick={() => router.push("../addPartner")}
+          onClick={() => router.push("./addPartner")}
           className="bg-[#6b252f] hover:bg-[#5a1f28] text-white px-6 py-2 rounded-xl"
         >
           ➕ إضافة شريك جديد

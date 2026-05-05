@@ -5,6 +5,7 @@ import Providers from './providers'
 /* import '@/app/globals.css' */
 import './output.css';
 import Header from './[locale]/component/Header';
+import { useLocale } from 'next-intl';
 
 
 /* const tajawal = Tajawal({
@@ -15,8 +16,9 @@ import Header from './[locale]/component/Header';
 
 
 export default function RootLayout({ children }: { children: ReactNode }) {
+  const locale=useLocale()
   return <>
-     <html lang="en" dir="ltr">
+    <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"}>
       
       <body
       /*  className={`${tajawal.className} antialiased`} */

@@ -40,17 +40,21 @@ const locale = useLocale()
     return (
          <section
         aria-labelledby="why-choose-us-title"
-        className="bg-white py-20 px-6 font-arabic"
+        className="bg-white py-10 px-6 font-arabic "
         dir="rtl"
       >
         <noscript>
           <h1>سبكتروم | حلول صوتية احترافية</h1>
           <p>معالجة صوتية، عزل صوت، أنظمة صوتية، سبكتروم</p>
         </noscript>
-        <div className="max-w-6xl mx-auto text-center">
-          <motion.h2
+       
+        <div className="max-w-6xl mx-auto text-center ">
+
+          <div className="mb-8 flex items-center justify-center gap-6">
+                <span className="h-px flex-1 max-w-[140px] bg-[#6b252f]"></span>
+                     <motion.h2
             id="why-choose-us-title"
-            className="text-4xl font-[Cairo] font-extrabold mb-8 text-[#6b252f]"
+            className="text-4xl font-[Cairo] font-extrabold  text-[#6b252f]"
             initial={{ opacity: 0, y: 20 }}
             dir={locale === "en" ? "ltr" : "rtl"}
             whileInView={{ opacity: 1, y: 0 }}
@@ -59,12 +63,18 @@ const locale = useLocale()
           >
             {t("title")}
           </motion.h2>
+               <span className="h-px flex-1 max-w-[140px] bg-[#6b252f]"></span>
+
+             </div>
+       
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 max-w-5xl mx-auto">
             {features.map(({ icon, title, description }, index) => (
               <motion.div
                 key={index}
-                className="flex flex-col items-center p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow cursor-default"
+               className="flex flex-col items-center p-6 rounded-xl shadow-md hover:shadow-xl hover:-translate-y-1 hover:scale-[1.02] transition-all cursor-default
+                bg-gradient-to-br from-white via-[#1ee704] to-[#99f109]
+                border border-[#6b252f]/10"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -72,6 +82,7 @@ const locale = useLocale()
                 aria-label={title}
                 role="article"
               >
+                
                 <div className="mb-4">{icon}</div>
                 <h3
                   className="text-xl font-medium mb-2 text-[#6b252f]"

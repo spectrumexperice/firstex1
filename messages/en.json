@@ -17,9 +17,12 @@
     "box":"search here ..."
   },
   "hero": {
-    "title": "Innovative Audio Solutions for Your World",
-    "subtitle": "The Best Audio Solutions Company in Saudi Arabia - Sound Systems for Mosques and Homes",
-    "description": "We offer you the best solutions for sound treatment and insulation.",
+    "title": "The sound",
+    "title2": "As it should be",
+    "title3":"perfect sound environment for your project",
+     "title4":"Spectrum Company",
+    "subtitle": "Advanced sound. A perfect experience.",
+    "description": "High-quality sound insulation and treatment with a modern design",
     "cta": "Discover Our Services"
   },
   "whyChooseUs": {
@@ -95,7 +98,7 @@
   "footer": {
     "aboutCompanyTitle": "About Company",
     "aboutCompanyDescription": "Spectrum is a leading company providing integrated audio solutions, relying on the latest global systems and technologies. We offer specialized consultations and studies to build professional audio systems carefully designed to suit each project’s needs.",
-    "quickLinksTitle": "Quick Links",
+    "quickLinksTitle": "Company",
     "links": {
       "home": "Home",
       "about": "About Us",

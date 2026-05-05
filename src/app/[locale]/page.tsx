@@ -64,10 +64,13 @@ useEffect(() => {
       </Head>
       <Header />
       <Hero />
+     
       <WhyChooseUs />
       <Ourfields />
+         <PartnersSection />
       <Ourwork />
-      <PartnersSection />
+     
+     
       <SendMessageSection />
       <Footer />
     </>

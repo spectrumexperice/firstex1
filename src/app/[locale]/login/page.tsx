@@ -49,8 +49,8 @@ export default function Login() {
 
       // جلب بيانات المستخدم بعد تسجيل الدخول
      
-      const userData = await fetchUserDetails(); 
-      dispatch(setUserDetails(userData));
+  
+      dispatch(setUserDetails(response.data.data.user));
 
       // تفريغ الفورم
       setData({ email: "", password: "" });

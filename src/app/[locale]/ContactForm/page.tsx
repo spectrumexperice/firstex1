@@ -163,7 +163,7 @@ export default function ContactForm() {
           <p>{t("title")}</p>
         </noscript>
 
-        <h2 className="text-3xl font-bold mb-6 text-[#6b252f] text-center mt-10">
+        <h2 className="text-3xl font-bold mb-6 p-4 rounded-md bg-[#6b252f] text-white text-center mt-10">
           {t("title")}
         </h2>
 
@@ -174,7 +174,7 @@ export default function ContactForm() {
           >
             <legend
               id="personal-data-legend"
-              className="px-3 font-semibold text-lg text-gray-800 bg-white rounded-md shadow-sm"
+              className="px-3 font-semibold text-lg text-yellow-300 p-1 bg-[#6b252f] rounded-md shadow-sm"
             >
               {t("personalData")}
             </legend>
@@ -219,7 +219,7 @@ export default function ContactForm() {
           </fieldset>
 
           <fieldset className="border border-gray-300 p-4 rounded-md bg-gray-50">
-            <legend className="px-3 font-semibold text-lg text-gray-800 bg-white rounded-md shadow-sm ">
+            <legend className="px-3 font-semibold text-lg text-yellow-300 p-1 bg-[#6b252f] rounded-md shadow-sm ">
               {t("projectData")}
             </legend>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -300,8 +300,8 @@ export default function ContactForm() {
             />
           </fieldset>
 
-          <fieldset className="border border-gray-300 p-4 rounded-md bg-gray-50">
-            <legend className="px-3 font-semibold text-lg text-gray-800 bg-white rounded-md shadow-sm ">
+          <fieldset className="border border-gray-300 p-4 rounded-md bg-gray-50 ">
+            <legend className="px-3 font-semibold text-lg text-yellow-300 p-1 bg-[#6b252f] rounded-md shadow-sm ">
               {t("attachments")}
             </legend>
             <input

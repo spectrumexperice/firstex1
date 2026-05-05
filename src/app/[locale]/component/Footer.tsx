@@ -1,5 +1,5 @@
 "use client";
-
+import Logo2 from "src/assits/Logo2.png";
 import Link from "next/link";
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaEnvelope, FaPhoneAlt } from "react-icons/fa";
 import ScrollToTopButton from "../../ScrollToTopButton";
@@ -7,6 +7,7 @@ import CallButton from "@/app/CallButton";
 import WhatsAppButton from "@/app/WhatsAppButton";
 import { useLocale, useTranslations } from "next-intl";
 import NewsletterForm from "./NewsletterForm";
+import Image from "next/image";
 
 const Footer = () => {
   const t = useTranslations("footer");
@@ -23,12 +24,34 @@ const Footer = () => {
         >
           {/* قسم نبذة عن الشركة */}
           <div>
-            <h3
-              dir={locale === "en" ? "ltr" : "rtl"}
-              className="text-xl font-semibold mb-4"
-            >
-              {t("aboutCompanyTitle")}
-            </h3>
+            {/* Logo */}
+        <Link
+          href="/"
+          className="flex flex-col  ltr:space-x-reverse cursor-pointer  items-start mb-3"
+        >
+          <Image
+            src={Logo2}
+            alt="شعار الشركة"
+            width={140}
+            height={70}
+            priority
+            className="object-contain hidden lg:block"
+          />
+          <Image
+            src={Logo2}
+            alt="شعار الشركة"
+            width={110}
+            height={70}
+            priority
+            className="object-contain lg:hidden"
+          />
+          
+       
+        </Link>
+        <div className="mb-2 flex items-center justify-center gap-6">
+           <span className="h-px flex-1 max-w-[160px] bg-white"></span>
+       </div>
+         
             <p
               dir={locale === "en" ? "ltr" : "rtl"}
               className="text-gray-300 leading-relaxed text-sm"
@@ -39,9 +62,13 @@ const Footer = () => {
 
           {/* روابط سريعة */}
           <div>
-            <h3 className="text-xl font-semibold mb-4">
+            <h3 className="text-xl font-semibold mb-4 font-[cairo]">
               {t("quickLinksTitle")}
             </h3>
+            <div className="mb-2 flex items-center justify-center gap-6">
+           <span className="h-px flex-1 max-w-[160px] bg-white"></span>
+       </div>
+       
             <ul className="space-y-2 text-gray-300 text-sm">
               <li>
                 <Link
@@ -80,9 +107,12 @@ const Footer = () => {
 
           {/* تواصل معنا */}
           <div>
-            <h3 className="text-xl font-semibold mb-4">
+            <h3 className="text-xl font-semibold mb-4 font-[cairo]">
               {t("contactUsTitle")}
             </h3>
+             <div className="mb-2 flex items-center justify-center gap-6">
+           <span className="h-px flex-1 max-w-[160px] bg-white"></span>
+       </div>
             <ul className="space-y-3 text-gray-300 text-sm">
               <li className="flex items-center gap-2">
                 <FaPhoneAlt />{" "}
