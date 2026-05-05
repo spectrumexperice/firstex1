@@ -22,8 +22,7 @@ const tajawal = Tajawal({
 export async function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+
 export default async function LocaleLayout({
   
   children,
