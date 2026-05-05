@@ -16,9 +16,9 @@ import { useLocale } from 'next-intl';
 
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-/*   const locale=useLocale() */
+  const locale=useLocale()
   return <>
-    <html >
+    <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"}>
       
       <body
       /*  className={`${tajawal.className} antialiased`} */
