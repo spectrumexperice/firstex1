@@ -30,8 +30,7 @@ export default function CategoryPage() {
   const rawCategory = Array.isArray(params.category) ? params.category[0] : params.category || "";
 const { slug } = useParams();
 
-/*  console.log("All params:", params);
-console.log("categoryslug value:", slug); */
+
   const [categoryMap, setCategoryMap] = useState<{ [key: string]: Category }>({});
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
