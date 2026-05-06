@@ -119,19 +119,11 @@ const Footer = () => {
                 <span dir={locale === "en" ? "ltr" : "rtl"}>
                   {t("contactDetails.phone1")}
                 </span>
-                <FaPhoneAlt />{" "}
-                <span dir={locale === "en" ? "ltr" : "rtl"}>
-                  {t("contactDetails.phone2")}
-                </span>
               </li>
               <li className="flex items-center gap-2">
                 <FaEnvelope />{" "}
                 <span dir={locale === "en" ? "ltr" : "rtl"}>
                   {t("contactDetails.email1")}
-                </span>
-                <FaEnvelope />{" "}
-                <span dir={locale === "en" ? "ltr" : "rtl"}>
-                  {t("contactDetails.email2")}
                 </span>
               </li>
             </ul>
