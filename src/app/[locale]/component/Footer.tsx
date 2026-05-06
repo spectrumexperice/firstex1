@@ -116,7 +116,7 @@ const Footer = () => {
             <ul className="space-y-3 text-gray-300 text-sm">
               <li className="flex items-center gap-2">
                 <FaPhoneAlt />{" "}
-                <span dir={locale === "en" ? "ltr" : "rtl"}>
+                <span dir="ltr">
                   {t("contactDetails.phone1")}
                 </span>
               </li>
